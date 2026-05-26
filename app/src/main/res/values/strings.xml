@@ -1,0 +1,36 @@
+<resources>
+    <!-- App -->
+    <string name="app_name">Hyper Reset Performance</string>
+
+    <!-- Splash / Onboarding -->
+    <string name="splash_title_1">Bienvenido a Hyper Reset Performance</string>
+    <string name="splash_desc_1">Tu centro de apoyo para el diagnóstico temprano y rehabilitación física de deportistas.</string>
+    <string name="splash_title_2">Evaluación Profesional</string>
+    <string name="splash_desc_2">Realiza un seguimiento completo de tu rendimiento con evaluaciones físicas detalladas y precisas.</string>
+    <string name="splash_title_3">Progreso y Resultados</string>
+    <string name="splash_desc_3">Visualiza tu evolución con gráficos interactivos y reportes personalizados.</string>
+    <string name="splash_skip">Saltar</string>
+    <string name="splash_next">Siguiente</string>
+    <string name="splash_start">Comenzar</string>
+
+    <!-- Login -->
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="login_email">Correo electrónico</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_button">Ingresar</string>
+    <string name="login_register_link">¿No tienes cuenta? Regístrate</string>
+    <string name="login_error_invalid_email">Correo electrónico inválido</string>
+    <string name="login_error_invalid_password">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="login_error_auth">Error de autenticación</string>
+    <string name="login_register_soon">Próximamente</string>
+
+    <!-- Home -->
+    <string name="home_title">Inicio</string>
+    <string name="home_welcome">Bienvenido</string>
+    <string name="home_welcome_message">Bienvenido a Hyper Reset Performance</string>
+
+    <!-- Navigation -->
+    <string name="nav_tests">Tests</string>
+    <string name="nav_appointments">Citas</string>
+    <string name="nav_profile">Perfil</string>
+</resources>

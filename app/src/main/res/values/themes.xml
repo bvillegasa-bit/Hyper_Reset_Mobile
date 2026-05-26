@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Proyecto_hiper_reset" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/hyper_primary</item>
+        <item name="colorOnPrimary">@color/hyper_on_primary</item>
+        <item name="colorPrimaryContainer">@color/hyper_surface</item>
+        <item name="colorSecondary">@color/hyper_accent</item>
+        <item name="colorOnSecondary">@color/hyper_on_accent</item>
+        <item name="colorSurface">@color/hyper_surface</item>
+        <item name="colorOnSurface">@color/hyper_on_surface</item>
+        <item name="colorError">@color/hyper_error</item>
+        <item name="colorOnError">@color/hyper_on_primary</item>
+
+        <!-- Status bar and navigation bar -->
+        <item name="android:statusBarColor">@color/hyper_primary</item>
+        <item name="android:navigationBarColor">@color/hyper_primary</item>
+    </style>
+
+    <style name="Theme.Proyecto_hiper_reset" parent="Base.Theme.Proyecto_hiper_reset" />
+</resources>
