@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.hyperreset.app.data.model.AuthResponse;
 import com.hyperreset.app.data.model.Usuario;
 import com.hyperreset.app.data.repository.AuthRepository;
 import com.hyperreset.app.utils.Resource;
@@ -30,13 +31,17 @@ public class LoginViewModel extends ViewModel {
     public void login(String email, String password) {
         loginResult.setValue(Resource.loading());
 
-        authRepository.login(email, password, new AuthRepository.ResourceCallback<com.hyperreset.app.data.model.LoginResponse>() {
+        authRepository.login(email, password, new AuthRepository.ResourceCallback<AuthResponse>() {
             @Override
-            public void onResult(Resource<com.hyperreset.app.data.model.LoginResponse> resource) {
+            public void onResult(Resource<AuthResponse> resource) {
                 switch (resource.status) {
                     case SUCCESS:
-                        if (resource.data != null && resource.data.getUser() != null) {
-                            Usuario user = resource.data.getUser();
+                        if (resource.data != null) {
+                            Usuario user = new Usuario();
+                            user.setId(resource.data.getUserId());
+                            user.setNombre(resource.data.getNombre());
+                            user.setEmail(resource.data.getEmail());
+                            user.setRol(resource.data.getRol());
                             loginResult.setValue(Resource.success(user));
                         } else {
                             loginResult.setValue(Resource.error("Error al obtener datos del usuario"));
