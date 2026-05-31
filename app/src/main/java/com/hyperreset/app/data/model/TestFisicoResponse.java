@@ -25,6 +25,9 @@ public class TestFisicoResponse {
     @SerializedName("completado")
     private boolean completado;
 
+    @SerializedName("deportistaId")
+    private long deportistaId;
+
     public long getId() {
         return id;
     }
@@ -63,6 +66,14 @@ public class TestFisicoResponse {
 
     public void setNotas(String notas) {
         this.notas = notas;
+    }
+
+    public long getDeportistaId() {
+        return deportistaId;
+    }
+
+    public void setDeportistaId(long deportistaId) {
+        this.deportistaId = deportistaId;
     }
 
     public boolean isCompletado() {

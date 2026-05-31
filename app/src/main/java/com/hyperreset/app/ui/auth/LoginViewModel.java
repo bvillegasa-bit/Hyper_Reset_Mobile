@@ -8,16 +8,26 @@ import com.hyperreset.app.data.model.AuthResponse;
 import com.hyperreset.app.data.model.Usuario;
 import com.hyperreset.app.data.repository.AuthRepository;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 public class LoginViewModel extends ViewModel {
 
     private final AuthRepository authRepository;
+    private SessionManager sessionManager;
 
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private final MutableLiveData<Resource<Usuario>> loginResult = new MutableLiveData<>();
 
     public LoginViewModel(AuthRepository authRepository) {
         this.authRepository = authRepository;
+    }
+
+    /**
+     * Sets the SessionManager for persisting auth data.
+     * Must be called before login() to save the AuthResponse.
+     */
+    public void setSessionManager(SessionManager sessionManager) {
+        this.sessionManager = sessionManager;
     }
 
     public LiveData<LoginFormState> getLoginFormState() {
@@ -37,6 +47,11 @@ public class LoginViewModel extends ViewModel {
                 switch (resource.status) {
                     case SUCCESS:
                         if (resource.data != null) {
+                            // Persist AuthResponse to SharedPreferences for later use
+                            if (sessionManager != null) {
+                                sessionManager.saveAuthResponse(resource.data);
+                            }
+
                             Usuario user = new Usuario();
                             user.setId(resource.data.getUserId());
                             user.setNombre(resource.data.getNombre());

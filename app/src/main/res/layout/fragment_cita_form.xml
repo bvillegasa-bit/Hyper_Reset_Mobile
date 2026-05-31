@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hyper_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/citas_form_title_create"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Deportista Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/citas_form_deportista"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerDeportista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/spinner_background"
+            android:padding="8dp"
+            android:textColor="@color/hyper_on_primary" />
+
+        <!-- Fecha -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/citas_form_fecha"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fechaLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Hora -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/citas_form_hora"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/horaLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHora"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:clickable="true"
+                android:cursorVisible="false"
+                android:inputType="none"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Motivo -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/motivoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/citas_form_motivo"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMotivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Notas -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/notasLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/citas_form_notas"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNotas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Save Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGuardar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/citas_form_guardar"
+            app:backgroundTint="@color/hyper_accent"
+            app:cornerRadius="8dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -13,14 +13,17 @@ public class ResultadoResponse {
     @SerializedName("testId")
     private long testId;
 
-    @SerializedName("parametro")
-    private String parametro;
+    @SerializedName("tipoTest")
+    private String tipoTest;
 
     @SerializedName("valor")
     private double valor;
 
     @SerializedName("unidad")
     private String unidad;
+
+    @SerializedName("calificacion")
+    private String calificacion;
 
     @SerializedName("observaciones")
     private String observaciones;
@@ -41,12 +44,12 @@ public class ResultadoResponse {
         this.testId = testId;
     }
 
-    public String getParametro() {
-        return parametro;
+    public String getTipoTest() {
+        return tipoTest;
     }
 
-    public void setParametro(String parametro) {
-        this.parametro = parametro;
+    public void setTipoTest(String tipoTest) {
+        this.tipoTest = tipoTest;
     }
 
     public double getValor() {
@@ -63,6 +66,14 @@ public class ResultadoResponse {
 
     public void setUnidad(String unidad) {
         this.unidad = unidad;
+    }
+
+    public String getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(String calificacion) {
+        this.calificacion = calificacion;
     }
 
     public String getObservaciones() {

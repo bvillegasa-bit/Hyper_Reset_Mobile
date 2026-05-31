@@ -16,6 +16,7 @@ import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.Usuario;
 import com.hyperreset.app.ui.home.HomeActivity;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = new LoginViewModel(
             ((com.hyperreset.app.HyperResetApplication) getApplication()).getAppContainer().getAuthRepository()
         );
+        loginViewModel.setSessionManager(new SessionManager(this));
 
         initViews();
         setupObservers();

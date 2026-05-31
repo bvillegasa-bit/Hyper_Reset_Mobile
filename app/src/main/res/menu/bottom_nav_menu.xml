@@ -9,9 +9,21 @@
         android:icon="@drawable/ic_test"
         android:title="@string/nav_tests" />
     <item
+        android:id="@+id/navigation_deportistas"
+        android:icon="@drawable/ic_deportista"
+        android:title="@string/nav_deportistas" />
+    <item
+        android:id="@+id/navigation_mensajes"
+        android:icon="@drawable/ic_message"
+        android:title="@string/nav_mensajes" />
+    <item
         android:id="@+id/navigation_appointments"
         android:icon="@drawable/ic_calendar"
         android:title="@string/nav_appointments" />
+    <item
+        android:id="@+id/navigation_materiales"
+        android:icon="@drawable/ic_material"
+        android:title="@string/nav_materiales" />
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile"

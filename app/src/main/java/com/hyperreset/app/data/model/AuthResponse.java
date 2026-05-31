@@ -14,6 +14,9 @@ public class AuthResponse {
     @SerializedName("type")
     private String type;
 
+    @SerializedName("id")
+    private long id;
+
     @SerializedName("userId")
     private long userId;
 
@@ -25,6 +28,12 @@ public class AuthResponse {
 
     @SerializedName("nombre")
     private String nombre;
+
+    @SerializedName("fechaRegistro")
+    private String fechaRegistro;
+
+    @SerializedName("activo")
+    private boolean activo;
 
     public String getToken() {
         return token;
@@ -40,6 +49,10 @@ public class AuthResponse {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public long getUserId() {
@@ -72,5 +85,21 @@ public class AuthResponse {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getFechaRegistro() {
+        return fechaRegistro;
+    }
+
+    public void setFechaRegistro(String fechaRegistro) {
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

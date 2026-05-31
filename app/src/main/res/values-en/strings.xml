@@ -31,6 +31,172 @@
 
     <!-- Navigation -->
     <string name="nav_tests">Tests</string>
+    <string name="nav_deportistas">Athletes</string>
     <string name="nav_appointments">Appointments</string>
     <string name="nav_profile">Profile</string>
+
+    <!-- Deportistas -->
+    <string name="deportistas_list_title">Athletes</string>
+    <string name="deportistas_list_empty">No athletes registered</string>
+    <string name="deportistas_list_error">Error loading athletes</string>
+    <string name="deportistas_list_retry">Retry</string>
+    <string name="deportistas_search_hint">Search by name or email</string>
+    <string name="deportistas_create_title">New Athlete</string>
+    <string name="deportistas_edit_title">Edit Athlete</string>
+
+    <!-- Deportistas Form -->
+    <string name="deportistas_form_nombres">First Name(s)</string>
+    <string name="deportistas_form_apellidos">Last Name(s)</string>
+    <string name="deportistas_form_email">Email</string>
+    <string name="deportistas_form_telefono">Phone</string>
+    <string name="deportistas_form_fecha_nacimiento">Date of Birth</string>
+    <string name="deportistas_form_direccion">Address</string>
+    <string name="deportistas_form_fecha_registro">Registration Date</string>
+    <string name="deportistas_form_guardar">Save</string>
+    <string name="deportistas_form_guardando">Saving...</string>
+
+    <!-- Deportistas Validation -->
+    <string name="deportistas_validation_nombres">First name is required</string>
+    <string name="deportistas_validation_apellidos">Last name is required</string>
+    <string name="deportistas_validation_email">Email is required</string>
+
+    <!-- Deportistas Detail -->
+    <string name="deportistas_detail_title">Athlete Details</string>
+    <string name="deportistas_detail_coach">Coach</string>
+    <string name="deportistas_detail_stats">Statistics</string>
+    <string name="deportistas_detail_total_tests">Total Tests</string>
+    <string name="deportistas_detail_last_test">Last Test</string>
+    <string name="deportistas_action_editar">Edit Athlete</string>
+    <string name="deportistas_action_ver_tests">View Test History</string>
+
+    <!-- Test List -->
+    <string name="test_list_title">Physical Tests</string>
+    <string name="test_list_empty">No tests registered</string>
+    <string name="test_list_error">Error loading tests</string>
+    <string name="test_list_retry">Retry</string>
+
+    <!-- Test Create -->
+    <string name="test_create_title">New Test</string>
+    <string name="test_create_deportista">Athlete</string>
+    <string name="test_create_tipo">Test Type</string>
+    <string name="test_create_notas">Notes</string>
+    <string name="test_create_biometrics">Biometric Data</string>
+    <string name="test_create_peso">Weight (kg)</string>
+    <string name="test_create_estatura">Height (cm)</string>
+    <string name="test_create_button">Create Test</string>
+    <string name="test_create_validation_deportista">Select an athlete</string>
+    <string name="test_create_validation_tipo">Select a test type</string>
+
+    <!-- Test Type Labels -->
+    <string name="test_type_illinois">Agility Test (Illinois)</string>
+    <string name="test_type_flexion_codos">Elbow Flexions</string>
+    <string name="test_type_velocidad_20m">20m Sprint</string>
+    <string name="test_type_velocidad_reaccion">Reaction Speed</string>
+    <string name="test_type_salto_horizontal">Horizontal Jump</string>
+    <string name="test_type_flexion_tronco">Trunk Flexion</string>
+    <string name="test_type_dinamometria">Dynamometry</string>
+    <string name="test_type_andersen">Andersen Test</string>
+
+    <!-- Result Entry -->
+    <string name="result_entry_title">Enter Result</string>
+    <string name="result_entry_valor">Value</string>
+    <string name="result_entry_unit_segundos">seconds</string>
+    <string name="result_entry_unit_repeticiones">repetitions</string>
+    <string name="result_entry_unit_cm">cm</string>
+    <string name="result_entry_unit_metros">meters</string>
+    <string name="result_entry_unit_kg">kg</string>
+    <string name="result_entry_save">Save Result</string>
+    <string name="result_entry_complete">Complete Test</string>
+    <string name="result_entry_validation_positive">Value must be positive</string>
+
+    <!-- Test Detail -->
+    <string name="test_detail_title">Test Details</string>
+    <string name="test_detail_resultados">Results</string>
+    <string name="test_detail_intento">Attempt</string>
+    <string name="test_detail_add_result">Add Result</string>
+    <string name="test_detail_en_progreso">IN PROGRESS</string>
+    <string name="test_detail_completado">COMPLETED</string>
+
+    <!-- Calificacion Labels -->
+    <string name="calificacion_excelente">Excellent</string>
+    <string name="calificacion_bueno">Good</string>
+    <string name="calificacion_regular">Average</string>
+    <string name="calificacion_deficiente">Poor</string>
+
+    <!-- Citas -->
+    <string name="citas_list_title">Appointments</string>
+    <string name="citas_list_empty">No appointments registered</string>
+    <string name="citas_list_error">Error loading appointments</string>
+    <string name="citas_list_retry">Retry</string>
+    <string name="citas_filter_todas">All</string>
+    <string name="citas_filter_hoy">Today</string>
+    <string name="citas_filter_semana">This week</string>
+    <string name="citas_filter_mes">This month</string>
+    <string name="citas_form_title_create">New Appointment</string>
+    <string name="citas_form_title_edit">Edit Appointment</string>
+    <string name="citas_form_deportista">Athlete</string>
+    <string name="citas_form_fecha">Date</string>
+    <string name="citas_form_hora">Time</string>
+    <string name="citas_form_motivo">Reason</string>
+    <string name="citas_form_notas">Notes</string>
+    <string name="citas_form_guardar">Save</string>
+    <string name="citas_form_guardando">Saving...</string>
+    <string name="citas_validation_fecha_hora">Select date and time for the appointment</string>
+    <string name="citas_validation_motivo">Reason is required</string>
+    <string name="citas_validation_deportista">Select an athlete</string>
+    <string name="citas_detail_title">Appointment Details</string>
+    <string name="citas_estado_pendiente">PENDING</string>
+    <string name="citas_estado_confirmada">CONFIRMED</string>
+    <string name="citas_estado_completada">COMPLETED</string>
+    <string name="citas_estado_cancelada">CANCELED</string>
+    <string name="citas_action_confirmar">Confirm</string>
+    <string name="citas_action_completar">Complete</string>
+    <string name="citas_action_cancelar">Cancel</string>
+    <string name="citas_action_editar">Edit</string>
+    <string name="citas_action_eliminar">Delete</string>
+    <string name="citas_delete_title">Delete this appointment?</string>
+    <string name="citas_delete_confirm">Delete</string>
+    <string name="citas_delete_cancel">Cancel</string>
+    <string name="citas_detail_coach">Coach</string>
+    <string name="citas_detail_deportista">Athlete</string>
+    <string name="citas_detail_fecha">Date</string>
+    <string name="citas_detail_hora">Time</string>
+    <string name="citas_detail_motivo">Reason</string>
+    <string name="citas_detail_notas">Notes</string>
+    <string name="citas_detail_estado">Status</string>
+
+    <!-- Materiales / Educational Materials -->
+    <string name="nav_materiales">Materials</string>
+    <string name="materiales_list_title">Educational Materials</string>
+    <string name="materiales_list_empty">No materials available</string>
+    <string name="materiales_list_error">Error loading materials</string>
+    <string name="materiales_list_retry">Retry</string>
+    <string name="materiales_detail_title">Educational Material</string>
+    <string name="materiales_form_title_create">New Material</string>
+    <string name="materiales_form_title_edit">Edit Material</string>
+    <string name="materiales_form_titulo">Title</string>
+    <string name="materiales_form_descripcion">Description</string>
+    <string name="materiales_form_tipo">Type</string>
+    <string name="materiales_form_url">Resource URL</string>
+    <string name="materiales_form_guardar">Save</string>
+    <string name="materiales_form_guardando">Saving...</string>
+    <string name="materiales_validation_titulo">Title is required</string>
+    <string name="materiales_validation_url">URL is required</string>
+    <string name="materiales_action_open">Open Resource</string>
+    <string name="materiales_action_editar">Edit</string>
+    <string name="materiales_action_eliminar">Delete</string>
+    <string name="materiales_delete_title">Delete this material?</string>
+    <string name="materiales_delete_confirm">Delete</string>
+    <string name="materiales_delete_cancel">Cancel</string>
+    <string name="materiales_type_video">Video</string>
+    <string name="materiales_type_pdf">PDF</string>
+    <string name="materiales_type_enlace">Link</string>
+    <string name="materiales_detail_titulo">Title</string>
+    <string name="materiales_detail_descripcion">Description</string>
+    <string name="materiales_detail_tipo">Type</string>
+    <string name="materiales_detail_url">URL</string>
+    <string name="materiales_detail_fecha">Publication Date</string>
+    <string name="materiales_success_created">Material created successfully</string>
+    <string name="materiales_success_updated">Material updated successfully</string>
+    <string name="materiales_success_deleted">Material deleted successfully</string>
 </resources>

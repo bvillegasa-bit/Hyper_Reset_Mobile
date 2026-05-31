@@ -11,4 +11,11 @@
     <color name="hyper_on_surface">#FFFFFFFF</color>
     <color name="hyper_background">#FF000000</color>
     <color name="hyper_error">#FFCF6679</color>
+
+    <!-- Calificacion Badge Colors -->
+    <color name="hyper_excelente">#FF4CAF50</color>
+    <color name="hyper_bueno">#FF2196F3</color>
+    <color name="hyper_regular">#FFFFC107</color>
+    <color name="hyper_deficiente">#FFF44336</color>
+    <color name="hyper_in_progress">#FF9E9E9E</color>
 </resources>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hyper_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/test_create_title"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Deportista Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/test_create_deportista"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerDeportista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/spinner_background"
+            android:padding="8dp"
+            android:textColor="@color/hyper_on_primary" />
+
+        <!-- Test Type Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/test_create_tipo"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerTipoTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/spinner_background"
+            android:padding="8dp"
+            android:textColor="@color/hyper_on_primary" />
+
+        <!-- Notes -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/notasLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/test_create_notas"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNotas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Biometrics Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/test_create_biometrics"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pesoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/test_create_peso"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPeso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/estaturaLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/test_create_estatura"
+            app:layout_behavior="com.google.android.material.textfield.OutlinedBox"
+            app:boxStrokeColor="@color/hyper_accent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEstatura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textColor="@color/hyper_on_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Create Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCreateTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/test_create_button"
+            app:backgroundTint="@color/hyper_accent"
+            app:cornerRadius="8dp" />
+
+    </LinearLayout>
+</ScrollView>
