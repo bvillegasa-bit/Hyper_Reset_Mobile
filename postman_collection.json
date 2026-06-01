@@ -1,0 +1,440 @@
+{
+  "info": {
+    "name": "Hyper Reset - Permission Testing",
+    "description": "Testing suite para validar permisos de Deportista y Coach",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🔐 Auth - Login Deportista",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "  var jsonData = pm.response.json();",
+              "  pm.environment.set('DEPORTISTA_TOKEN', jsonData.data.token);",
+              "  pm.environment.set('DEPORTISTA_ID', jsonData.data.id);",
+              "  console.log('✅ Deportista token saved');",
+              "} else {",
+              "  console.log('❌ Login failed: ' + pm.response.code);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"deportista@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/auth/login",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "🔐 Auth - Login Coach",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 200) {",
+              "  var jsonData = pm.response.json();",
+              "  pm.environment.set('COACH_TOKEN', jsonData.data.token);",
+              "  pm.environment.set('COACH_ID', jsonData.data.id);",
+              "  console.log('✅ Coach token saved');",
+              "} else {",
+              "  console.log('❌ Login failed: ' + pm.response.code);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"coach@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/auth/login",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "✅ TEST 1.1: GET /api/citas (Deportista)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response has data array', function () {",
+              "  var jsonData = pm.response.json();",
+              "  pm.expect(jsonData.data).to.be.an('array');",
+              "});",
+              "pm.test('Each cita has required fields', function () {",
+              "  var jsonData = pm.response.json();",
+              "  jsonData.data.forEach(function(cita) {",
+              "    pm.expect(cita).to.have.property('id');",
+              "    pm.expect(cita).to.have.property('fecha');",
+              "  });",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{DEPORTISTA_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/citas",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "citas"]
+        }
+      }
+    },
+    {
+      "name": "✅ TEST 1.2: PUT /api/deportistas/{id} (Edit own profile)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Email was updated', function () {",
+              "  var jsonData = pm.response.json();",
+              "  pm.expect(jsonData.data.email).to.equal('deportista.new@email.com');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{DEPORTISTA_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"deportista.new@email.com\",\n  \"telefono\": \"+34 600 999 888\",\n  \"direccion\": \"Calle Nueva 456\",\n  \"coachId\": 50\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/deportistas/{{DEPORTISTA_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "deportistas", "{{DEPORTISTA_ID}}"]
+        }
+      }
+    },
+    {
+      "name": "🔒 TEST 1.3: SECURITY - Deportista edita otro perfil (debe 403)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 403 (Forbidden)', function () {",
+              "  pm.response.to.have.status(403);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{DEPORTISTA_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"hack@email.com\",\n  \"telefono\": \"999\"\n}"
+        },
+        "url": {
+          "raw": "{{BASE_URL}}/api/deportistas/999",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "deportistas", "999"]
+        }
+      }
+    },
+    {
+      "name": "✅ TEST 1.4: GET /api/deportistas/coaches",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response has coaches array', function () {",
+              "  var jsonData = pm.response.json();",
+              "  pm.expect(jsonData.data).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{DEPORTISTA_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/deportistas/coaches",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "deportistas", "coaches"]
+        }
+      }
+    },
+    {
+      "name": "✅ TEST 1.5: GET /api/test-fisicos (Deportista)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response has tests array', function () {",
+              "  var jsonData = pm.response.json();",
+              "  pm.expect(jsonData.data).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{DEPORTISTA_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/test-fisicos",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "test-fisicos"]
+        }
+      }
+    },
+    {
+      "name": "✅ TEST 1.6: GET /api/deportistas/coach/{coachId} (Coach)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('Response has deportistas array', function () {",
+              "  var jsonData = pm.response.json();",
+              "  pm.expect(jsonData.data).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{COACH_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/deportistas/coach/{{COACH_ID}}",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "deportistas", "coach", "{{COACH_ID}}"]
+        }
+      }
+    },
+    {
+      "name": "✅ TEST 1.7: GET /api/resultados/deportista/{id} (Coach - own)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{COACH_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/resultados/deportista/100",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "resultados", "deportista", "100"]
+        }
+      }
+    },
+    {
+      "name": "🔒 TEST 1.8: SECURITY - Coach accede resultados ajenos (debe 403)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 403 (Forbidden)', function () {",
+              "  pm.response.to.have.status(403);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{COACH_TOKEN}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/resultados/deportista/999",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "resultados", "deportista", "999"]
+        }
+      }
+    },
+    {
+      "name": "🔒 TEST 1.9: No Token Request (debe 401)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 401 (Unauthorized)', function () {",
+              "  pm.response.to.have.status(401);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{BASE_URL}}/api/deportistas",
+          "host": ["{{BASE_URL}}"],
+          "path": ["api", "deportistas"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "https://your-backend.com",
+      "type": "string"
+    },
+    {
+      "key": "DEPORTISTA_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "COACH_TOKEN",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "DEPORTISTA_ID",
+      "value": "100",
+      "type": "string"
+    },
+    {
+      "key": "COACH_ID",
+      "value": "50",
+      "type": "string"
+    }
+  ]
+}
