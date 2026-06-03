@@ -24,6 +24,27 @@
     <string name="login_error_auth">Authentication error</string>
     <string name="login_register_soon">Coming soon</string>
 
+    <!-- Register -->
+    <string name="register_title">Create Account</string>
+    <string name="register_subtitle">Complete your details to get started</string>
+    <string name="register_nombres">First Name(s)</string>
+    <string name="register_apellidos">Last Name(s)</string>
+    <string name="register_email">Email</string>
+    <string name="register_email_placeholder">email@example.com</string>
+    <string name="register_password">Password</string>
+    <string name="register_confirm_password">Confirm password</string>
+    <string name="register_account_type">Account type</string>
+    <string name="register_role_deportista">Athlete</string>
+    <string name="register_role_coach">Coach</string>
+    <string name="register_button">Create Account</string>
+    <string name="register_login_link">Already have an account? Sign in</string>
+    <string name="register_password_mismatch">Passwords do not match</string>
+    <string name="register_password_invalid">Password must be at least 6 characters</string>
+    <string name="register_name_invalid">Name is required</string>
+    <string name="register_success">Account created successfully</string>
+    <string name="register_role_required">Select an account type</string>
+    <string name="action_back">Back</string>
+
     <!-- Home -->
     <string name="home_title">Home</string>
     <string name="home_welcome">Welcome</string>
@@ -54,6 +75,9 @@
     <string name="deportistas_form_fecha_registro">Registration Date</string>
     <string name="deportistas_form_guardar">Save</string>
     <string name="deportistas_form_guardando">Saving...</string>
+    <string name="deportistas_temp_password_title">Athlete Created</string>
+    <string name="deportistas_temp_password_message">Athlete created successfully.\n\nEmail: %1$s\nTemporary password: %2$s\n\nShare this password with the athlete so they can log in.</string>
+    <string name="deportistas_temp_password_ok">Got it</string>
 
     <!-- Deportistas Validation -->
     <string name="deportistas_validation_nombres">First name is required</string>
@@ -199,4 +223,35 @@
     <string name="materiales_success_created">Material created successfully</string>
     <string name="materiales_success_updated">Material updated successfully</string>
     <string name="materiales_success_deleted">Material deleted successfully</string>
+
+    <!-- Navigation (role-based) -->
+    <string name="nav_home">Home</string>
+    <string name="nav_patients">Patients</string>
+    <string name="nav_reports">Reports</string>
+    <string name="nav_schedule">Schedule</string>
+    <string name="nav_messages">Messages</string>
+
+    <!-- Home Dashboard -->
+    <string name="home_greeting">Hello, %s!</string>
+    <string name="home_coach_subtitle">Coach control panel</string>
+    <string name="home_deportista_subtitle">Your progress and activities</string>
+    <string name="home_progress_title">Weekly Progress</string>
+    <string name="home_progress_velocidad">Speed</string>
+    <string name="home_progress_agilidad">Agility</string>
+    <string name="home_progress_fuerza">Strength</string>
+    <string name="home_next_appointment">Next Appointment</string>
+    <string name="home_no_appointment">No appointments scheduled</string>
+    <string name="home_quick_access">Quick Access</string>
+    <string name="home_quick_rutinas">My Routines</string>
+    <string name="home_quick_cita">Next Appointment</string>
+    <string name="home_quick_logros">My Achievements</string>
+    <string name="home_quick_meta">Monthly Goal</string>
+    <string name="home_metric_patients">Patients</string>
+    <string name="home_metric_pending_tests">Pending</string>
+    <string name="home_metric_reports">Reports</string>
+    <string name="home_quick_actions">Quick Actions</string>
+    <string name="home_action_new_patient">New Patient</string>
+    <string name="home_action_register_test">Register Test</string>
+    <string name="home_action_view_reports">View Reports</string>
+    <string name="home_action_schedule">My Schedule</string>
 </resources>

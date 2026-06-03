@@ -25,8 +25,20 @@ public class DeportistaResponse {
     @SerializedName("coachNombre")
     private String coachNombre;
 
+    @SerializedName("coachId")
+    private long coachId;
+
     @SerializedName("fechaRegistro")
     private String fechaRegistro;
+
+    @SerializedName("tempPassword")
+    private String tempPassword;
+
+    @SerializedName("direccion")
+    private String direccion;
+
+    @SerializedName("usuarioId")
+    private long usuarioId;
 
     public long getId() {
         return id;
@@ -76,11 +88,43 @@ public class DeportistaResponse {
         this.coachNombre = coachNombre;
     }
 
+    public long getCoachId() {
+        return coachId;
+    }
+
+    public void setCoachId(long coachId) {
+        this.coachId = coachId;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
     public String getFechaRegistro() {
         return fechaRegistro;
     }
 
     public void setFechaRegistro(String fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
+    }
+
+    public String getTempPassword() {
+        return tempPassword;
+    }
+
+    public void setTempPassword(String tempPassword) {
+        this.tempPassword = tempPassword;
     }
 }

@@ -10,9 +10,18 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.hyperreset.app.R;
+import com.hyperreset.app.data.api.RetrofitClient;
+import com.hyperreset.app.data.model.AuthResponse;
 import com.hyperreset.app.ui.auth.LoginActivity;
+import com.hyperreset.app.ui.home.HomeActivity;
 import com.hyperreset.app.ui.splash.onboarding.OnboardingAdapter;
 import com.hyperreset.app.ui.splash.onboarding.OnboardingPage;
+import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +38,58 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Skip onboarding if already logged in — but validate the token first
+        SessionManager sessionManager = new SessionManager(this);
+        if (sessionManager.isLoggedIn()) {
+            validateTokenAndNavigate();
+            return;
+        }
+
         setContentView(R.layout.activity_splash);
 
         initViews();
         setupOnboardingPages();
         setupListeners();
+    }
+
+    /**
+     * Validates that the stored token is still valid before navigating to Home.
+     * If the token expired (401), clears session and shows onboarding/login.
+     */
+    private void validateTokenAndNavigate() {
+        String token = new SessionManager(this).getToken();
+        if (token == null) {
+            navigateToLogin();
+            return;
+        }
+
+        // Make a lightweight call to validate the token
+        Call<com.hyperreset.app.data.model.ApiResponse<AuthResponse>> call =
+                RetrofitClient.getInstance().getApiService().getProfile();
+
+        call.enqueue(new Callback<com.hyperreset.app.data.model.ApiResponse<AuthResponse>>() {
+            @Override
+            public void onResponse(Call<com.hyperreset.app.data.model.ApiResponse<AuthResponse>> call,
+                                   Response<com.hyperreset.app.data.model.ApiResponse<AuthResponse>> response) {
+                if (response.isSuccessful()) {
+                    navigateToHome();
+                } else if (response.code() == 401) {
+                    // Token expired — clear session and show login
+                    new SessionManager(SplashActivity.this).clearSession();
+                    navigateToLogin();
+                } else {
+                    // Other error — still try Home (will redirect on 401 via the listener)
+                    navigateToHome();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.hyperreset.app.data.model.ApiResponse<AuthResponse>> call, Throwable t) {
+                // Network error — still try Home (offline mode maybe)
+                navigateToHome();
+            }
+        });
     }
 
     private void initViews() {
@@ -111,6 +167,13 @@ public class SplashActivity extends AppCompatActivity {
     private void navigateToLogin() {
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    private void navigateToHome() {
+        Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }

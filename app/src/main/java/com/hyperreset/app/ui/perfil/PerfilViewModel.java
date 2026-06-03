@@ -18,6 +18,9 @@ public class PerfilViewModel extends ViewModel {
 
     private final MutableLiveData<Resource<AuthResponse>> profile = new MutableLiveData<>();
 
+    // Flag to prevent UI updates after ViewModel is cleared
+    private volatile boolean cleared = false;
+
     public PerfilViewModel() {
         this.authRepository = new AuthRepository();
     }
@@ -26,8 +29,24 @@ public class PerfilViewModel extends ViewModel {
         this.authRepository = authRepository;
     }
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        cleared = true;
+    }
+
     public LiveData<Resource<AuthResponse>> getProfile() {
         return profile;
+    }
+
+    /**
+     * Returns the phone number from the current profile data, or null if not loaded.
+     */
+    public String getTelefono() {
+        if (profile.getValue() != null && profile.getValue().data != null) {
+            return profile.getValue().data.getTelefono();
+        }
+        return null;
     }
 
     /**

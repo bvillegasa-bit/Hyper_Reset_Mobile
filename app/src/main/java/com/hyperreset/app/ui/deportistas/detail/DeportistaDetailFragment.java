@@ -175,9 +175,9 @@ public class DeportistaDetailFragment extends Fragment {
         tvCoachNombre.setText(deportista.getCoachNombre() != null
                 ? deportista.getCoachNombre() : "-");
 
-        // Direccion is not in the current DeportistaResponse model,
-        // but the backend entity supports it. Show placeholder.
-        tvDireccion.setText("-");
+        // Show the address from the backend response
+        String dir = deportista.getDireccion();
+        tvDireccion.setText(dir != null && !dir.isEmpty() ? dir : "-");
 
         // Show stats card with placeholder data (actual stats would need another API call)
         cardStats.setVisibility(View.VISIBLE);

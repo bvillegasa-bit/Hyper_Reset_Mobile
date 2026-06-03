@@ -35,6 +35,12 @@ public class AuthResponse {
     @SerializedName("activo")
     private boolean activo;
 
+    @SerializedName("deportistaId")
+    private long deportistaId;
+
+    @SerializedName("telefono")
+    private String telefono;
+
     public String getToken() {
         return token;
     }
@@ -101,5 +107,21 @@ public class AuthResponse {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
+    }
+
+    public long getDeportistaId() {
+        return deportistaId;
+    }
+
+    public void setDeportistaId(long deportistaId) {
+        this.deportistaId = deportistaId;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }

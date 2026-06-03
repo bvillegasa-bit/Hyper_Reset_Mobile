@@ -4,41 +4,36 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="end"
-    android:paddingVertical="4dp"
-    android:paddingHorizontal="8dp">
+    android:paddingVertical="3dp"
+    android:paddingHorizontal="4dp">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="280dp"
-        app:cardBackgroundColor="@color/hyper_accent"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
-        app:strokeWidth="0dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <!-- Bubble with gradient background -->
+        <TextView
+            android:id="@+id/tvContenido"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:background="@drawable/bg_chat_bubble_sent"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="10dp"
+            android:textColor="@color/hyper_on_accent"
+            android:textSize="14sp"
+            android:lineSpacingExtra="2dp" />
 
-            <TextView
-                android:id="@+id/tvContenido"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/hyper_on_accent"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tvTimestamp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/hyper_on_accent"
-                android:textSize="10sp"
-                android:alpha="0.7" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+        <!-- Timestamp below bubble -->
+        <TextView
+            android:id="@+id/tvTimestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="4dp"
+            android:textColor="@color/hyper_on_surface_variant"
+            android:textSize="10sp" />
+    </LinearLayout>
 
 </LinearLayout>

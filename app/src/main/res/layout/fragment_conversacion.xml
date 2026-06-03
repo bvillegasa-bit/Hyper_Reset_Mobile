@@ -5,32 +5,98 @@
     android:layout_height="match_parent"
     android:background="@color/hyper_background">
 
-    <!-- Title with other user name -->
-    <TextView
-        android:id="@+id/tvTitle"
+    <!-- Header -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:textColor="@color/hyper_on_primary"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:background="@color/hyper_surface"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:paddingTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Back Button -->
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="\u25C0"
+            android:textColor="@color/hyper_on_primary"
+            android:textSize="20sp" />
+
+        <!-- Avatar -->
+        <FrameLayout
+            android:id="@+id/frameAvatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/circle_gradient_avatar">
+
+            <TextView
+                android:id="@+id/tvAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/hyper_on_accent" />
+        </FrameLayout>
+
+        <!-- Contact Info -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvContactName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/hyper_on_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvOnlineStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mensajes_online_status"
+                android:textColor="@color/hyper_on_surface_variant"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/headerDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/hyper_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
 
     <!-- Conversation RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvConversacion"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="8dp"
         android:clipToPadding="false"
-        android:paddingBottom="8dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/layoutInput"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/headerDivider" />
 
     <!-- Loading -->
     <ProgressBar
@@ -42,13 +108,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
 
     <!-- Error -->
     <TextView
         android:id="@+id/tvError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="16dp"
         android:text="@string/mensajes_conversacion_error"
         android:textColor="@color/hyper_error"
         android:textSize="16sp"
@@ -56,9 +123,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
 
-    <!-- Input Area -->
+    <!-- Input Bar -->
     <LinearLayout
         android:id="@+id/layoutInput"
         android:layout_width="0dp"
@@ -70,27 +137,54 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <!-- Paperclip placeholder -->
+        <TextView
+            android:id="@+id/btnAttach"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="\uD83D\uDCCE"
+            android:textSize="18sp" />
+
+        <!-- Message Input -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etReply"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
             android:layout_weight="1"
-            android:background="@null"
+            android:background="@color/hyper_surface_variant"
             android:hint="@string/mensajes_reply_hint"
-            android:inputType="textMultiLine"
+            android:inputType="text"
             android:maxLines="4"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
             android:textColor="@color/hyper_on_primary"
-            android:textColorHint="@color/hyper_on_surface"
+            android:textColorHint="@color/hyper_on_surface_variant"
             android:textSize="14sp" />
 
+        <!-- Mic placeholder -->
+        <TextView
+            android:id="@+id/btnMic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:gravity="center"
+            android:text="\uD83C\uDFA4"
+            android:textSize="18sp" />
+
+        <!-- Send Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/mensajes_send_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="0dp"
+            android:text="\u27A1"
+            android:textSize="18sp"
             app:backgroundTint="@color/hyper_accent"
-            app:cornerRadius="8dp" />
+            app:cornerRadius="12dp"
+            app:iconGravity="textStart" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

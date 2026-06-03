@@ -73,8 +73,8 @@ public class TestCreateFragment extends Fragment {
         List<String> items = new ArrayList<>();
         items.add("Seleccionar...");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                requireContext(), R.layout.spinner_item, items);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerDeportista.setAdapter(adapter);
 
         spinnerDeportista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -109,8 +109,8 @@ public class TestCreateFragment extends Fragment {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                requireContext(), R.layout.spinner_item, items);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerTipoTest.setAdapter(adapter);
 
         spinnerTipoTest.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -160,8 +160,8 @@ public class TestCreateFragment extends Fragment {
                     items.add(d.getNombreCompleto());
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        requireContext(), android.R.layout.simple_spinner_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        requireContext(), R.layout.spinner_item, items);
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 spinnerDeportista.setAdapter(adapter);
             }
         });

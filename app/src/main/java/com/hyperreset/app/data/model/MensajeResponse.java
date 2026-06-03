@@ -19,6 +19,9 @@ public class MensajeResponse {
     @SerializedName("destinatarioId")
     private long destinatarioId;
 
+    @SerializedName("destinatarioNombre")
+    private String destinatarioNombre;
+
     @SerializedName("contenido")
     private String contenido;
 
@@ -58,6 +61,14 @@ public class MensajeResponse {
 
     public void setDestinatarioId(long destinatarioId) {
         this.destinatarioId = destinatarioId;
+    }
+
+    public String getDestinatarioNombre() {
+        return destinatarioNombre;
+    }
+
+    public void setDestinatarioNombre(String destinatarioNombre) {
+        this.destinatarioNombre = destinatarioNombre;
     }
 
     public String getContenido() {

@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Proyecto_hiper_reset" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Primary brand colors -->
+        <!-- Primary brand colors (orange-red #FF4500 per Figma) -->
         <item name="colorPrimary">@color/hyper_primary</item>
         <item name="colorOnPrimary">@color/hyper_on_primary</item>
         <item name="colorPrimaryContainer">@color/hyper_surface</item>
@@ -12,10 +12,51 @@
         <item name="colorError">@color/hyper_error</item>
         <item name="colorOnError">@color/hyper_on_primary</item>
 
-        <!-- Status bar and navigation bar -->
-        <item name="android:statusBarColor">@color/hyper_primary</item>
-        <item name="android:navigationBarColor">@color/hyper_primary</item>
+        <!-- Dark backgrounds per Figma design -->
+        <item name="android:windowBackground">@color/hyper_background</item>
+        <item name="android:statusBarColor">@color/hyper_background</item>
+        <item name="android:navigationBarColor">@color/hyper_background</item>
+
+        <!-- Outline and surface variant for visible borders/contrast -->
+        <item name="colorOutline">@color/hyper_accent</item>
+        <item name="colorOnSurfaceVariant">#FFCCCCCC</item>
+    </style>
+
+    <style name="HyperResetDatePicker" parent="ThemeOverlay.Material3.Dialog">
+        <item name="colorControlNormal">@color/hyper_accent</item>
+        <item name="colorControlActivated">@color/hyper_accent</item>
+        <item name="colorControlHighlight">@color/hyper_accent</item>
     </style>
 
     <style name="Theme.Proyecto_hiper_reset" parent="Base.Theme.Proyecto_hiper_reset" />
+
+    <!-- ================================================================== -->
+    <!-- Reusable Card Styles for Visual Consistency (Phase 7)              -->
+    <!-- ================================================================== -->
+
+    <!-- Standard card: 12dp radius, 2dp elevation, surface bg, border -->
+    <style name="CardStyle.HyperReset" parent="Widget.Material3.CardView.Filled">
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/hyper_surface</item>
+        <item name="strokeColor">@color/hyper_border</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+
+    <!-- Elevated card: 4dp elevation for highlighted cards -->
+    <style name="CardStyle.HyperReset.Elevated">
+        <item name="cardElevation">4dp</item>
+    </style>
+
+    <!-- Standard button with primary background and 8dp corner -->
+    <style name="ButtonStyle.HyperReset" parent="Widget.Material3.Button">
+        <item name="cornerRadius">8dp</item>
+        <item name="backgroundTint">@color/hyper_primary</item>
+    </style>
+
+    <!-- Outline button style (destructive or secondary) -->
+    <style name="ButtonStyle.HyperReset.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">8dp</item>
+    </style>
 </resources>

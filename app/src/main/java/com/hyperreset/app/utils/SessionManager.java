@@ -2,6 +2,7 @@ package com.hyperreset.app.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hyperreset.app.data.model.AuthResponse;
@@ -18,6 +19,26 @@ public class SessionManager {
 
     private final SharedPreferences prefs;
     private final Gson gson;
+
+    // ==================================================================
+    // Session Expired Listener (global 401 handling)
+    // ==================================================================
+
+    private static SessionExpiredListener sessionExpiredListener;
+
+    public interface SessionExpiredListener {
+        void onSessionExpired();
+    }
+
+    public static void setSessionExpiredListener(SessionExpiredListener listener) {
+        sessionExpiredListener = listener;
+    }
+
+    public static void notifySessionExpired() {
+        if (sessionExpiredListener != null) {
+            sessionExpiredListener.onSessionExpired();
+        }
+    }
 
     public SessionManager(Context context) {
         this.prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -48,12 +69,12 @@ public class SessionManager {
     public long getUserId() {
         AuthResponse auth = getAuthResponse();
         if (auth != null) {
-            // userId is the primary user ID field
             long uid = auth.getUserId();
+            Log.d("SessionManager", "getUserId: userId=" + uid + ", id=" + auth.getId());
             if (uid > 0) return uid;
-            // Fallback to id field
             return auth.getId();
         }
+        Log.e("SessionManager", "getUserId: AuthResponse is NULL");
         return 0;
     }
 
@@ -77,5 +98,40 @@ public class SessionManager {
      */
     public boolean isLoggedIn() {
         return getAuthResponse() != null;
+    }
+
+    /**
+     * Returns the user's role (e.g., "COACH" or "DEPORTISTA"), or null if not logged in.
+     */
+    public String getUserRole() {
+        AuthResponse auth = getAuthResponse();
+        return auth != null ? auth.getRol() : null;
+    }
+
+    /**
+     * Returns the user's display name, or empty string if not logged in.
+     */
+    public String getUserName() {
+        AuthResponse auth = getAuthResponse();
+        return auth != null ? auth.getNombre() : "";
+    }
+
+    /**
+     * Returns the deportista ID if the user is a DEPORTISTA, or -1 if not logged in or not a deportista.
+     */
+    public long getDeportistaId() {
+        AuthResponse auth = getAuthResponse();
+        if (auth != null && auth.getDeportistaId() > 0) {
+            return auth.getDeportistaId();
+        }
+        return -1;
+    }
+
+    /**
+     * Returns true if the current user is a DEPORTISTA, false otherwise.
+     */
+    public boolean isDeportista() {
+        String role = getUserRole();
+        return role != null && role.equals("DEPORTISTA");
     }
 }

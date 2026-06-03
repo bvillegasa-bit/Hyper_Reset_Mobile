@@ -3,4 +3,12 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">10.0.2.2</domain>
     </domain-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">ngrok-free.dev</domain>
+        <domain includeSubdomains="true">ngrok.io</domain>
+        <!-- Trust system CAs (includes Let's Encrypt for Ngrok) -->
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </domain-config>
 </network-security-config>

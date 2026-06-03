@@ -24,16 +24,42 @@
     <string name="login_error_auth">Error de autenticación</string>
     <string name="login_register_soon">Próximamente</string>
 
+    <!-- Register -->
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_subtitle">Completa tus datos para comenzar</string>
+    <string name="register_nombres">Nombres</string>
+    <string name="register_apellidos">Apellidos</string>
+    <string name="register_email">Correo electrónico</string>
+    <string name="register_email_placeholder">correo@ejemplo.com</string>
+    <string name="register_password">Contraseña</string>
+    <string name="register_confirm_password">Confirmar contraseña</string>
+    <string name="register_account_type">Tipo de cuenta</string>
+    <string name="register_role_deportista">Deportista</string>
+    <string name="register_role_coach">Coach</string>
+    <string name="register_button">Crear cuenta</string>
+    <string name="register_login_link">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="register_password_mismatch">Las contraseñas no coinciden</string>
+    <string name="register_password_invalid">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="register_name_invalid">El nombre es obligatorio</string>
+    <string name="register_success">Cuenta creada exitosamente</string>
+    <string name="register_role_required">Selecciona un tipo de cuenta</string>
+    <string name="action_back">Regresar</string>
+
     <!-- Home -->
     <string name="home_title">Inicio</string>
     <string name="home_welcome">Bienvenido</string>
     <string name="home_welcome_message">Bienvenido a Hyper Reset Performance</string>
 
     <!-- Navigation -->
+    <string name="nav_home">Inicio</string>
     <string name="nav_tests">Tests</string>
     <string name="nav_deportistas">Deportistas</string>
     <string name="nav_appointments">Citas</string>
     <string name="nav_profile">Perfil</string>
+    <string name="nav_patients">Pacientes</string>
+    <string name="nav_reports">Reportes</string>
+    <string name="nav_schedule">Agenda</string>
+    <string name="nav_messages">Mensajes</string>
 
     <!-- Deportistas -->
     <string name="deportistas_list_title">Deportistas</string>
@@ -54,6 +80,9 @@
     <string name="deportistas_form_fecha_registro">Fecha de Registro</string>
     <string name="deportistas_form_guardar">Guardar</string>
     <string name="deportistas_form_guardando">Guardando...</string>
+    <string name="deportistas_temp_password_title">Deportista Creado</string>
+    <string name="deportistas_temp_password_message">Deportista creado exitosamente.\n\nEmail: %1$s\nContraseña temporal: %2$s\n\nComparte esta contraseña con el deportista para que pueda iniciar sesión.</string>
+    <string name="deportistas_temp_password_ok">Entendido</string>
 
     <!-- Deportistas Validation -->
     <string name="deportistas_validation_nombres">El nombre es obligatorio</string>
@@ -136,6 +165,7 @@
     <string name="citas_form_title_create">Nueva Cita</string>
     <string name="citas_form_title_edit">Editar Cita</string>
     <string name="citas_form_deportista">Deportista</string>
+    <string name="citas_form_coach">Coach</string>
     <string name="citas_form_fecha">Fecha</string>
     <string name="citas_form_hora">Hora</string>
     <string name="citas_form_motivo">Motivo</string>
@@ -241,8 +271,57 @@
     <string name="mensajes_conversacion_title">Conversación</string>
     <string name="mensajes_conversacion_error">Error al cargar conversación</string>
     <string name="mensajes_reply_hint">Escribe un mensaje...</string>
+    <string name="mensajes_search_hint">Buscar conversación...</string>
+    <string name="mensajes_list_empty_conversations">No hay conversaciones</string>
+    <string name="mensajes_search_no_results">No se encontraron conversaciones</string>
+    <string name="mensajes_online_status">En línea</string>
     <string name="deportistas_action_ver_reportes">Ver Reportes</string>
     <string name="deportistas_action_enviar_mensaje">Enviar Mensaje</string>
+
+    <!-- Home Dashboard -->
+    <string name="home_greeting">¡Hola, %s!</string>
+    <string name="home_coach_subtitle">Panel de control del entrenador</string>
+    <string name="home_coach_greeting">Hola, Dr. %s</string>
+    <string name="home_deportista_subtitle">Tu progreso y actividades</string>
+    <string name="home_progress_title">Progreso Semanal</string>
+    <string name="home_progress_velocidad">Velocidad</string>
+    <string name="home_progress_agilidad">Agilidad</string>
+    <string name="home_progress_fuerza">Fuerza</string>
+    <string name="home_next_appointment">Próxima Cita</string>
+    <string name="home_quick_access">Acceso Rápido</string>
+    <string name="home_quick_rutinas">Mis Rutinas</string>
+    <string name="home_quick_cita">Próxima Cita</string>
+    <string name="home_quick_logros">Mis Logros</string>
+    <string name="home_quick_meta">Meta del Mes</string>
+    <string name="home_no_appointment">No tienes citas programadas</string>
+    <string name="home_metric_patients">Pacientes</string>
+    <string name="home_metric_pending_tests">Pendientes</string>
+    <string name="home_metric_reports">Reportes</string>
+    <string name="home_quick_actions">Acciones Rápidas</string>
+    <string name="home_action_new_patient">Nuevo Paciente</string>
+    <string name="home_action_register_test">Registrar Test</string>
+    <string name="home_action_view_reports">Ver Reportes</string>
+    <string name="home_action_schedule">Mi Agenda</string>
+
+    <!-- New Dashboard strings -->
+    <string name="home_achievement_tests">Tests\nCompletados</string>
+    <string name="home_achievement_sessions">Sesiones</string>
+    <string name="home_achievement_streak">Racha\nactual</string>
+    <string name="home_goal_month">Meta del Mes</string>
+    <string name="home_goal_default">Completar 20 sesiones de entrenamiento</string>
+    <string name="home_goal_counter">%d / %d sesiones</string>
+    <string name="home_coach_metric_patients">Pacientes\nHoy</string>
+    <string name="home_coach_metric_pending">Pruebas\nPendientes</string>
+    <string name="home_coach_metric_reports">Reportes</string>
+    <string name="home_coach_recent_activity">Actividad Reciente</string>
+    <string name="home_coach_view_all">Ver todo</string>
+    <string name="home_coach_monthly_performance">Rendimiento del Mes</string>
+    <string name="home_coach_performance_desc">%d evaluaciones este mes</string>
+    <string name="home_coach_no_activity">No hay actividad reciente</string>
+    <string name="home_weekly_percent">%d%%</string>
+    <string name="home_data_error">Error al cargar datos del dashboard</string>
+    <string name="home_appointment_with">Con %1$s - %2$s</string>
+    <string name="home_data_empty">No hay datos disponibles para el dashboard</string>
 
     <!-- Perfil / Profile -->
     <string name="perfil_title">Perfil</string>
@@ -252,12 +331,21 @@
     <string name="perfil_role_coach">Entrenador</string>
     <string name="perfil_role_admin">Administrador</string>
     <string name="perfil_role_deportista">Deportista</string>
+    <string name="perfil_role_fisioterapeuta">Fisioterapeuta</string>
     <string name="perfil_member_since">Miembro desde %s</string>
     <string name="perfil_logout">Cerrar Sesión</string>
     <string name="perfil_logout_confirm">¿Cerrar sesión?</string>
     <string name="perfil_logout_message">¿Estás seguro de que deseas cerrar sesión?</string>
     <string name="perfil_load_error">Error al cargar perfil</string>
     <string name="perfil_retry">Reintentar</string>
+    <string name="perfil_label_email">Email</string>
+    <string name="perfil_label_phone">Teléfono</string>
+    <string name="perfil_phone_unavailable">No disponible</string>
+    <string name="perfil_section_ajustes">AJUSTES</string>
+    <string name="perfil_menu_edit_profile">Editar Perfil</string>
+    <string name="perfil_menu_notifications">Notificaciones</string>
+    <string name="perfil_menu_privacy">Privacidad y Seguridad</string>
+    <string name="perfil_menu_settings">Configuración</string>
 
     <!-- Months (Spanish) -->
     <string name="month_enero">Enero</string>
@@ -272,4 +360,34 @@
     <string name="month_octubre">Octubre</string>
     <string name="month_noviembre">Noviembre</string>
     <string name="month_diciembre">Diciembre</string>
+
+    <!-- Calendario Semanal / Weekly Calendar (Fase 5) -->
+    <string name="citas_calendar_title_coach">Mi Agenda</string>
+    <string name="citas_calendar_title_deportista">Citas</string>
+    <string name="citas_calendar_day_header">%1$s, %2$d de %3$s</string>
+    <string name="citas_calendar_appointment_count">%d citas</string>
+    <string name="citas_calendar_empty">No hay citas para este día</string>
+    <string name="citas_calendar_empty_action">¿Necesitas agendar una cita?</string>
+    <string name="citas_calendar_empty_subtitle">Consulta la disponibilidad de tu coach</string>
+    <string name="citas_calendar_schedule_button">Agendar Nueva Cita</string>
+    <string name="citas_calendar_create_button">Nueva</string>
+    <string name="citas_calendar_confirmada">Confirmada</string>
+    <string name="citas_calendar_pendiente">Pendiente</string>
+    <string name="citas_calendar_completada">Completada</string>
+    <string name="citas_calendar_cancelada">Cancelada</string>
+
+    <!-- Test Battery (Fase 3) -->
+    <!-- Global error/empty states (Phase 7) -->
+    <string name="global_empty_data">No hay datos disponibles</string>
+    <string name="global_retry">Reintentar</string>
+    <string name="global_error_403">No tienes permisos para esta acción.</string>
+    <string name="global_error_network">Error de conexión. Verifica tu red.</string>
+
+    <!-- Test Battery (Fase 3) -->
+    <string name="test_bateria_title">Pruebas Físicas</string>
+    <string name="test_bateria_subtitle">Completa las evaluaciones para medir tu rendimiento</string>
+    <string name="test_bateria_progress_title">Progreso General</string>
+    <string name="test_bateria_completado">Completado</string>
+    <string name="test_bateria_coming_soon">Próximamente</string>
+
 </resources>

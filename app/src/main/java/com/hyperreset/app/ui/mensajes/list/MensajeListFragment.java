@@ -1,19 +1,23 @@
 package com.hyperreset.app.ui.mensajes.list;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hyperreset.app.R;
-import com.hyperreset.app.data.model.MensajeResponse;
+import com.hyperreset.app.data.model.Conversacion;
 import com.hyperreset.app.ui.mensajes.conversacion.ConversacionFragment;
 import com.hyperreset.app.ui.mensajes.form.MensajeFormFragment;
 import com.hyperreset.app.utils.Resource;
@@ -22,21 +26,22 @@ import com.hyperreset.app.utils.SessionManager;
 import java.util.ArrayList;
 
 /**
- * Fragment that displays the list of messages (inbox/sent) with tab toggle.
- * Accessible from the bottom navigation "Mensajes" tab.
+ * Redesigned Fragment for the conversation list.
+ * Shows grouped conversations with search bar, replacing the old tab-based
+ * Recibidos/Enviados view.
  */
 public class MensajeListFragment extends Fragment {
 
     private MensajeListViewModel viewModel;
     private MensajeListAdapter adapter;
-    private RecyclerView rvMensajes;
-    private MaterialButton btnTabRecibidos;
-    private MaterialButton btnTabEnviados;
+    private RecyclerView rvConversaciones;
+    private EditText etSearch;
     private View layoutEmpty;
     private View layoutError;
     private View progressLoading;
     private FloatingActionButton fabCompose;
     private SessionManager sessionManager;
+    private TextView tvEmptyText;
 
     @Nullable
     @Override
@@ -51,44 +56,39 @@ public class MensajeListFragment extends Fragment {
 
         viewModel = new MensajeListViewModel();
         sessionManager = new SessionManager(requireContext());
+        viewModel.setSessionManager(sessionManager);
 
         initViews(view);
         setupRecyclerView();
-        setupTabs();
+        setupSearch();
         setupFAB();
         setupObservers();
 
-        // Load inbox by default
-        viewModel.setTabActual(true);
+        viewModel.loadConversaciones();
         viewModel.loadNoLeidos();
     }
 
     private void initViews(View view) {
-        rvMensajes = view.findViewById(R.id.rvMensajes);
-        btnTabRecibidos = view.findViewById(R.id.btnTabRecibidos);
-        btnTabEnviados = view.findViewById(R.id.btnTabEnviados);
+        rvConversaciones = view.findViewById(R.id.rvConversaciones);
+        etSearch = view.findViewById(R.id.etSearch);
         layoutEmpty = view.findViewById(R.id.layoutEmpty);
         layoutError = view.findViewById(R.id.layoutError);
         progressLoading = view.findViewById(R.id.progressLoading);
         fabCompose = view.findViewById(R.id.fabCompose);
+        tvEmptyText = view.findViewById(R.id.tvEmptyText);
 
         view.findViewById(R.id.btnRetry).setOnClickListener(v -> {
-            Boolean isRecibidos = viewModel.getTabActual().getValue();
-            if (isRecibidos != null && isRecibidos) {
-                viewModel.loadRecibidos();
-            } else {
-                viewModel.loadEnviados();
-            }
+            viewModel.loadConversaciones();
         });
     }
 
     private void setupRecyclerView() {
-        adapter = new MensajeListAdapter(new ArrayList<>(), true, mensaje -> {
-            // Navigate to conversation thread
+        adapter = new MensajeListAdapter(new ArrayList<>(), conversacion -> {
+            // Navigate to conversation
             Bundle args = new Bundle();
-            args.putLong("remitenteId", mensaje.getRemitenteId());
-            args.putLong("destinatarioId", mensaje.getDestinatarioId());
-            args.putString("remitenteNombre", mensaje.getRemitenteNombre());
+            args.putLong("otherUserId", conversacion.getOtherUserId());
+            args.putString("otherUserName", conversacion.getContactName());
+            args.putString("otherUserEmoji", conversacion.getAvatarEmoji());
 
             ConversacionFragment fragment = new ConversacionFragment();
             fragment.setArguments(args);
@@ -98,77 +98,54 @@ public class MensajeListFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-        rvMensajes.setAdapter(adapter);
+        rvConversaciones.setAdapter(adapter);
     }
 
-    private void setupTabs() {
-        btnTabRecibidos.setOnClickListener(v -> {
-            if (Boolean.FALSE.equals(viewModel.getTabActual().getValue())) {
-                viewModel.setTabActual(true);
-                updateTabStyles(true);
+    private void setupSearch() {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                viewModel.setSearchQuery(s != null ? s.toString() : "");
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
-
-        btnTabEnviados.setOnClickListener(v -> {
-            if (Boolean.TRUE.equals(viewModel.getTabActual().getValue())) {
-                viewModel.setTabActual(false);
-                updateTabStyles(false);
-            }
-        });
-
-        updateTabStyles(true);
-    }
-
-    private void updateTabStyles(boolean isRecibidos) {
-        if (isRecibidos) {
-            btnTabRecibidos.setBackgroundTintList(
-                    android.content.res.ColorStateList.valueOf(
-                            getResources().getColor(R.color.hyper_accent, requireContext().getTheme())));
-            btnTabRecibidos.setTextColor(
-                    getResources().getColor(R.color.hyper_on_accent, requireContext().getTheme()));
-            btnTabEnviados.setBackgroundTintList(
-                    android.content.res.ColorStateList.valueOf(
-                            getResources().getColor(R.color.hyper_surface, requireContext().getTheme())));
-            btnTabEnviados.setTextColor(
-                    getResources().getColor(R.color.hyper_on_primary, requireContext().getTheme()));
-        } else {
-            btnTabRecibidos.setBackgroundTintList(
-                    android.content.res.ColorStateList.valueOf(
-                            getResources().getColor(R.color.hyper_surface, requireContext().getTheme())));
-            btnTabRecibidos.setTextColor(
-                    getResources().getColor(R.color.hyper_on_primary, requireContext().getTheme()));
-            btnTabEnviados.setBackgroundTintList(
-                    android.content.res.ColorStateList.valueOf(
-                            getResources().getColor(R.color.hyper_accent, requireContext().getTheme())));
-            btnTabEnviados.setTextColor(
-                    getResources().getColor(R.color.hyper_on_accent, requireContext().getTheme()));
-        }
-        adapter.setShowRecibidos(isRecibidos);
     }
 
     private void setupFAB() {
-        fabCompose.setOnClickListener(v -> navigateToCompose(null));
+        fabCompose.setOnClickListener(v -> {
+            MensajeFormFragment formFragment = new MensajeFormFragment();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, formFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
-    private void navigateToCompose(Long preSelectedDeportistaId) {
-        MensajeFormFragment formFragment = new MensajeFormFragment();
-        if (preSelectedDeportistaId != null) {
-            Bundle args = new Bundle();
-            args.putLong("deportistaId", preSelectedDeportistaId);
-            formFragment.setArguments(args);
-        }
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, formFragment)
-                .addToBackStack(null)
-                .commit();
+    /**
+     * Apply a fade-in animation (300ms) to the given content view.
+     */
+    private void fadeInContent(View contentView) {
+        if (contentView == null) return;
+        contentView.setAlpha(0f);
+        contentView.setVisibility(View.VISIBLE);
+        contentView.animate()
+                .alpha(1f)
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
     }
 
     private void setupObservers() {
-        viewModel.getMensajes().observe(getViewLifecycleOwner(), resource -> {
+        viewModel.getConversaciones().observe(getViewLifecycleOwner(), resource -> {
             if (resource == null) return;
 
-            rvMensajes.setVisibility(View.GONE);
+            rvConversaciones.setVisibility(View.GONE);
             layoutEmpty.setVisibility(View.GONE);
             layoutError.setVisibility(View.GONE);
             progressLoading.setVisibility(View.GONE);
@@ -179,10 +156,17 @@ public class MensajeListFragment extends Fragment {
                     break;
                 case SUCCESS:
                     if (resource.data != null && !resource.data.isEmpty()) {
-                        rvMensajes.setVisibility(View.VISIBLE);
+                        fadeInContent(rvConversaciones);
                         adapter.updateData(resource.data);
                     } else {
                         layoutEmpty.setVisibility(View.VISIBLE);
+                        String searchText = etSearch.getText() != null
+                                ? etSearch.getText().toString() : "";
+                        if (!searchText.isEmpty()) {
+                            tvEmptyText.setText(R.string.mensajes_search_no_results);
+                        } else {
+                            tvEmptyText.setText(R.string.mensajes_list_empty_conversations);
+                        }
                     }
                     break;
                 case ERROR:
@@ -190,26 +174,12 @@ public class MensajeListFragment extends Fragment {
                     break;
             }
         });
-
-        viewModel.getTabActual().observe(getViewLifecycleOwner(), isRecibidos -> {
-            if (isRecibidos != null) {
-                updateTabStyles(isRecibidos);
-            }
-        });
     }
 
-    /**
-     * Refresh data when returning from back stack.
-     */
     @Override
     public void onResume() {
         super.onResume();
-        Boolean isRecibidos = viewModel.getTabActual().getValue();
-        if (isRecibidos != null && isRecibidos) {
-            viewModel.loadRecibidos();
-        } else {
-            viewModel.loadEnviados();
-        }
+        viewModel.loadConversaciones();
         viewModel.loadNoLeidos();
     }
 }

@@ -3,6 +3,9 @@ package com.hyperreset.app.data.api;
 import com.hyperreset.app.data.model.ApiResponse;
 import com.hyperreset.app.data.model.AuthResponse;
 import com.hyperreset.app.data.model.CitaResponse;
+import com.hyperreset.app.data.model.CoachResponse;
+import com.hyperreset.app.data.model.DashboardCoachResponse;
+import com.hyperreset.app.data.model.DashboardDeportistaResponse;
 import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.data.model.LoginRequest;
 import com.hyperreset.app.data.model.MaterialResponse;
@@ -11,6 +14,7 @@ import com.hyperreset.app.data.model.RegisterRequest;
 import com.hyperreset.app.data.model.ReporteResponse;
 import com.hyperreset.app.data.model.ResultadoResponse;
 import com.hyperreset.app.data.model.TestFisicoResponse;
+import com.hyperreset.app.data.model.TipoTestEstadoResponse;
 
 import java.util.List;
 
@@ -55,6 +59,9 @@ public interface ApiService {
 
     @GET("deportistas/coach/{coachId}")
     Call<ApiResponse<List<DeportistaResponse>>> getDeportistasByCoach(@Path("coachId") long coachId);
+
+    @GET("deportistas/coaches")
+    Call<ApiResponse<List<CoachResponse>>> getCoaches();
 
     @POST("deportistas")
     Call<ApiResponse<DeportistaResponse>> createDeportista(@Body Object request);
@@ -186,4 +193,21 @@ public interface ApiService {
 
     @DELETE("materiales/{id}")
     Call<ApiResponse<Void>> deleteMaterial(@Path("id") long id);
+
+    // ==================================================================
+    // Dashboard — /api/dashboard
+    // ==================================================================
+
+    @GET("dashboard/deportista/{id}")
+    Call<ApiResponse<DashboardDeportistaResponse>> getDashboardDeportista(@Path("id") long id);
+
+    @GET("dashboard/coach/{id}")
+    Call<ApiResponse<DashboardCoachResponse>> getDashboardCoach(@Path("id") long id);
+
+    // ==================================================================
+    // Resultados — Tipos de Test con Estado
+    // ==================================================================
+
+    @GET("resultados/tipos-con-estado/{deportistaId}")
+    Call<ApiResponse<List<TipoTestEstadoResponse>>> getTiposTestConEstado(@Path("deportistaId") long deportistaId);
 }

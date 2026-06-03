@@ -1,305 +1,480 @@
-# 📋 Testing Plan Summary - Hyper Reset Permissions
+# 📚 TESTING DOCUMENTATION INDEX
 
-**Fecha**: 2026-06-01  
-**Objetivo**: Validar correcciones de permisos para Deportistas y Coaches  
-**Status**: Ready to Execute
-
----
-
-## 📁 Documentos Creados
-
-### 1️⃣ `TESTING_RESULTS.md` (Hoja de Resultados Principal)
-**Propósito**: Documento maestro para registrar todos los resultados de testing
-
-**Contiene**:
-- Tablas detalladas de tests backend (9 tests)
-- Tablas detalladas de tests UI Android (12+ tests)
-- Tests de seguridad (SECURITY CHECKS)
-- Tests de consistencia de datos
-- Sección para errores encontrados
-- Resumen final y conclusión
-
-**Cómo usar**:
-- Abrir en VS Code o editor de markdown
-- Ejecutar cada test en orden
-- Cambiar `???` por resultados reales
-- Cambiar `⏳` por `✅` o `❌` según resultado
+**Proyecto**: Hyper Reset - Performance Tracking System  
+**Fecha Creación**: 2026-06-01  
+**Objetivo**: Documentación completa para Testing de Permisos (Backend & Android UI)
 
 ---
 
-### 2️⃣ `TESTING_EXECUTION_GUIDE.md` (Guía Paso a Paso)
-**Propósito**: Instrucciones detalladas para ejecutar cada test
+## 🎯 ¿POR QUÉ ESTA DOCUMENTACIÓN?
 
-**Contiene**:
-- Instrucciones de setup inicial
-- Pasos exactos para cada test backend (con URLs y headers)
-- Pasos exactos para cada test Android
-- Cómo obtener tokens de prueba
-- Cómo usar Postman
-- Cómo usar Android Emulator
-- Resolución de errores comunes
-- Cómo reportar bugs
+Hemos implementado correcciones importantes en el sistema de permisos para Deportistas y Coaches. Esta documentación te ayuda a **validar que todo funciona correctamente** antes de deployar a producción.
 
-**Cómo usar**:
-- Seguir la guía secuencialmente
-- Copiar comandos curl o URLs a Postman
-- Marcar cada paso completado
+### Cambios Validados:
+✅ Deportistas solo ven sus propios datos  
+✅ Coaches solo ven sus propios deportistas  
+✅ Permisos correctos en backend y UI  
+✅ SessionManager funciona con roles  
+✅ Bottom navigation cambia según rol  
 
 ---
 
-### 3️⃣ `postman_collection.json` (Colección Postman Automática)
-**Propósito**: Automatizar tests backend en Postman
+## 📁 Documentos Incluidos
+
+### 1. 📋 `QUICK_CHECKLIST.md`
+**Tipo**: Referencia rápida  
+**Tamaño**: 1 página  
+**Tiempo**: 2 minutos para leer
+
+**¿Cuándo usarlo?**
+- Cuando necesitas una **visión rápida** de todos los tests
+- Para **marcar progreso** mientras testeas
+- Como **guía de bolsillo** imprimible
 
 **Contiene**:
-- Requests pre-configurados para todos los tests
-- Scripts de validación automáticos (tests)
-- Variables de entorno (tokens, IDs)
-- Auto-guardado de tokens después de login
+```
+✅ 9 tests backend
+✅ 12 tests Android UI  
+✅ Checkboxes para marcar
+✅ Estimación de tiempo
+✅ Status resumen
+```
 
-**Cómo usar**:
+**👉 EMPIEZA AQUÍ si tienes prisa (< 5 min)**
+
+---
+
+### 2. 📖 `TESTING_EXECUTION_GUIDE.md`
+**Tipo**: Guía paso a paso detallada  
+**Tamaño**: ~10 páginas  
+**Tiempo**: 15-20 minutos para leer
+
+**¿Cuándo usarlo?**
+- Cuando necesitas **instrucciones exactas** para cada test
+- Para saber **cómo usar Postman**
+- Para entender **cómo usar el emulador**
+- Para resolver **errores comunes**
+
+**Contiene**:
+```
+✅ Setup inicial
+✅ Pasos exactos para Backend tests (con curl/JSON)
+✅ Pasos exactos para Android tests
+✅ Screenshots conceptuales
+✅ Troubleshooting
+✅ Cómo reportar bugs
+```
+
+**👉 USA ESTO para ejecutar los tests (15-30 min)**
+
+---
+
+### 3. 📊 `TESTING_RESULTS.md`
+**Tipo**: Hoja de resultados / tabla de tracking  
+**Tamaño**: ~15 páginas  
+**Tiempo**: 30-60 minutos para completar
+
+**¿Cuándo usarlo?**
+- Para **documentar los resultados** de tus tests
+- Para **cambiar valores** de `???` a resultados reales
+- Para **reportar bugs** encontrados
+- Para la **conclusión final**
+
+**Contiene**:
+```
+✅ Tablas de tests backend (9 tests)
+✅ Tablas de tests UI Android (12+ tests)
+✅ Tests de seguridad (403/401)
+✅ Tests de consistencia
+✅ Sección de errores
+✅ Conclusión ejecutiva
+```
+
+**👉 RELLENA ESTO mientras ejecutas los tests (30-60 min)**
+
+---
+
+### 4. ⚙️ `postman_collection.json`
+**Tipo**: Colección Postman automatizada  
+**Tamaño**: ~20KB  
+**Tiempo**: 2-5 minutos para importar
+
+**¿Cuándo usarlo?**
+- Cuando quieres **automatizar** tests backend en Postman
+- Para **ahorrar tiempo** vs hacer tests manuales
+- Para **validación automática** de responses
+
+**Contiene**:
+```
+✅ 9 requests pre-configurados
+✅ Scripts de validación automáticos
+✅ Variables de entorno (tokens, IDs)
+✅ Auto-guardado de tokens
+```
+
+**👉 CÓMO IMPORTAR**:
 1. Abrir Postman
 2. Click: `File → Import`
-3. Seleccionar `postman_collection.json`
-4. Configurar variables: `BASE_URL`, user IDs
-5. Ejecutar cada request
-6. Verificar resultados en "Test Results" tab
+3. Seleccionar este archivo
+4. Configurar `BASE_URL` y IDs
+5. Ejecutar requests (cada uno se valida automáticamente)
 
-**Ventajas**:
-- ✅ Tests se ejecutan automáticamente
-- ✅ Valida responses automáticamente
-- ✅ Tokens se guardan entre requests
-- ✅ Tiempo ~5 minutos vs 15 minutos manual
+**Ventaja**: ⚡ 5 minutos vs 15 minutos manual
 
 ---
 
-### 4️⃣ `QUICK_CHECKLIST.md` (Checklist de Bolsillo)
-**Propósito**: Referencia rápida con todos los tests en una página
+### 5. 🗺️ `TESTING_PLAN_SUMMARY.md` (Este archivo)
+**Tipo**: Resumen ejecutivo  
+**Tamaño**: ~8 páginas  
+**Tiempo**: 5-10 minutos para leer
+
+**¿Cuándo usarlo?**
+- Para **entender el plan completo** de testing
+- Para **orientación general**
+- Para saber **qué documentos usar**
+- Para entender **criterios de éxito**
 
 **Contiene**:
-- Todos los tests backend (9)
-- Todos los tests Android (12)
-- Checkboxes para marcar completados
-- Resumen final
-- Estimación de tiempo
-
-**Cómo usar**:
-- Imprimir o mostrar mientras testeas
-- Marcar checkboxes conforme avanzas
-- Verificación final rápida
-
----
-
-## 🧪 Tests Incluidos
-
-### Fase 1: Backend Tests (9 tests + Security)
 ```
-✅ GET /api/citas (Deportista)
-✅ PUT /api/deportistas/{id} (Editar propio perfil)
-🔒 PUT /api/deportistas/{999} (Security - Editar otro - debe fallar)
-✅ GET /api/deportistas/coaches
-✅ GET /api/test-fisicos (Deportista)
-✅ GET /api/deportistas/coach/{id} (Coach)
-✅ GET /api/resultados/deportista/{id} (Coach - own)
-🔒 GET /api/resultados/deportista/{999} (Security - Other - debe fallar)
-🔒 GET /api/deportistas (No token - debe fallar)
-```
-
-### Fase 2: Android UI Tests (12+ tests)
-```
-👤 Deportista:
-  ✅ Login
-  ✅ SessionManager role verification
-  ✅ Bottom nav tabs (correcto para rol)
-  ✅ Ver perfil
-  ✅ Editar perfil + sync backend
-  ✅ Seleccionar coach
-  ✅ Ver citas
-  ✅ Ver pruebas
-  ✅ Logout
-
-👨‍💼 Coach:
-  ✅ Login
-  ✅ Bottom nav tabs (diferentes)
-  ✅ Ver deportistas asignados
-  ✅ Ver citas
-```
-
-### Fase 3: Data Consistency & Security
-```
-🔒 Verificar permisos correctos por rol
-📊 Datos en UI = Backend
-🔐 Tokens se guardan/se limpian correctamente
+✅ Resumen de todos los documentos
+✅ Flujo recomendado de testing
+✅ Success criteria
+✅ Key points
+✅ Troubleshooting rápido
+✅ Índice de referencia
 ```
 
 ---
 
-## 🚀 Flujo de Testing Recomendado
+## 🚀 FLUJO RECOMENDADO
 
-### Día 1 - Backend (30-45 minutos)
+### Opción A: Rápido (< 2 horas)
+
 ```
-1. Setup: Obtener tokens (5 min)
-2. Backend tests manual o Postman (25 min)
-3. Documentar resultados (5 min)
+1. Lee QUICK_CHECKLIST.md (5 min)
+   ↓
+2. Lee TESTING_PLAN_SUMMARY.md (10 min)
+   ↓
+3. Importa postman_collection.json en Postman (2 min)
+   ↓
+4. Ejecuta tests Postman (5-10 min)
+   ↓
+5. Rellena TESTING_RESULTS.md (Backend section)
+   ↓
+6. Ejecuta tests Android (45 min)
+   ↓
+7. Rellena TESTING_RESULTS.md (Android section)
+   ↓
+8. Revisa conclusión en TESTING_RESULTS.md
 ```
 
-### Día 2 - Android UI (45-60 minutos)
+**Tiempo Total**: 60-90 minutos
+
+---
+
+### Opción B: Detallado (3-4 horas)
+
 ```
-1. Setup Emulator (10 min)
-2. Android tests (40 min)
-3. Documentar resultados (5 min)
+1. Lee TESTING_PLAN_SUMMARY.md (10 min)
+   ↓
+2. Lee TESTING_EXECUTION_GUIDE.md (15 min)
+   ↓
+3. Lee TESTING_RESULTS.md (10 min)
+   ↓
+4. Ejecuta Backend tests (25 min)
+   - Opción A: Manual con cURL (TESTING_EXECUTION_GUIDE.md)
+   - Opción B: Postman (postman_collection.json)
+   ↓
+5. Rellena TESTING_RESULTS.md (Backend section - 10 min)
+   ↓
+6. Ejecuta Android tests (60-90 min)
+   ↓
+7. Rellena TESTING_RESULTS.md (Android section - 15 min)
+   ↓
+8. Documenta errores encontrados (10 min)
+   ↓
+9. Revisa conclusión
 ```
 
-### Día 3 - Bug Fixes (si hay errores)
+**Tiempo Total**: 150-180 minutos
+
+---
+
+## 🎯 USO SEGÚN TU SITUACIÓN
+
+### Soy QA y necesito validar todo correctamente
+→ **Opción B (Detallado)** con Postman collection
+
+### Necesito validar rápido antes de deployar
+→ **Opción A (Rápido)** con checklist
+
+### Quiero entender el plan antes de empezar
+→ Lee: `TESTING_PLAN_SUMMARY.md` → luego decide
+
+### Tengo un error específico y necesito debuguearlo
+→ Ve a: `TESTING_EXECUTION_GUIDE.md` → Sección "Troubleshooting"
+
+### Necesito documentar resultados para el cliente
+→ Usa: `TESTING_RESULTS.md` → Completa todos los campos
+
+---
+
+## 📍 LOCALIZACIÓN DE DOCUMENTOS
+
+Todos en la **raíz del proyecto**:
+
 ```
-1. Analizar errores
-2. Implementar fixes
-3. Re-test
+Proyecto_hiper_reset/
+├── QUICK_CHECKLIST.md                 ← Empieza aquí (5 min)
+├── TESTING_PLAN_SUMMARY.md            ← Resumen completo (este)
+├── TESTING_EXECUTION_GUIDE.md         ← Instrucciones detalladas
+├── TESTING_RESULTS.md                 ← Hoja de resultados
+├── postman_collection.json            ← Collection Postman
+└── ... otros archivos del proyecto
 ```
 
 ---
 
-## 📊 Success Criteria
+## ✨ FEATURES DE ESTOS DOCUMENTOS
 
-### ✅ Todo debe pasar:
-- [x] Backend: 9 tests + 4 security checks
-- [x] Android: 12+ UI tests  
-- [x] No 403/401 errores excepto en security tests esperados
-- [x] SessionManager funciona correctamente
-- [x] Datos consistentes UI ↔ Backend
-- [x] Tokens persistidos correctamente
+### ✅ Completo
+- Cubre todos los aspectos: Backend, UI, Security, Data consistency
 
-### 🚀 Deployment Requirements:
+### ✅ Práctico
+- Instrucciones paso a paso
+- Ejemplos reales de JSON/cURL
+- URLs exactas a copiar
+
+### ✅ Automatizable
+- Postman collection con validaciones automáticas
+- Scripts de testing
+- Checklists marcables
+
+### ✅ Flexible
+- Usa Postman o cURL (a tu elección)
+- Tests manuales o automatizados
+- Flujo rápido o detallado
+
+### ✅ Referenciable
+- Tablas de búsqueda rápida
+- Índices
+- Links entre documentos
+
+---
+
+## 📊 TESTS INCLUIDOS
+
+### Backend (9 tests + Security)
 ```
-✅ Todos los tests PASS
-✅ Cero bugs críticos
-✅ TESTING_RESULTS.md actualizado
-✅ Código limpio y sin warnings
-✅ Documentación actualizada
-→ READY FOR PRODUCTION
+GET /api/citas ........................... [Deportista]
+PUT /api/deportistas/{id} ................. [Edit own]
+PUT /api/deportistas/{999} ............... [SECURITY: Should 403]
+GET /api/deportistas/coaches ............. [List coaches]
+GET /api/test-fisicos .................... [Deportista]
+GET /api/deportistas/coach/{id} .......... [Coach]
+GET /api/resultados/deportista/{id} ...... [Coach own]
+GET /api/resultados/deportista/{999} ..... [SECURITY: Should 403]
+GET /api/deportistas ..................... [SECURITY: No token]
+```
+
+### Android UI (12+ tests)
+```
+👤 Deportista Role:
+   - Login
+   - Session persistence
+   - Correct tabs (no Deportistas tab)
+   - View profile
+   - Edit profile
+   - Select coach
+   - View citas
+   - View pruebas
+
+👨‍💼 Coach Role:
+   - Login
+   - Correct tabs (has Deportistas)
+   - View deportistas
+   - View citas
 ```
 
 ---
 
-## 📝 Key Files Modified/Created
+## 🔐 SEGURIDAD VALIDADA
 
+### Critical Security Checks:
 ```
-NUEVO:
-├── TESTING_RESULTS.md              ← Hoja de resultados principal
-├── TESTING_EXECUTION_GUIDE.md      ← Guía paso a paso
-├── postman_collection.json         ← Tests Postman automatizados
-└── QUICK_CHECKLIST.md              ← Checklist de bolsillo
+🔒 Deportista NO puede editar otros perfiles ........ [403 expected]
+🔒 Coach NO puede ver otros deportistas ............ [403 expected]
+🔒 Coach NO puede ver resultados ajenos ............ [403 expected]
+🔒 Sin token = Unauthorized ........................ [401 expected]
+🔒 Rol correcto en SessionManager .................. [DEPORTISTA/COACH]
+```
 
-EXISTENTES (sin cambios para testing):
-├── app/src/main/java/com/hyperreset/app/utils/SessionManager.java
-├── app/src/main/java/com/hyperreset/app/data/api/RetrofitClient.java
-├── app/src/main/java/com/hyperreset/app/ui/home/HomeActivity.java
-└── app/src/main/java/com/hyperreset/app/data/api/ApiService.java
+**Si alguno falla**: ⚠️ NO DEPLOYAR - hay security vulnerability
+
+---
+
+## ✅ SUCCESS CRITERIA
+
+**Todos estos deben ser ciertos:**
+
+- [x] Backend: 9/9 tests pasan (200 OK)
+- [x] Security: 4/4 security checks fallan correctamente (403/401)
+- [x] Android: 12+ UI tests funcionales
+- [x] SessionManager: Rol guardado correctamente
+- [x] Tabs: Diferentes según rol
+- [x] Data: Consistente entre UI y Backend
+- [x] Errors: Cero 500 errors
+- [x] Docs: TESTING_RESULTS.md completado
+
+**Si alguno falla**: Fijar bug + re-test + repeat
+
+---
+
+## 🛠️ HERRAMIENTAS NECESARIAS
+
+| Herramienta | Descarga | Propósito |
+|-------------|----------|----------|
+| **Postman** | [postman.com](https://www.postman.com) | Tests Backend |
+| **Android Studio** | [developer.android.com](https://developer.android.com) | Emulator |
+| **cURL** | Pre-installed en Windows | Tests manuales |
+| **VS Code** | [code.visualstudio.com](https://code.visualstudio.com) | Editar markdown |
+
+---
+
+## 🔗 QUICK REFERENCE
+
+### "Necesito..."
+
+| Necesidad | Ir a |
+|-----------|------|
+| Visión rápida | QUICK_CHECKLIST.md |
+| Instrucciones detalladas | TESTING_EXECUTION_GUIDE.md |
+| Documentar resultados | TESTING_RESULTS.md |
+| Tests automatizados | postman_collection.json |
+| Entender el plan | TESTING_PLAN_SUMMARY.md (este) |
+| Resolver error | TESTING_EXECUTION_GUIDE.md → Troubleshooting |
+| Reportar bug | TESTING_RESULTS.md → Errores encontrados |
+
+---
+
+## 📞 SOPORTE
+
+### Errores Comunes
+→ Ver: `TESTING_EXECUTION_GUIDE.md` → Sección "Errores Comunes & Fixes"
+
+### ¿Cómo reporto un bug?
+→ Ver: `TESTING_EXECUTION_GUIDE.md` → Sección "Cómo Reportar Bugs"
+
+### ¿Qué hago si un test falla?
+→ Ver: `TESTING_PLAN_SUMMARY.md` → Sección "Troubleshooting Rápido"
+
+---
+
+## 🚀 PRÓXIMOS PASOS
+
+1. **Elige tu flujo**:
+   - Rápido (< 2 horas) → Lee QUICK_CHECKLIST.md
+   - Detallado (3-4 horas) → Lee TESTING_EXECUTION_GUIDE.md
+
+2. **Ejecuta los tests** en orden (backend primero, luego Android)
+
+3. **Documenta resultados** en TESTING_RESULTS.md
+
+4. **Reporte conclusión** en TESTING_RESULTS.md → Conclusión
+
+5. **Si todo OK**: Commit + Push + Ready for production ✅
+
+---
+
+## 📈 PROGRESS TRACKING
+
+Usa este checklist para saber dónde estás:
+
+- [ ] Leído QUICK_CHECKLIST.md
+- [ ] Leído TESTING_PLAN_SUMMARY.md
+- [ ] Backend tests completados (9/9)
+- [ ] Android tests completados (12/12)
+- [ ] Resultados documentados en TESTING_RESULTS.md
+- [ ] Errores reportados (0 = éxito)
+- [ ] Conclusión: READY FOR PRODUCTION
+- [ ] Commit + Push completado
+
+---
+
+## 💡 TIPS PRO
+
+1. **Abre 4 ventanas**:
+   - Markdown (TESTING_EXECUTION_GUIDE.md)
+   - Postman
+   - Android Emulator
+   - TESTING_RESULTS.md (para anotar)
+
+2. **Mantén Logcat abierto**: Verás errores en tiempo real
+
+3. **Toma screenshots**: De cada paso importante
+
+4. **No saltees pasos**: El orden importa
+
+5. **Haz commits parciales**: Después de Backend, después de Android
+
+---
+
+## 🎓 APRENDIZAJES
+
+### Qué valida este plan:
+```
+✅ Permisos correctos por rol
+✅ Backend retorna datos filtrados
+✅ UI muestra datos correctos según rol
+✅ Tokens se guardan/se limpian
+✅ Datos consistentes UI ↔ Backend
+✅ Seguridad: 403/401 cuando corresponde
+```
+
+### Qué NO valida:
+```
+❌ Performance bajo carga
+❌ Tests con millones de registros
+❌ Múltiples usuarios concurrentes
+❌ Offline mode
 ```
 
 ---
 
-## 🛠️ Herramientas Necesarias
+## 📅 VERSIONADO
 
-| Herramienta | Versión | Propósito |
-|------------|---------|----------|
-| **Postman** | Latest | Tests Backend |
-| **Android Studio** | 2022+ | Android Emulator |
-| **Android Emulator** | API 31+ | Testing UI |
-| **cURL** (opcional) | Any | Tests manuales |
-| **Browser** | Any | Visualizar markdown |
+| Versión | Fecha | Cambios |
+|---------|-------|---------|
+| 1.0 | 2026-06-01 | Plan inicial |
+| TBD | TBD | Actualizaciones después de tests |
 
 ---
 
-## ⚠️ Puntos Críticos de Seguridad
+## 🏁 CONCLUSIÓN
 
-Estos tests **DEBEN** fallar con 403/401:
+Este plan de testing completo te ayuda a:
 
-```
-1. ❌ Deportista edita perfil de otro deportista
-2. ❌ Coach accede deportistas de otro coach  
-3. ❌ Coach accede resultados de otro coach
-4. ❌ Cualquier endpoint sin token (401)
-```
-
-Si alguno de estos **PASA** (retorna 200), **NO DEPLOYAR** - hay vulnerability.
+✅ **Validar** que todos los permisos funcionan correctamente  
+✅ **Documentar** resultados de forma profesional  
+✅ **Identificar** bugs antes de producción  
+✅ **Deployar** con confianza  
 
 ---
 
-## 🐛 Troubleshooting Rápido
+## 📝 AUTOFIRMA
 
-### Backend Tests fallan
-```
-→ Verificar BASE_URL correcta
-→ Verificar tokens válidos y no expirados
-→ Verificar IDs de deportistas/coaches existen
-→ Revisar backend logs para errores
-```
+Después de completar todos los tests, firma aquí:
 
-### Android Tests fallan
 ```
-→ Emulator correctamente iniciado
-→ API Base URL correcta en Constants.java
-→ Token visible en Logcat (no null)
-→ Verificar layout resources existen
-```
-
-### No sincroniza datos UI ↔ Backend
-```
-→ Verificar POST/PUT/GET se hacen con token
-→ Revisar Logcat para errores HTTP
-→ Verificar ResponseCode != 200
-→ Verificar JSON parsing en modelos
+Testeo completado por: ___________________
+Fecha: ________________
+Status Final: ✅ READY FOR PRODUCTION / ❌ NEEDS FIXES
 ```
 
 ---
 
-## 📞 Próximos Pasos
+**¿Preguntas?** Consulta el documento específico según tu necesidad.
 
-1. **Ejecutar Backend Tests** → TESTING_EXECUTION_GUIDE.md
-2. **Ejecutar Android Tests** → TESTING_EXECUTION_GUIDE.md  
-3. **Documentar Resultados** → TESTING_RESULTS.md
-4. **Si hay errores** → Hacer fixes y re-test
-5. **Si todo OK** → Actualizar TESTING_RESULTS.md con conclusión ✅
-6. **Commit & Push** → `git add . && git commit -m "Testing: All tests passed" && git push`
-7. **Release** → Ready for production
+**¿Listo para empezar?** → Ve a: QUICK_CHECKLIST.md o TESTING_EXECUTION_GUIDE.md
 
----
-
-## 📋 Archivo de Referencia Rápida
-
-**¿Dónde encontrar qué?**
-
-| Pregunta | Respuesta |
-|----------|----------|
-| "¿Por dónde empiezo?" | → QUICK_CHECKLIST.md |
-| "¿Cómo hago el test 1.2?" | → TESTING_EXECUTION_GUIDE.md #1.2 |
-| "¿Dónde anoto resultados?" | → TESTING_RESULTS.md |
-| "¿Cómo hago tests en Postman?" | → postman_collection.json |
-| "¿Dónde está el error?" | → TESTING_RESULTS.md #Errores |
-| "¿Qué debo hacer antes de deployar?" | → TESTING_RESULTS.md #Conclusión |
-
----
-
-## ✨ Tips Profesionales
-
-1. **Usa Postman Collection** - Más rápido que curl
-2. **Mantén Logcat abierto** - Verás errores en tiempo real
-3. **Toma screenshots** - Para documentar bugs
-4. **Ejecuta tests en orden** - No saltes pasos
-5. **Anota los problemas** - Con detalles exactos
-6. **Re-test después del fix** - Nunca asumas que funciona
-7. **Commit después de cada fase** - No pierdes trabajo
-
----
-
-**🎯 Objetivo Final**: Validar que todos los permisos funcionan correctamente ANTES de deployment a producción.
-
-**💡 Recuerda**: Un test que falla ahora es mejor que un bug en producción.
-
----
-
-**Fecha de Creación**: 2026-06-01  
-**Status**: READY TO EXECUTE  
-**Próximo Paso**: Comenzar con QUICK_CHECKLIST.md
-
-🚀 **¡Buena suerte!**
+🚀 **¡Adelante con el testing!**

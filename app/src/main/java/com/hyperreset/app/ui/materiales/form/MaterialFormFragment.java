@@ -97,8 +97,8 @@ public class MaterialFormFragment extends Fragment {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                requireContext(), R.layout.spinner_item, items);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerTipo.setAdapter(adapter);
 
         spinnerTipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

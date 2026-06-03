@@ -10,6 +10,7 @@ import com.hyperreset.app.data.model.AuthResponse;
 import com.hyperreset.app.data.model.LoginRequest;
 import com.hyperreset.app.data.model.RegisterRequest;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -158,6 +159,7 @@ public class AuthRepository {
                     if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
                         postResult(callback, Resource.success(response.body().getData()));
                     } else if (response.code() == 401) {
+                        SessionManager.notifySessionExpired();
                         RetrofitClient.getInstance().clearAuthToken();
                         postResult(callback, Resource.error("Sesión expirada. Inicia sesión de nuevo."));
                     } else {

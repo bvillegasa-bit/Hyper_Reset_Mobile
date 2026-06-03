@@ -20,9 +20,11 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.CitaResponse;
+import com.hyperreset.app.data.model.CoachResponse;
 import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.ui.citas.detail.CitaDetailFragment;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +41,9 @@ import java.util.Map;
 public class CitaFormFragment extends Fragment {
 
     private CitaFormViewModel viewModel;
+    private SessionManager sessionManager;
     private Spinner spinnerDeportista;
+    private TextView tvDeportistaLabel;
     private TextInputEditText etFecha;
     private TextInputEditText etHora;
     private TextInputEditText etMotivo;
@@ -47,7 +51,10 @@ public class CitaFormFragment extends Fragment {
     private MaterialButton btnGuardar;
 
     private List<DeportistaResponse> deportistaList = new ArrayList<>();
+    private List<CoachResponse> coachList = new ArrayList<>();
     private int selectedDeportistaPosition = -1;
+    private int selectedCoachPosition = -1;
+    private boolean isDeportista;
 
     private Long editCitaId = null;
     private String selectedFecha = "";
@@ -65,6 +72,8 @@ public class CitaFormFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new CitaFormViewModel();
+        sessionManager = new SessionManager(requireContext());
+        isDeportista = sessionManager.isDeportista();
 
         // Check if we're in edit mode
         Bundle args = getArguments();
@@ -83,11 +92,18 @@ public class CitaFormFragment extends Fragment {
             viewModel.loadCita(editCitaId);
         }
 
-        viewModel.loadDeportistas(0);
+        if (isDeportista) {
+            // DEPORTISTA: load coaches for selection, use own deportistaId when saving
+            tvDeportistaLabel.setText(R.string.citas_form_coach);
+            viewModel.loadCoaches();
+        } else {
+            viewModel.loadDeportistas(sessionManager.getUserId());
+        }
     }
 
     private void initViews(View view) {
         spinnerDeportista = view.findViewById(R.id.spinnerDeportista);
+        tvDeportistaLabel = view.findViewById(R.id.tvDeportistaLabel);
         etFecha = view.findViewById(R.id.etFecha);
         etHora = view.findViewById(R.id.etHora);
         etMotivo = view.findViewById(R.id.etMotivo);
@@ -107,8 +123,8 @@ public class CitaFormFragment extends Fragment {
         List<String> items = new ArrayList<>();
         items.add("Seleccionar...");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_spinner_item, items);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                requireContext(), R.layout.spinner_item, items);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerDeportista.setAdapter(adapter);
 
         spinnerDeportista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -162,13 +178,6 @@ public class CitaFormFragment extends Fragment {
     }
 
     private void onSaveClick() {
-        // Validate deportista
-        if (selectedDeportistaPosition < 0 || selectedDeportistaPosition >= deportistaList.size()) {
-            Snackbar.make(requireView(), R.string.citas_validation_deportista,
-                    Snackbar.LENGTH_LONG).show();
-            return;
-        }
-
         // Validate fecha and hora
         if (selectedFecha.isEmpty() || selectedHora.isEmpty()) {
             Snackbar.make(requireView(), R.string.citas_validation_fecha_hora,
@@ -186,15 +195,33 @@ public class CitaFormFragment extends Fragment {
 
         // Build request body
         String notas = etNotas.getText() != null ? etNotas.getText().toString().trim() : "";
-        long deportistaId = deportistaList.get(selectedDeportistaPosition).getId();
-
         Map<String, Object> request = new HashMap<>();
-        request.put("deportistaId", deportistaId);
+
+        if (isDeportista) {
+            // DEPORTISTA: selectedCoachPosition is the coach index, deportistaId comes from session
+            if (selectedCoachPosition < 0 || selectedCoachPosition >= coachList.size()) {
+                Snackbar.make(requireView(), R.string.citas_validation_deportista,
+                        Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            request.put("deportistaId", sessionManager.getDeportistaId());
+            request.put("coachId", coachList.get(selectedCoachPosition).getIdCoach());
+        } else {
+            // COACH: selectedDeportistaPosition is the deportista index
+            if (selectedDeportistaPosition < 0 || selectedDeportistaPosition >= deportistaList.size()) {
+                Snackbar.make(requireView(), R.string.citas_validation_deportista,
+                        Snackbar.LENGTH_LONG).show();
+                return;
+            }
+            long deportistaId = deportistaList.get(selectedDeportistaPosition).getId();
+            request.put("deportistaId", deportistaId);
+            request.put("coachId", sessionManager.getUserId());
+        }
+
         request.put("fechaCita", selectedFecha);
         request.put("horaCita", selectedHora);
         request.put("motivo", motivo);
         request.put("notas", notas);
-        request.put("coachId", 0); // Placeholder until auth integration
 
         if (editCitaId != null) {
             viewModel.updateCita(editCitaId, request);
@@ -204,7 +231,7 @@ public class CitaFormFragment extends Fragment {
     }
 
     private void setupObservers() {
-        // Observe deportista list for spinner
+        // Observe deportista list for spinner (COACH path)
         viewModel.getDeportistas().observe(getViewLifecycleOwner(), resource -> {
             if (resource == null) return;
 
@@ -216,9 +243,39 @@ public class CitaFormFragment extends Fragment {
                     items.add(d.getNombreCompleto());
                 }
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        requireContext(), android.R.layout.simple_spinner_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        requireContext(), R.layout.spinner_item, items);
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 spinnerDeportista.setAdapter(adapter);
+            }
+        });
+
+        // Observe coach list for spinner (DEPORTISTA path)
+        viewModel.getCoaches().observe(getViewLifecycleOwner(), resource -> {
+            if (resource == null) return;
+
+            if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                coachList = resource.data;
+                List<String> items = new ArrayList<>();
+                items.add("Seleccionar...");
+                for (CoachResponse c : resource.data) {
+                    items.add(c.getNombreCompleto());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        requireContext(), R.layout.spinner_item, items);
+                adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                spinnerDeportista.setAdapter(adapter);
+                // Set up item selection for coach path
+                spinnerDeportista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedCoachPosition = position - 1;
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        selectedCoachPosition = -1;
+                    }
+                });
             }
         });
 

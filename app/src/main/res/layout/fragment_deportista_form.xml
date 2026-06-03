@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/deportistas_form_nombres"
-            app:boxStrokeColor="@color/hyper_accent"
+            app:boxStrokeColor="@color/textinput_stroke_color"
             app:layout_behavior="com.google.android.material.textfield.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/deportistas_form_apellidos"
-            app:boxStrokeColor="@color/hyper_accent"
+            app:boxStrokeColor="@color/textinput_stroke_color"
             app:layout_behavior="com.google.android.material.textfield.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/deportistas_form_email"
-            app:boxStrokeColor="@color/hyper_accent"
+            app:boxStrokeColor="@color/textinput_stroke_color"
             app:layout_behavior="com.google.android.material.textfield.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/deportistas_form_telefono"
-            app:boxStrokeColor="@color/hyper_accent"
+            app:boxStrokeColor="@color/textinput_stroke_color"
             app:layout_behavior="com.google.android.material.textfield.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            app:boxStrokeColor="@color/hyper_accent"
+            app:boxStrokeColor="@color/textinput_stroke_color"
             app:layout_behavior="com.google.android.material.textfield.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/deportistas_form_direccion"
-            app:boxStrokeColor="@color/hyper_accent"
+            app:boxStrokeColor="@color/textinput_stroke_color"
             app:layout_behavior="com.google.android.material.textfield.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText

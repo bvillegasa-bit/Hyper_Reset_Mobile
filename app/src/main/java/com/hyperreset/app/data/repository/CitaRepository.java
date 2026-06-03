@@ -8,6 +8,7 @@ import com.hyperreset.app.data.api.RetrofitClient;
 import com.hyperreset.app.data.model.ApiResponse;
 import com.hyperreset.app.data.model.CitaResponse;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -265,7 +266,9 @@ public class CitaRepository {
     private String getHttpErrorMessage(int code) {
         switch (code) {
             case 400: return "Datos inv\u00e1lidos. Verifica los campos.";
-            case 401: return "Sesi\u00f3n expirada. Inicia sesi\u00f3n de nuevo.";
+            case 401:
+                SessionManager.notifySessionExpired();
+                return "Sesi\u00f3n expirada. Inicia sesi\u00f3n de nuevo.";
             case 403: return "No tienes permisos para esta acci\u00f3n.";
             case 404: return "El recurso solicitado no existe.";
             default:

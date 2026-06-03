@@ -26,15 +26,17 @@ import com.hyperreset.app.utils.Resource;
 import java.util.List;
 
 /**
- * Fragment showing detailed view of a physical test session.
- * Displays header info, biometrics, results with calificacion badges,
- * and action buttons for in-progress tests.
+ * Fragment showing detailed view of a physical test session or test type.
+ * - If testId > 0: loads the full test session with results (existing behavior for COACH)
+ * - If testId <= 0: shows test type info passed via arguments (from battery test list)
  */
 public class TestDetailFragment extends Fragment {
 
     private TestDetailViewModel viewModel;
     private long testId;
     private String tipoTest;
+    private String testName;
+    private boolean isBatteryView; // true if navigated from battery test (no session ID)
 
     private TextView tvDeportista;
     private TextView tvTestType;
@@ -48,6 +50,12 @@ public class TestDetailFragment extends Fragment {
     private MaterialButton btnAddResult;
     private MaterialButton btnFinalizar;
     private MaterialButton btnGenerarReporte;
+
+    // Battery test type info views
+    private View batteryInfoSection;
+    private TextView tvBatteryLastValue;
+    private TextView tvBatteryDate;
+    private TextView tvBatteryUnidad;
 
     @Nullable
     @Override
@@ -64,6 +72,8 @@ public class TestDetailFragment extends Fragment {
         if (args != null) {
             testId = args.getLong("testId", -1);
             tipoTest = args.getString("tipoTest", "");
+            testName = args.getString("testName", "");
+            isBatteryView = testId <= 0;
         }
 
         viewModel = new TestDetailViewModel();
@@ -71,8 +81,14 @@ public class TestDetailFragment extends Fragment {
         initViews(view);
         setupObservers();
 
-        viewModel.loadTest(testId);
-        viewModel.loadResultados(testId);
+        if (!isBatteryView) {
+            // Existing behavior: load full test session
+            viewModel.loadTest(testId);
+            viewModel.loadResultados(testId);
+        } else {
+            // Battery test type view: show info from arguments
+            showBatteryInfo(view);
+        }
     }
 
     private void initViews(View view) {
@@ -89,6 +105,12 @@ public class TestDetailFragment extends Fragment {
         btnFinalizar = view.findViewById(R.id.btnFinalizar);
         btnGenerarReporte = view.findViewById(R.id.btnGenerarReporte);
 
+        // Battery info section (hidden by default in XML)
+        batteryInfoSection = view.findViewById(R.id.batteryInfoSection);
+        tvBatteryLastValue = view.findViewById(R.id.tvBatteryLastValue);
+        tvBatteryDate = view.findViewById(R.id.tvBatteryDate);
+        tvBatteryUnidad = view.findViewById(R.id.tvBatteryUnidad);
+
         rvResultados.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         btnAddResult.setOnClickListener(v -> navigateToResultEntry());
@@ -96,9 +118,53 @@ public class TestDetailFragment extends Fragment {
         btnGenerarReporte.setOnClickListener(v -> navigateToGenerateReporte());
     }
 
+    private void showBatteryInfo(View view) {
+        Bundle args = getArguments();
+        if (args == null) return;
+
+        // Hide session-specific views
+        cardBiometrics.setVisibility(View.GONE);
+        btnAddResult.setVisibility(View.GONE);
+        btnFinalizar.setVisibility(View.GONE);
+        btnGenerarReporte.setVisibility(View.GONE);
+
+        // Show battery info section
+        batteryInfoSection.setVisibility(View.VISIBLE);
+
+        // Set test type name
+        tvTestType.setText(!testName.isEmpty() ? testName : getTestTypeLabel(tipoTest));
+
+        // Set deportista label
+        tvDeportista.setText(R.string.test_bateria_completado);
+
+        // Set last value if available
+        boolean completado = args.getBoolean("completado", false);
+        if (completado) {
+            badgeStatus.setText(R.string.test_detail_completado);
+            setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_excelente));
+
+            double ultimoValor = args.getDouble("ultimoValor", 0);
+            String unidad = args.getString("unidad", "");
+            String fechaUltimo = args.getString("fechaUltimo", "");
+
+            tvBatteryLastValue.setText(String.valueOf(ultimoValor));
+            tvBatteryUnidad.setText(unidad);
+            tvBatteryDate.setText(fechaUltimo != null ? fechaUltimo : "");
+        } else {
+            badgeStatus.setText(R.string.test_bateria_coming_soon);
+            setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_in_progress));
+
+            tvBatteryLastValue.setText("--");
+            tvBatteryUnidad.setText("");
+            tvBatteryDate.setText("");
+        }
+
+        tvDate.setVisibility(View.GONE);
+    }
+
     private void setupObservers() {
         viewModel.getTest().observe(getViewLifecycleOwner(), resource -> {
-            if (resource == null) return;
+            if (resource == null || isBatteryView) return;
 
             if (resource.status == Resource.Status.LOADING) {
                 progressLoading.setVisibility(View.VISIBLE);
@@ -112,7 +178,7 @@ public class TestDetailFragment extends Fragment {
         });
 
         viewModel.getResultados().observe(getViewLifecycleOwner(), resource -> {
-            if (resource == null) return;
+            if (resource == null || isBatteryView) return;
 
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 bindResultados(resource.data);

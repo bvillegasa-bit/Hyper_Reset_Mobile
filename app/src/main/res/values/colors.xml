@@ -2,15 +2,29 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="hyper_primary">#FF000000</color>
-    <color name="hyper_accent">#FFFF6B00</color>
-    <color name="hyper_accent_light">#FFFF8C33</color>
-    <color name="hyper_surface">#FF1A1A1A</color>
+
+    <!-- Figma Design Colors (dark theme) -->
+    <!-- Brand -->
+    <color name="hyper_primary">#FFFF4500</color>
     <color name="hyper_on_primary">#FFFFFFFF</color>
-    <color name="hyper_on_accent">#FF000000</color>
+    <color name="hyper_accent">#FFFF6B35</color>
+    <color name="hyper_on_accent">#FFFFFFFF</color>
+
+    <!-- Surfaces -->
+    <color name="hyper_background">#FF0A0A0A</color>
+    <color name="hyper_surface">#FF1A1A1A</color>
+    <color name="hyper_surface_variant">#FF2A2A2A</color>
     <color name="hyper_on_surface">#FFFFFFFF</color>
-    <color name="hyper_background">#FF000000</color>
-    <color name="hyper_error">#FFCF6679</color>
+    <color name="hyper_on_surface_variant">#FFA0A0A0</color>
+
+    <!-- Border -->
+    <color name="hyper_border">#FF2A2A2A</color>
+
+    <!-- Semantic -->
+    <color name="hyper_success">#FF10B981</color>
+    <color name="hyper_warning">#FFFBBF24</color>
+    <color name="hyper_error">#FFEF4444</color>
+    <color name="hyper_info">#FF3B82F6</color>
 
     <!-- Calificacion Badge Colors -->
     <color name="hyper_excelente">#FF4CAF50</color>

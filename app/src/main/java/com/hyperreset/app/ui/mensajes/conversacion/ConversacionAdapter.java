@@ -11,12 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.MensajeResponse;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * RecyclerView adapter for the conversation thread.
- * Two view types: sent messages (right-aligned) and received messages (left-aligned).
+ * Two view types: sent messages (right-aligned, gradient bg) and received messages
+ * (left-aligned, surface bg). Each bubble shows content + timestamp.
  */
 public class ConversacionAdapter extends RecyclerView.Adapter<ConversacionAdapter.ViewHolder> {
 
@@ -75,8 +79,42 @@ public class ConversacionAdapter extends RecyclerView.Adapter<ConversacionAdapte
         }
 
         void bind(MensajeResponse mensaje) {
+            // Message content
             tvContenido.setText(mensaje.getContenido() != null ? mensaje.getContenido() : "");
-            tvTimestamp.setText(mensaje.getFechaEnvio() != null ? mensaje.getFechaEnvio() : "");
+
+            // Timestamp — format nicely
+            tvTimestamp.setText(formatTime(mensaje.getFechaEnvio()));
+        }
+
+        /**
+         * Format a timestamp string to show just the time (HH:mm).
+         */
+        private String formatTime(String timestamp) {
+            if (timestamp == null || timestamp.isEmpty()) return "";
+
+            try {
+                // Try parsing ISO format: 2026-05-14T10:30:00
+                String cleanTs = timestamp.replace("T", " ").replace("Z", "").trim();
+                if (cleanTs.length() >= 16) {
+                    // Extract HH:mm from "yyyy-MM-dd HH:mm:ss"
+                    return cleanTs.substring(11, 16);
+                }
+                // Try full parse
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                Date date = sdf.parse(cleanTs);
+                if (date != null) {
+                    SimpleDateFormat timeFmt = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    return timeFmt.format(date);
+                }
+            } catch (Exception e) {
+                // Fall through
+            }
+
+            // Fallback: return original truncated
+            if (timestamp.length() > 16) {
+                return timestamp.substring(11, 16);
+            }
+            return timestamp;
         }
     }
 }

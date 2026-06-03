@@ -9,7 +9,9 @@ import com.hyperreset.app.data.model.ApiResponse;
 import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.data.model.ResultadoResponse;
 import com.hyperreset.app.data.model.TestFisicoResponse;
+import com.hyperreset.app.data.model.TipoTestEstadoResponse;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -181,6 +183,29 @@ public class TestRepository {
     }
 
     // ==================================================================
+    // Tipos de Test con Estado
+    // ==================================================================
+
+    public void getTiposTestConEstado(long deportistaId,
+                                       ResourceCallback<List<TipoTestEstadoResponse>> callback) {
+        executor.execute(() -> {
+            Call<ApiResponse<List<TipoTestEstadoResponse>>> call = apiService.getTiposTestConEstado(deportistaId);
+            call.enqueue(new Callback<ApiResponse<List<TipoTestEstadoResponse>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<TipoTestEstadoResponse>>> call,
+                                       Response<ApiResponse<List<TipoTestEstadoResponse>>> response) {
+                    handleApiResponse(response, callback);
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<TipoTestEstadoResponse>>> call, Throwable t) {
+                    postResult(callback, Resource.error(getErrorMessage(t)));
+                }
+            });
+        });
+    }
+
+    // ==================================================================
     // Deportistas helper
     // ==================================================================
 
@@ -225,7 +250,9 @@ public class TestRepository {
     private String getHttpErrorMessage(int code) {
         switch (code) {
             case 400: return "Datos inv\u00e1lidos. Verifica los campos.";
-            case 401: return "Sesi\u00f3n expirada. Inicia sesi\u00f3n de nuevo.";
+            case 401:
+                SessionManager.notifySessionExpired();
+                return "Sesi\u00f3n expirada. Inicia sesi\u00f3n de nuevo.";
             case 403: return "No tienes permisos para esta acci\u00f3n.";
             case 404: return "El recurso solicitado no existe.";
             default:

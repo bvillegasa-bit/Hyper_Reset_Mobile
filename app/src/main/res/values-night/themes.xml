@@ -15,5 +15,9 @@
         <!-- Status bar and navigation bar -->
         <item name="android:statusBarColor">@color/hyper_primary</item>
         <item name="android:navigationBarColor">@color/hyper_primary</item>
+
+        <!-- Outline and surface variant for visible borders/contrast -->
+        <item name="colorOutline">@color/hyper_accent</item>
+        <item name="colorOnSurfaceVariant">#FFCCCCCC</item>
     </style>
 </resources>

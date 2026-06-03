@@ -1,6 +1,5 @@
 package com.hyperreset.app.ui.deportistas.form;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.hyperreset.app.R;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * Fragment for creating or editing an athlete (deportista).
@@ -96,23 +98,37 @@ public class DeportistaFormFragment extends Fragment {
 
     private void setupFechaNacimientoPicker() {
         etFechaNacimiento.setOnClickListener(v -> {
-            final Calendar c = Calendar.getInstance();
-            DatePickerDialog dialog = new DatePickerDialog(
-                    requireContext(),
-                    (view, year, month, dayOfMonth) -> {
-                        Calendar selected = Calendar.getInstance();
-                        selected.set(year, month, dayOfMonth);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        selectedFechaNacimiento = sdf.format(selected.getTime());
-                        // Display a user-friendly format
-                        SimpleDateFormat displaySdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                        etFechaNacimiento.setText(displaySdf.format(selected.getTime()));
-                    },
-                    c.get(Calendar.YEAR),
-                    c.get(Calendar.MONTH),
-                    c.get(Calendar.DAY_OF_MONTH));
-            // Allow selecting any date (not just past)
-            dialog.show();
+            // Use Material3's MaterialDatePicker which properly supports dark themes
+            MaterialDatePicker.Builder<Long> builder = MaterialDatePicker.Builder.datePicker();
+            builder.setTitleText(R.string.deportistas_form_fecha_nacimiento);
+
+            // Pre-fill with selected date if one exists
+            if (!selectedFechaNacimiento.isEmpty()) {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    java.util.Date date = sdf.parse(selectedFechaNacimiento);
+                    builder.setSelection(date.getTime());
+                } catch (Exception e) {
+                    builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+                }
+            } else {
+                builder.setSelection(MaterialDatePicker.todayInUtcMilliseconds());
+            }
+
+            MaterialDatePicker<Long> picker = builder.build();
+
+            picker.addOnPositiveButtonClickListener(selection -> {
+                Calendar selected = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+                selected.setTimeInMillis(selection);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                selectedFechaNacimiento = sdf.format(selected.getTime());
+                SimpleDateFormat displaySdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                displaySdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+                etFechaNacimiento.setText(displaySdf.format(selected.getTime()));
+            });
+
+            picker.show(getParentFragmentManager(), "DATE_PICKER");
         });
     }
 
@@ -191,7 +207,13 @@ public class DeportistaFormFragment extends Fragment {
                 btnGuardar.setText(R.string.deportistas_form_guardar);
 
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                    navigateToDetail(resource.data);
+                    String tempPassword = resource.data.getTempPassword();
+                    if (tempPassword != null && !tempPassword.isEmpty()) {
+                        // Show temp password dialog for new deportistas
+                        showTempPasswordDialog(resource.data, tempPassword);
+                    } else {
+                        navigateToDetail(resource.data);
+                    }
                 } else if (resource.status == Resource.Status.ERROR) {
                     Snackbar.make(requireView(),
                             resource.message != null ? resource.message : "Error al guardar deportista",
@@ -250,5 +272,19 @@ public class DeportistaFormFragment extends Fragment {
                 .replace(R.id.fragment_container, detailFragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    private void showTempPasswordDialog(DeportistaResponse deportista, String tempPassword) {
+        String message = getString(R.string.deportistas_temp_password_message,
+                deportista.getEmail(), tempPassword);
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.deportistas_temp_password_title)
+                .setMessage(message)
+                .setPositiveButton(R.string.deportistas_temp_password_ok, (dialog, which) -> {
+                    navigateToDetail(deportista);
+                })
+                .setCancelable(false)
+                .show();
     }
 }

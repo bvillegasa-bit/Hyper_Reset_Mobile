@@ -48,181 +48,285 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:orientation="vertical">
+
+            <!-- ==================== Header Gradient ==================== -->
+            <View
+                android:id="@+id/headerGradient"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/bg_header_gradient" />
 
             <!-- ==================== Avatar Section ==================== -->
+            <RelativeLayout
+                android:id="@+id/avatarSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-60dp"
+                android:gravity="center">
 
-            <!-- Avatar Circle (placeholder profile picture) -->
-            <FrameLayout
-                android:id="@+id/avatarCircle"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/circle_avatar_bg"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                <!-- Avatar Circle 96dp with Gradient -->
+                <FrameLayout
+                    android:id="@+id/avatarCircle"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/circle_gradient_96dp">
 
+                    <TextView
+                        android:id="@+id/tvEmoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textSize="36sp" />
+
+                    <TextView
+                        android:id="@+id/tvInitialsFallback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/hyper_on_accent"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+                </FrameLayout>
+
+                <!-- User Full Name -->
                 <TextView
-                    android:id="@+id/tvInitials"
+                    android:id="@+id/tvNombre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@color/hyper_on_accent"
-                    android:textSize="28sp"
+                    android:layout_below="@id/avatarCircle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:textColor="@color/hyper_on_primary"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
-            </FrameLayout>
 
-            <!-- User Name -->
-            <TextView
-                android:id="@+id/tvNombre"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:textColor="@color/hyper_on_primary"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/avatarCircle" />
+                <!-- Role Badge -->
+                <TextView
+                    android:id="@+id/tvRol"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvNombre"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/spinner_background"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="4dp"
+                    android:textColor="@color/hyper_on_surface_variant"
+                    android:textSize="14sp" />
+            </RelativeLayout>
 
-            <!-- User Email -->
-            <TextView
-                android:id="@+id/tvEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:textColor="@color/hyper_on_surface"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvNombre" />
-
-            <!-- ==================== Profile Card ==================== -->
-
+            <!-- ==================== Contact Info Card ==================== -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/profileCard"
-                android:layout_width="0dp"
+                android:id="@+id/contactCard"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
                 app:cardBackgroundColor="@color/hyper_surface"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
+                app:cardElevation="2dp"
                 app:contentPadding="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvEmail">
+                app:strokeColor="@color/hyper_border"
+                app:strokeWidth="1dp">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                    <!-- Card Title -->
-                    <TextView
-                        android:id="@+id/tvCardTitle"
-                        android:layout_width="0dp"
+                    <!-- Email Row -->
+                    <LinearLayout
+                        android:id="@+id/rowEmail"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/perfil_card_title"
-                        android:textColor="@color/hyper_accent"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <FrameLayout
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/spinner_background">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_mail"
+                                android:contentDescription="@null" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/perfil_label_email"
+                                android:textColor="@color/hyper_on_surface_variant"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvEmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/hyper_on_primary"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
 
                     <!-- Divider -->
                     <View
-                        android:id="@+id/cardDivider"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@color/hyper_accent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvCardTitle" />
+                        android:layout_marginVertical="12dp"
+                        android:background="@color/hyper_border" />
 
-                    <!-- Role Label -->
-                    <TextView
-                        android:id="@+id/lblRol"
-                        android:layout_width="wrap_content"
+                    <!-- Phone Row -->
+                    <LinearLayout
+                        android:id="@+id/rowPhone"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/perfil_label_rol"
-                        android:textColor="@color/hyper_on_surface"
-                        android:textSize="12sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/cardDivider" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
-                    <!-- Role Badge -->
-                    <TextView
-                        android:id="@+id/tvRol"
-                        android:layout_width="wrap_content"
+                        <FrameLayout
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/spinner_background">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_phone"
+                                android:contentDescription="@null" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/perfil_label_phone"
+                                android:textColor="@color/hyper_on_surface_variant"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvPhone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/hyper_on_primary"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@color/hyper_border" />
+
+                    <!-- Member Since Row -->
+                    <LinearLayout
+                        android:id="@+id/rowMemberSince"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:background="@drawable/spinner_background"
-                        android:paddingHorizontal="12dp"
-                        android:paddingVertical="4dp"
-                        android:textColor="@color/hyper_accent"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lblRol" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
-                    <!-- Member Since Label -->
-                    <TextView
-                        android:id="@+id/lblMemberSince"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/perfil_label_member_since"
-                        android:textColor="@color/hyper_on_surface"
-                        android:textSize="12sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvRol" />
+                        <FrameLayout
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:background="@drawable/spinner_background">
 
-                    <!-- Member Since Date -->
-                    <TextView
-                        android:id="@+id/tvMemberSince"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/hyper_on_primary"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lblMemberSince" />
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_calendar"
+                                android:contentDescription="@null" />
+                        </FrameLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/perfil_label_member_since"
+                                android:textColor="@color/hyper_on_surface_variant"
+                                android:textSize="11sp" />
+
+                            <TextView
+                                android:id="@+id/tvMemberSince"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/hyper_on_primary"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ==================== Logout Button ==================== -->
+            <!-- ==================== Settings Menu Section ==================== -->
+            <TextView
+                android:id="@+id/tvSectionAjustes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/perfil_section_ajustes"
+                android:textColor="@color/hyper_on_surface_variant"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
+            <!-- Menu Items Container (inflated programmatically) -->
+            <LinearLayout
+                android:id="@+id/menuItemsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:orientation="vertical" />
+
+            <!-- ==================== Logout Button ==================== -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
-                style="@style/Widget.Material3.Button"
-                android:layout_width="0dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:backgroundTint="@color/hyper_error"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                android:icon="@drawable/ic_logout"
                 android:text="@string/perfil_logout"
-                android:textColor="@color/hyper_on_primary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/profileCard" />
+                android:textColor="@color/hyper_error"
+                app:iconTint="@color/hyper_error"
+                app:strokeColor="@color/hyper_error"
+                app:strokeWidth="2dp" />
 
-            <!-- Bottom spacing -->
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnLogout" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
     </ScrollView>
 
 </FrameLayout>

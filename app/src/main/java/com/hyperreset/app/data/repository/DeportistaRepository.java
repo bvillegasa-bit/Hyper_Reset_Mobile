@@ -6,8 +6,10 @@ import android.os.Looper;
 import com.hyperreset.app.data.api.ApiService;
 import com.hyperreset.app.data.api.RetrofitClient;
 import com.hyperreset.app.data.model.ApiResponse;
+import com.hyperreset.app.data.model.CoachResponse;
 import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -91,6 +93,27 @@ public class DeportistaRepository {
         });
     }
 
+    /**
+     * Gets all coaches available in the system.
+     */
+    public void getCoaches(ResourceCallback<List<CoachResponse>> callback) {
+        executor.execute(() -> {
+            Call<ApiResponse<List<CoachResponse>>> call = apiService.getCoaches();
+            call.enqueue(new Callback<ApiResponse<List<CoachResponse>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<CoachResponse>>> call,
+                                       Response<ApiResponse<List<CoachResponse>>> response) {
+                    handleApiResponse(response, callback);
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<CoachResponse>>> call, Throwable t) {
+                    postResult(callback, Resource.error(getErrorMessage(t)));
+                }
+            });
+        });
+    }
+
     // ==================================================================
     // Mutations
     // ==================================================================
@@ -160,7 +183,9 @@ public class DeportistaRepository {
     private String getHttpErrorMessage(int code) {
         switch (code) {
             case 400: return "Datos inv\u00e1lidos. Verifica los campos.";
-            case 401: return "Sesi\u00f3n expirada. Inicia sesi\u00f3n de nuevo.";
+            case 401:
+                SessionManager.notifySessionExpired();
+                return "Sesi\u00f3n expirada. Inicia sesi\u00f3n de nuevo.";
             case 403: return "No tienes permisos para esta acci\u00f3n.";
             case 404: return "El recurso solicitado no existe.";
             default:

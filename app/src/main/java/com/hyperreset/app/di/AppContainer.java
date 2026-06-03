@@ -19,7 +19,7 @@ public class AppContainer {
                 .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                 .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
                 .addInterceptor(new okhttp3.logging.HttpLoggingInterceptor()
-                        .setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.BODY))
+                        .setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.HEADERS))
                 .build();
 
         // Configure Retrofit
