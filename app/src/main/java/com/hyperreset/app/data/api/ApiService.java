@@ -2,14 +2,17 @@ package com.hyperreset.app.data.api;
 
 import com.hyperreset.app.data.model.ApiResponse;
 import com.hyperreset.app.data.model.AuthResponse;
+import com.hyperreset.app.data.model.ChangePasswordRequest;
 import com.hyperreset.app.data.model.CitaResponse;
 import com.hyperreset.app.data.model.CoachResponse;
+import com.hyperreset.app.data.model.DashboardActivityResponse;
 import com.hyperreset.app.data.model.DashboardCoachResponse;
 import com.hyperreset.app.data.model.DashboardDeportistaResponse;
 import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.data.model.LoginRequest;
 import com.hyperreset.app.data.model.MaterialResponse;
 import com.hyperreset.app.data.model.MensajeResponse;
+import com.hyperreset.app.data.model.ProfileUpdateRequest;
 import com.hyperreset.app.data.model.RegisterRequest;
 import com.hyperreset.app.data.model.ReporteResponse;
 import com.hyperreset.app.data.model.ResultadoResponse;
@@ -46,6 +49,12 @@ public interface ApiService {
 
     @GET("auth/profile")
     Call<ApiResponse<AuthResponse>> getProfile();
+
+    @PUT("auth/profile")
+    Call<ApiResponse<AuthResponse>> updateProfile(@Body ProfileUpdateRequest request);
+
+    @PATCH("auth/change-password")
+    Call<ApiResponse<Object>> changePassword(@Body ChangePasswordRequest request);
 
     // ==================================================================
     // Deportistas — /api/deportistas
@@ -203,6 +212,9 @@ public interface ApiService {
 
     @GET("dashboard/coach/{id}")
     Call<ApiResponse<DashboardCoachResponse>> getDashboardCoach(@Path("id") long id);
+
+    @GET("dashboard/actividad")
+    Call<ApiResponse<DashboardActivityResponse>> getActividad(@Query("page") int page, @Query("size") int size);
 
     // ==================================================================
     // Resultados — Tipos de Test con Estado

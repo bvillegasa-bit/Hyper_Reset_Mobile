@@ -5,6 +5,7 @@ import android.app.Application;
 import com.hyperreset.app.data.api.RetrofitClient;
 import com.hyperreset.app.di.AppContainer;
 import com.hyperreset.app.utils.SessionManager;
+import com.hyperreset.app.utils.SettingsManager;
 
 public class HyperResetApplication extends Application {
 
@@ -22,6 +23,17 @@ public class HyperResetApplication extends Application {
         if (savedToken != null && !savedToken.isEmpty()) {
             RetrofitClient.getInstance().setAuthToken(savedToken);
         }
+
+        // Apply persisted settings on startup
+        SettingsManager settingsManager = new SettingsManager(this);
+        String language = settingsManager.getLanguage();
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        if ("en".equals(language)) {
+            config.setLocale(java.util.Locale.ENGLISH);
+        } else {
+            config.setLocale(new java.util.Locale("es", "ES"));
+        }
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
     public AppContainer getAppContainer() {

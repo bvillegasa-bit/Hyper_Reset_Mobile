@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/hyper_background">
+
+    <!-- Loading Indicator -->
+    <ProgressBar
+        android:id="@+id/progressLoading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <!-- Error State -->
+    <LinearLayout
+        android:id="@+id/layoutError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_profile_load_error"
+            android:textColor="@color/hyper_error"
+            android:textSize="16sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRetry"
+            style="@style/Widget.Material3.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/perfil_retry" />
+    </LinearLayout>
+
+    <!-- Form Content -->
+    <ScrollView
+        android:id="@+id/formContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tvEditTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/edit_profile_title"
+                    android:textColor="@color/hyper_on_primary"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/edit_profile_subtitle"
+                android:textColor="@color/hyper_on_surface_variant"
+                android:textSize="14sp" />
+
+            <!-- Form Fields Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/hyper_surface"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:contentPadding="16dp"
+                app:strokeColor="@color/hyper_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Nombres -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilNombres"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="@string/edit_profile_label_nombres"
+                        app:boxStrokeColor="@color/hyper_accent"
+                        app:hintTextColor="@color/hyper_on_surface_variant"
+                        app:startIconDrawable="@drawable/ic_user">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etNombres"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/hyper_on_primary"
+                            android:textColorHint="@color/hyper_on_surface_variant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Apellidos -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilApellidos"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="@string/edit_profile_label_apellidos"
+                        app:boxStrokeColor="@color/hyper_accent"
+                        app:hintTextColor="@color/hyper_on_surface_variant"
+                        app:startIconDrawable="@drawable/ic_user">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etApellidos"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:textColor="@color/hyper_on_primary"
+                            android:textColorHint="@color/hyper_on_surface_variant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Correo Electrónico -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCorreo"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="@string/edit_profile_label_correo"
+                        app:boxStrokeColor="@color/hyper_accent"
+                        app:hintTextColor="@color/hyper_on_surface_variant"
+                        app:startIconDrawable="@drawable/ic_mail">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCorreo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/hyper_on_primary"
+                            android:textColorHint="@color/hyper_on_surface_variant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Teléfono -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilTelefono"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="@string/edit_profile_label_telefono"
+                        app:boxStrokeColor="@color/hyper_accent"
+                        app:hintTextColor="@color/hyper_on_surface_variant"
+                        app:startIconDrawable="@drawable/ic_phone">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etTelefono"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="phone"
+                            android:textColor="@color/hyper_on_primary"
+                            android:textColorHint="@color/hyper_on_surface_variant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Dirección -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilDireccion"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="@string/edit_profile_label_direccion"
+                        app:boxStrokeColor="@color/hyper_accent"
+                        app:hintTextColor="@color/hyper_on_surface_variant"
+                        app:startIconDrawable="@drawable/ic_profile">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDireccion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPostalAddress"
+                            android:textColor="@color/hyper_on_primary"
+                            android:textColorHint="@color/hyper_on_surface_variant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Fecha de Nacimiento -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilFechaNacimiento"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
+                        android:hint="@string/edit_profile_label_fecha_nacimiento"
+                        android:focusable="false"
+                        app:boxStrokeColor="@color/hyper_accent"
+                        app:endIconDrawable="@drawable/ic_calendar"
+                        app:endIconMode="custom"
+                        app:hintTextColor="@color/hyper_on_surface_variant"
+                        app:startIconDrawable="@drawable/ic_calendar">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etFechaNacimiento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:textColor="@color/hyper_on_primary"
+                            android:textColorHint="@color/hyper_on_surface_variant"
+                            android:textSize="16sp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="32dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCancel"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/edit_profile_cancel"
+                    android:textColor="@color/hyper_on_surface_variant"
+                    app:strokeColor="@color/hyper_border"
+                    app:strokeWidth="2dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSave"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="@string/edit_profile_save" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Saving overlay (shown during update) -->
+    <FrameLayout
+        android:id="@+id/layoutSaving"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/hyper_background"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                style="?android:attr/progressBarStyle"
+                android:layout_width="48dp"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/edit_profile_saving"
+                android:textColor="@color/hyper_on_surface_variant"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

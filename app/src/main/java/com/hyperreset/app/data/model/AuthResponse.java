@@ -41,6 +41,15 @@ public class AuthResponse {
     @SerializedName("telefono")
     private String telefono;
 
+    @SerializedName("apellidos")
+    private String apellidos;
+
+    @SerializedName("direccion")
+    private String direccion;
+
+    @SerializedName("fechaNacimiento")
+    private String fechaNacimiento;
+
     public String getToken() {
         return token;
     }
@@ -123,5 +132,29 @@ public class AuthResponse {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 }

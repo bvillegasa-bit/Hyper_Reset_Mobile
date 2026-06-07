@@ -1,7 +1,8 @@
-# Skill Registry — Proyecto_hiper_reset
+# Skill Registry — hyper-reset (Proyecto_hiper_reset)
 
-Generated: 2026-05-26
+Generated: 2026-06-06
 Mode: engram
+Updated by: sdd-init
 
 ## Available Skills
 
@@ -36,4 +37,4 @@ No project-level convention files found (no CLAUDE.md, AGENTS.md, .cursorrules, 
 
 ## Tags
 
-android, java, gradle-kts, mvvm-planned, retro fit-planned, hilt-planned, spring-boot-planned
+android, java, gradle-kts, mvvm, retrofit, viewmodel, fragments, spring-boot, spring-security, jpa, mysql, jwt, rest-api

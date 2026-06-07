@@ -347,6 +347,24 @@
     <string name="perfil_menu_privacy">Privacidad y Seguridad</string>
     <string name="perfil_menu_settings">Configuración</string>
 
+    <!-- Edit Profile -->
+    <string name="edit_profile_title">Editar Perfil</string>
+    <string name="edit_profile_subtitle">Actualiza tus datos personales</string>
+    <string name="edit_profile_label_nombres">Nombres</string>
+    <string name="edit_profile_label_apellidos">Apellidos</string>
+    <string name="edit_profile_label_correo">Correo Electrónico</string>
+    <string name="edit_profile_error_invalid_correo">Ingresa un correo válido</string>
+    <string name="edit_profile_label_telefono">Teléfono</string>
+    <string name="edit_profile_label_direccion">Dirección</string>
+    <string name="edit_profile_label_fecha_nacimiento">Fecha de Nacimiento</string>
+    <string name="edit_profile_save">Guardar Cambios</string>
+    <string name="edit_profile_cancel">Cancelar</string>
+    <string name="edit_profile_saving">Guardando…</string>
+    <string name="edit_profile_success">Perfil actualizado exitosamente</string>
+    <string name="edit_profile_load_error">Error al cargar datos del perfil</string>
+    <string name="edit_profile_error_empty_nombres">El nombre es obligatorio</string>
+    <string name="edit_profile_error_empty_apellidos">Los apellidos son obligatorios</string>
+
     <!-- Months (Spanish) -->
     <string name="month_enero">Enero</string>
     <string name="month_febrero">Febrero</string>
@@ -390,4 +408,37 @@
     <string name="test_bateria_completado">Completado</string>
     <string name="test_bateria_coming_soon">Próximamente</string>
 
+    <!-- Change Password -->
+    <string name="change_password_title">Cambiar Contraseña</string>
+    <string name="change_password_subtitle">Actualiza tu contraseña de acceso</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="password_mismatch">Las contraseñas no coinciden</string>
+    <string name="password_too_short">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="same_password">La nueva contraseña debe ser diferente a la actual</string>
+    <string name="password_changed">Contraseña cambiada exitosamente</string>
+    <string name="wrong_current_password">Contraseña actual incorrecta</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Configuración</string>
+    <string name="settings_subtitle">Personaliza tu experiencia en la aplicación</string>
+    <string name="settings_section_appearance">Apariencia</string>
+    <string name="settings_section_language">Idioma</string>
+    <string name="settings_section_notifications">Notificaciones</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Oscuro</string>
+    <string name="settings_theme_system">Sistema</string>
+    <string name="settings_lang_es">Español</string>
+    <string name="settings_lang_en">English</string>
+
+    <!-- Actividad List -->
+    <string name="actividad_list_title">Actividad Reciente</string>
+    <string name="actividad_list_subtitle">Historial completo de actividad</string>
+    <string name="actividad_list_empty">No hay actividad registrada</string>
+    <string name="actividad_list_error">Error al cargar la actividad</string>
+    <string name="actividad_list_retry">Reintentar</string>
+    <string name="actividad_list_refresh">Actualizar</string>
 </resources>

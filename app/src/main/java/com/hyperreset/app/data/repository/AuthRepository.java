@@ -7,7 +7,9 @@ import com.hyperreset.app.data.api.ApiService;
 import com.hyperreset.app.data.api.RetrofitClient;
 import com.hyperreset.app.data.model.ApiResponse;
 import com.hyperreset.app.data.model.AuthResponse;
+import com.hyperreset.app.data.model.ChangePasswordRequest;
 import com.hyperreset.app.data.model.LoginRequest;
+import com.hyperreset.app.data.model.ProfileUpdateRequest;
 import com.hyperreset.app.data.model.RegisterRequest;
 import com.hyperreset.app.utils.Resource;
 import com.hyperreset.app.utils.SessionManager;
@@ -170,6 +172,103 @@ public class AuthRepository {
                 @Override
                 public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
                     postResult(callback, Resource.error("No se puede conectar al servidor"));
+                }
+            });
+        });
+    }
+
+    /**
+     * Updates the authenticated user's profile.
+     *
+     * @param request  The profile update data (nombres, apellidos, correo, telefono, direccion, fechaNacimiento)
+     * @param callback Callback to receive the updated AuthResponse on the main thread
+     */
+    public void updateProfile(ProfileUpdateRequest request, ResourceCallback<AuthResponse> callback) {
+        executor.execute(() -> {
+            Call<ApiResponse<AuthResponse>> call = apiService.updateProfile(request);
+            call.enqueue(new Callback<ApiResponse<AuthResponse>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<AuthResponse>> call,
+                                       Response<ApiResponse<AuthResponse>> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                        postResult(callback, Resource.success(response.body().getData()));
+                    } else if (response.code() == 401) {
+                        SessionManager.notifySessionExpired();
+                        RetrofitClient.getInstance().clearAuthToken();
+                        postResult(callback, Resource.error("Sesión expirada. Inicia sesión de nuevo."));
+                    } else if (response.code() == 400) {
+                        String msg = response.body() != null
+                                ? response.body().getMessage()
+                                : "Datos inválidos. Verifica los campos.";
+                        postResult(callback, Resource.error(msg));
+                    } else if (response.code() == 404) {
+                        postResult(callback, Resource.error("Servicio no disponible temporalmente."));
+                    } else if (response.code() == 409) {
+                        postResult(callback, Resource.error("El correo ya está registrado."));
+                    } else {
+                        postResult(callback, Resource.error("Error del servidor. Intenta más tarde."));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<AuthResponse>> call, Throwable t) {
+                    String msg = "Servidor no disponible. Intenta más tarde.";
+                    if (t instanceof java.net.ConnectException) {
+                        msg = "Servidor no disponible. Intenta más tarde.";
+                    } else if (t instanceof java.net.SocketTimeoutException) {
+                        msg = "La conexión ha expirado. Intenta de nuevo.";
+                    }
+                    postResult(callback, Resource.error(msg));
+                }
+            });
+        });
+    }
+
+    /**
+     * Changes the authenticated user's password.
+     *
+     * @param request  The password change data (currentPassword, newPassword, confirmPassword)
+     * @param callback Callback to receive the result on the main thread
+     */
+    public void changePassword(ChangePasswordRequest request, ResourceCallback<Object> callback) {
+        executor.execute(() -> {
+            Call<ApiResponse<Object>> call = apiService.changePassword(request);
+            call.enqueue(new Callback<ApiResponse<Object>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<Object>> call,
+                                       Response<ApiResponse<Object>> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().isSuccess()) {
+                        mainHandler.post(() -> callback.onResult(Resource.success(response.body().getData())));
+                    } else if (response.code() == 401) {
+                        SessionManager.notifySessionExpired();
+                        RetrofitClient.getInstance().clearAuthToken();
+                        mainHandler.post(() -> callback.onResult(
+                                Resource.error("Sesión expirada. Inicia sesión de nuevo.")));
+                    } else if (response.code() == 400) {
+                        String msg = response.body() != null
+                                ? response.body().getMessage()
+                                : "La contraseña actual no es correcta.";
+                        mainHandler.post(() -> callback.onResult(Resource.error(msg)));
+                    } else if (response.code() == 404) {
+                        mainHandler.post(() -> callback.onResult(
+                                Resource.error("Funcionalidad no disponible")));
+                    } else {
+                        mainHandler.post(() -> callback.onResult(
+                                Resource.error("Error del servidor. Intenta más tarde.")));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                    final String msg;
+                    if (t instanceof java.net.SocketTimeoutException) {
+                        msg = "La conexión ha expirado. Intenta de nuevo.";
+                    } else if (t instanceof java.net.ConnectException) {
+                        msg = "Servidor no disponible. Intenta más tarde.";
+                    } else {
+                        msg = "Servidor no disponible. Intenta más tarde.";
+                    }
+                    mainHandler.post(() -> callback.onResult(Resource.error(msg)));
                 }
             });
         });

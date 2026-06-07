@@ -123,16 +123,28 @@ public class PerfilFragment extends Fragment {
     private void onMenuItemClick(int index) {
         switch (index) {
             case 0: // Editar Perfil
-                Toast.makeText(requireContext(), "Editar Perfil - Próximamente", Toast.LENGTH_SHORT).show();
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new EditProfileFragment())
+                        .addToBackStack("edit_profile")
+                        .commit();
                 break;
             case 1: // Notificaciones
                 Toast.makeText(requireContext(), "Notificaciones - Próximamente", Toast.LENGTH_SHORT).show();
                 break;
-            case 2: // Privacidad y Seguridad
-                Toast.makeText(requireContext(), "Privacidad y Seguridad - Próximamente", Toast.LENGTH_SHORT).show();
+            case 2: // Privacidad y Seguridad → Cambiar Contraseña
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new ChangePasswordFragment())
+                        .addToBackStack("change_password")
+                        .commit();
                 break;
             case 3: // Configuración
-                Toast.makeText(requireContext(), "Configuración - Próximamente", Toast.LENGTH_SHORT).show();
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new SettingsFragment())
+                        .addToBackStack("settings")
+                        .commit();
                 break;
         }
     }

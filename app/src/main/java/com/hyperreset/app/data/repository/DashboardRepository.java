@@ -6,6 +6,7 @@ import android.os.Looper;
 import com.hyperreset.app.data.api.ApiService;
 import com.hyperreset.app.data.api.RetrofitClient;
 import com.hyperreset.app.data.model.ApiResponse;
+import com.hyperreset.app.data.model.DashboardActivityResponse;
 import com.hyperreset.app.data.model.DashboardCoachResponse;
 import com.hyperreset.app.data.model.DashboardDeportistaResponse;
 import com.hyperreset.app.utils.Resource;
@@ -85,6 +86,36 @@ public class DashboardRepository {
                 @Override
                 public void onFailure(Call<ApiResponse<DashboardCoachResponse>> call, Throwable t) {
                     postResult(callback, Resource.error(getErrorMessage(t)));
+                }
+            });
+        });
+    }
+
+    // ==================================================================
+    // Actividad (paginated)
+    // ==================================================================
+
+    public void getActividad(int page, int size,
+                              ResourceCallback<DashboardActivityResponse> callback) {
+        executor.execute(() -> {
+            Call<ApiResponse<DashboardActivityResponse>> call = apiService.getActividad(page, size);
+            call.enqueue(new Callback<ApiResponse<DashboardActivityResponse>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<DashboardActivityResponse>> call,
+                                       Response<ApiResponse<DashboardActivityResponse>> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body().getData() != null) {
+                        postResult(callback, Resource.success(response.body().getData()));
+                    } else if (response.code() == 401) {
+                        SessionManager.notifySessionExpired();
+                        postResult(callback, Resource.error("Sesi\u00f3n expirada"));
+                    } else {
+                        postResult(callback, Resource.error("Error al cargar actividad"));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<DashboardActivityResponse>> call, Throwable t) {
+                    postResult(callback, Resource.error("Error de red: " + t.getMessage()));
                 }
             });
         });

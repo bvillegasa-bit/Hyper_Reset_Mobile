@@ -558,9 +558,8 @@ public class HomeDashboardFragment extends Fragment {
             btnViewReports.setOnClickListener(v -> navigateToFragment(new DeportistaListFragment()));
             btnMySchedule.setOnClickListener(v -> navigateToFragment(new CitaListFragment()));
 
-            tvViewAllActivity.setOnClickListener(v -> {
-                // TODO: Navigate to full activity list
-            });
+            tvViewAllActivity.setOnClickListener(v ->
+                    navigateToFragment(new com.hyperreset.app.ui.dashboard.ActividadListFragment()));
         } else {
             btnRutinas.setOnClickListener(v -> navigateToFragment(new TestListFragment()));
             btnProximaCita.setOnClickListener(v -> navigateToFragment(new CitaListFragment()));

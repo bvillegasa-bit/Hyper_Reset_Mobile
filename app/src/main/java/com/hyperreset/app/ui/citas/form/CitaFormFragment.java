@@ -127,17 +127,7 @@ public class CitaFormFragment extends Fragment {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinnerDeportista.setAdapter(adapter);
 
-        spinnerDeportista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedDeportistaPosition = position - 1;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                selectedDeportistaPosition = -1;
-            }
-        });
+        // Listener is set by each observer (COACH or DEPORTISTA) with the appropriate variable
     }
 
     private void setupFechaPicker() {
@@ -245,6 +235,18 @@ public class CitaFormFragment extends Fragment {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                         requireContext(), R.layout.spinner_item, items);
                 adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                // Set deportista-selection listener before setting adapter to avoid stale listener firing
+                spinnerDeportista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedDeportistaPosition = position - 1;
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        selectedDeportistaPosition = -1;
+                    }
+                });
                 spinnerDeportista.setAdapter(adapter);
             }
         });
@@ -263,8 +265,7 @@ public class CitaFormFragment extends Fragment {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
                         requireContext(), R.layout.spinner_item, items);
                 adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                spinnerDeportista.setAdapter(adapter);
-                // Set up item selection for coach path
+                // Set coach-selection listener before setting adapter to avoid stale listener firing
                 spinnerDeportista.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -276,6 +277,7 @@ public class CitaFormFragment extends Fragment {
                         selectedCoachPosition = -1;
                     }
                 });
+                spinnerDeportista.setAdapter(adapter);
             }
         });
 
