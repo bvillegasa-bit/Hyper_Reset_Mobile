@@ -25,8 +25,6 @@ import com.hyperreset.app.ui.citas.list.CitaListFragment;
 import com.hyperreset.app.ui.custom.GradientCardView;
 import com.hyperreset.app.ui.custom.WeeklyBarChartView;
 import com.hyperreset.app.ui.deportistas.form.DeportistaFormFragment;
-import com.hyperreset.app.ui.deportistas.list.DeportistaListFragment;
-import com.hyperreset.app.ui.tests.create.TestCreateFragment;
 import com.hyperreset.app.ui.tests.list.TestListFragment;
 import com.hyperreset.app.utils.Resource;
 import com.hyperreset.app.utils.SessionManager;
@@ -85,7 +83,6 @@ public class HomeDashboardFragment extends Fragment {
     private TextView tvMetricPendingTests;
     private TextView tvMetricReportsCount;
     private CardView btnNewPatient;
-    private CardView btnRegisterTest;
     private CardView btnViewReports;
     private CardView btnMySchedule;
     private LinearLayout activityContainer;
@@ -158,7 +155,6 @@ public class HomeDashboardFragment extends Fragment {
         tvMetricPendingTests = view.findViewById(R.id.tvMetricPendingTests);
         tvMetricReportsCount = view.findViewById(R.id.tvMetricReportsCount);
         btnNewPatient = view.findViewById(R.id.btnNewPatient);
-        btnRegisterTest = view.findViewById(R.id.btnRegisterTest);
         btnViewReports = view.findViewById(R.id.btnViewReports);
         btnMySchedule = view.findViewById(R.id.btnMySchedule);
         activityContainer = view.findViewById(R.id.activityContainer);
@@ -554,8 +550,11 @@ public class HomeDashboardFragment extends Fragment {
 
         if ("COACH".equals(userRole)) {
             btnNewPatient.setOnClickListener(v -> navigateToFragment(new DeportistaFormFragment()));
-            btnRegisterTest.setOnClickListener(v -> navigateToFragment(new TestCreateFragment()));
-            btnViewReports.setOnClickListener(v -> navigateToFragment(new DeportistaListFragment()));
+            btnViewReports.setOnClickListener(v -> {
+                if (getActivity() instanceof HomeActivity) {
+                    ((HomeActivity) getActivity()).selectNavigationItem(R.id.navigation_reports);
+                }
+            });
             btnMySchedule.setOnClickListener(v -> navigateToFragment(new CitaListFragment()));
 
             tvViewAllActivity.setOnClickListener(v ->

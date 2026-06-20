@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -108,18 +107,8 @@ public class TestListFragment extends Fragment {
 
     private void setupRecyclerView() {
         adapter = new TestBateriaAdapter(new ArrayList<>(), test -> {
-            SessionManager sm = new SessionManager(requireContext());
-            if (sm.isDeportista()) {
-                // DEPORTISTA: completed → view detail, pending → coming soon
-                if (test.isCompletado()) {
-                    navigateToDetail(test);
-                } else {
-                    showComingSoon(test);
-                }
-            } else {
-                // COACH: always navigate to detail
-                navigateToDetail(test);
-            }
+            // Both DEPORTISTA and COACH navigate to detail
+            navigateToDetail(test);
         });
         rvTests.setAdapter(adapter);
     }
@@ -182,6 +171,9 @@ public class TestListFragment extends Fragment {
         if (test.getFechaUltimo() != null) {
             args.putString("fechaUltimo", test.getFechaUltimo());
         }
+        if (test.getCalificacion() != null && !test.getCalificacion().isEmpty()) {
+            args.putString("calificacion", test.getCalificacion());
+        }
         TestDetailFragment detailFragment = new TestDetailFragment();
         detailFragment.setArguments(args);
         requireActivity().getSupportFragmentManager()
@@ -189,12 +181,6 @@ public class TestListFragment extends Fragment {
                 .replace(R.id.fragment_container, detailFragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    private void showComingSoon(TipoTestEstadoResponse test) {
-        android.widget.Toast.makeText(requireContext(),
-                "Próximamente: " + test.getNombre(),
-                android.widget.Toast.LENGTH_SHORT).show();
     }
 
     private void navigateToCreate() {

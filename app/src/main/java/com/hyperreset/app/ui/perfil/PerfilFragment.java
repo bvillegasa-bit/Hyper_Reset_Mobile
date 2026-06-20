@@ -10,7 +10,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.hyperreset.app.ui.notificaciones.NotificacionesFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -130,7 +131,11 @@ public class PerfilFragment extends Fragment {
                         .commit();
                 break;
             case 1: // Notificaciones
-                Toast.makeText(requireContext(), "Notificaciones - Próximamente", Toast.LENGTH_SHORT).show();
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, new NotificacionesFragment())
+                        .addToBackStack("notificaciones")
+                        .commit();
                 break;
             case 2: // Privacidad y Seguridad → Cambiar Contraseña
                 requireActivity().getSupportFragmentManager()

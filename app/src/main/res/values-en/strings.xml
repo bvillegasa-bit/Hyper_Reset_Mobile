@@ -231,6 +231,16 @@
     <string name="nav_schedule">Schedule</string>
     <string name="nav_messages">Messages</string>
 
+    <!-- Notificaciones -->
+    <string name="notificaciones_title">Notifications</string>
+    <string name="notificaciones_empty">You have no notifications</string>
+    <string name="notificaciones_error">Error loading notifications</string>
+    <string name="notificaciones_retry">Retry</string>
+    <string name="notificaciones_empty_action">Go to Messages</string>
+    <string name="notificacion_mensaje">New message from %s</string>
+    <string name="notificacion_cita">Upcoming appointment: %s</string>
+    <string name="deportista_selector_hint">Select an athlete</string>
+
     <!-- Home Dashboard -->
     <string name="home_greeting">Hello, %s!</string>
     <string name="home_coach_subtitle">Coach control panel</string>

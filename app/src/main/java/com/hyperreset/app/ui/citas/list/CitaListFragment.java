@@ -1,5 +1,6 @@
 package com.hyperreset.app.ui.citas.list;
 
+import com.google.android.material.color.MaterialColors;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -186,6 +188,16 @@ public class CitaListFragment extends Fragment {
     }
 
     /**
+     * Resolve a theme attribute color to a concrete color value.
+     * Uses MaterialColors to properly handle Material theme attributes (like colorOnSurfaceVariant)
+     * across all API levels.
+     */
+    private int getThemeColor(int attrRes) {
+        return MaterialColors.getColor(requireContext(), attrRes,
+            ContextCompat.getColor(requireContext(), R.color.hyper_on_surface));
+    }
+
+    /**
      * Update the 7 day buttons with dates from the current week.
      */
     private void updateDayButtonsFromViewModel() {
@@ -215,13 +227,13 @@ public class CitaListFragment extends Fragment {
             if (dateStr.equals(selectedDay)) {
                 // Selected day: gradient background, white text
                 dayView.setBackgroundResource(R.drawable.bg_card_gradient_primary_accent);
-                tvAbbr.setTextColor(0xFFFFFFFF);
-                tvDate.setTextColor(0xFFFFFFFF);
+                tvAbbr.setTextColor(ContextCompat.getColor(requireContext(), R.color.hyper_on_primary));
+                tvDate.setTextColor(ContextCompat.getColor(requireContext(), R.color.hyper_on_primary));
             } else {
                 // Non-selected: surface background, muted text
                 dayView.setBackgroundResource(R.drawable.bg_day_button_default);
-                tvAbbr.setTextColor(requireContext().getColor(R.color.hyper_on_surface_variant));
-                tvDate.setTextColor(requireContext().getColor(R.color.hyper_on_surface));
+                tvAbbr.setTextColor(getThemeColor(com.google.android.material.R.attr.colorOnSurfaceVariant));
+                tvDate.setTextColor(getThemeColor(com.google.android.material.R.attr.colorOnSurface));
             }
         }
 
@@ -248,12 +260,12 @@ public class CitaListFragment extends Fragment {
 
             if (i == selectedIndex || (dateStr != null && dateStr.equals(viewModel.getSelectedDay().getValue()))) {
                 dayView.setBackgroundResource(R.drawable.bg_card_gradient_primary_accent);
-                tvAbbr.setTextColor(0xFFFFFFFF);
-                tvDate.setTextColor(0xFFFFFFFF);
+                tvAbbr.setTextColor(ContextCompat.getColor(requireContext(), R.color.hyper_on_primary));
+                tvDate.setTextColor(ContextCompat.getColor(requireContext(), R.color.hyper_on_primary));
             } else {
                 dayView.setBackgroundResource(R.drawable.bg_day_button_default);
-                tvAbbr.setTextColor(requireContext().getColor(R.color.hyper_on_surface_variant));
-                tvDate.setTextColor(requireContext().getColor(R.color.hyper_on_surface));
+                tvAbbr.setTextColor(getThemeColor(com.google.android.material.R.attr.colorOnSurfaceVariant));
+                tvDate.setTextColor(getThemeColor(com.google.android.material.R.attr.colorOnSurface));
             }
         }
     }

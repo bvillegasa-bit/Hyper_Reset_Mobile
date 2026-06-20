@@ -33,6 +33,9 @@ public class TipoTestEstadoResponse {
     @SerializedName("fechaUltimo")
     private String fechaUltimo;
 
+    @SerializedName("calificacion")
+    private String calificacion;
+
     // Getters and Setters
 
     public String getTipoTest() { return tipoTest; }
@@ -58,4 +61,7 @@ public class TipoTestEstadoResponse {
 
     public String getFechaUltimo() { return fechaUltimo; }
     public void setFechaUltimo(String fechaUltimo) { this.fechaUltimo = fechaUltimo; }
+
+    public String getCalificacion() { return calificacion; }
+    public void setCalificacion(String calificacion) { this.calificacion = calificacion; }
 }

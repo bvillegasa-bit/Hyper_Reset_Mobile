@@ -17,6 +17,58 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
+    <!-- ============================================================ -->
+    <!-- DEPORTISTA SELECTOR SECTION (visible when no deportistaId)   -->
+    <!-- ============================================================ -->
+
+    <LinearLayout
+        android:id="@+id/layoutDeportistaSelector"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvDeportistaSelectorHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/deportista_selector_hint"
+            android:textColor="@color/hyper_on_surface"
+            android:textSize="16sp" />
+
+        <!-- Deportistas list -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDeportistas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1" />
+
+        <!-- Deportistas empty state -->
+        <LinearLayout
+            android:id="@+id/layoutDeportistaEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deportistas_list_empty"
+                android:textColor="@color/hyper_on_surface"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- ============================================================ -->
+    <!-- REPORTES SECTION (visible when deportistaId is set)          -->
+    <!-- ============================================================ -->
+
     <!-- Loading -->
     <ProgressBar
         android:id="@+id/progressLoading"
@@ -72,7 +124,7 @@
             app:cornerRadius="8dp" />
     </LinearLayout>
 
-    <!-- RecyclerView -->
+    <!-- RecyclerView for reports -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReportes"
         android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.hyperreset.app.ui.perfil;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,11 @@ import android.widget.RadioGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+
+import java.util.Locale;
 
 import com.hyperreset.app.R;
 import com.hyperreset.app.utils.SettingsManager;
@@ -87,24 +91,34 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setupListeners() {
-        // Theme radio group — save on change
+        // Theme radio group — save and apply immediately
         radioGroupTheme.setOnCheckedChangeListener((group, checkedId) -> {
+            int mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
             if (checkedId == R.id.radioThemeLight) {
                 settingsManager.setThemeMode("light");
+                mode = AppCompatDelegate.MODE_NIGHT_NO;
             } else if (checkedId == R.id.radioThemeDark) {
                 settingsManager.setThemeMode("dark");
+                mode = AppCompatDelegate.MODE_NIGHT_YES;
             } else if (checkedId == R.id.radioThemeSystem) {
                 settingsManager.setThemeMode("system");
+                mode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
             }
+            AppCompatDelegate.setDefaultNightMode(mode);
+            requireActivity().recreate();
         });
 
-        // Language radio group — save on change
+        // Language radio group — save and apply immediately
         radioGroupLanguage.setOnCheckedChangeListener((group, checkedId) -> {
-            if (checkedId == R.id.radioLangEn) {
-                settingsManager.setLanguage("en");
-            } else {
-                settingsManager.setLanguage("es");
-            }
+            String langCode = (checkedId == R.id.radioLangEn) ? "en" : "es";
+            settingsManager.setLanguage(langCode);
+
+            Locale locale = langCode.equals("en") ? Locale.ENGLISH : new Locale("es", "ES");
+            Locale.setDefault(locale);
+            Configuration config = getResources().getConfiguration();
+            config.setLocale(locale);
+            getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+            requireActivity().recreate();
         });
 
         // Notifications toggle — save on change

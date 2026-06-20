@@ -56,6 +56,7 @@ public class TestDetailFragment extends Fragment {
     private TextView tvBatteryLastValue;
     private TextView tvBatteryDate;
     private TextView tvBatteryUnidad;
+    private TextView tvBatteryCalificacion;
 
     @Nullable
     @Override
@@ -110,6 +111,7 @@ public class TestDetailFragment extends Fragment {
         tvBatteryLastValue = view.findViewById(R.id.tvBatteryLastValue);
         tvBatteryDate = view.findViewById(R.id.tvBatteryDate);
         tvBatteryUnidad = view.findViewById(R.id.tvBatteryUnidad);
+        tvBatteryCalificacion = view.findViewById(R.id.tvBatteryCalificacion);
 
         rvResultados.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -157,6 +159,16 @@ public class TestDetailFragment extends Fragment {
             tvBatteryLastValue.setText("--");
             tvBatteryUnidad.setText("");
             tvBatteryDate.setText("");
+        }
+
+        // Show calificación badge if available
+        String calificacion = args.getString("calificacion", null);
+        if (calificacion != null && !calificacion.trim().isEmpty()) {
+            tvBatteryCalificacion.setVisibility(View.VISIBLE);
+            tvBatteryCalificacion.setText(calificacion);
+            tvBatteryCalificacion.setTextColor(getColorForCalificacion(calificacion));
+        } else {
+            tvBatteryCalificacion.setVisibility(View.GONE);
         }
 
         tvDate.setVisibility(View.GONE);
@@ -294,6 +306,20 @@ public class TestDetailFragment extends Fragment {
             case "DINAMOMETRIA": return getString(R.string.test_type_dinamometria);
             case "ANDERSEN": return getString(R.string.test_type_andersen);
             default: return tipoTest;
+        }
+    }
+
+    /**
+     * Return a theme-appropriate color for the given calificación text.
+     */
+    private int getColorForCalificacion(String calificacion) {
+        if (calificacion == null) return ContextCompat.getColor(requireContext(), R.color.hyper_on_primary);
+        switch (calificacion) {
+            case "EXCELENTE": return ContextCompat.getColor(requireContext(), R.color.hyper_excelente);
+            case "BUENO":     return ContextCompat.getColor(requireContext(), R.color.hyper_bueno);
+            case "REGULAR":   return ContextCompat.getColor(requireContext(), R.color.hyper_regular);
+            case "DEFICIENTE": return ContextCompat.getColor(requireContext(), R.color.hyper_deficiente);
+            default:          return ContextCompat.getColor(requireContext(), R.color.hyper_on_primary);
         }
     }
 

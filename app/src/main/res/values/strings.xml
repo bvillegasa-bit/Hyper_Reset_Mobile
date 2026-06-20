@@ -434,6 +434,16 @@
     <string name="settings_lang_es">Español</string>
     <string name="settings_lang_en">English</string>
 
+    <!-- Notificaciones -->
+    <string name="notificaciones_title">Notificaciones</string>
+    <string name="notificaciones_empty">No tienes notificaciones</string>
+    <string name="notificaciones_error">Error al cargar notificaciones</string>
+    <string name="notificaciones_retry">Reintentar</string>
+    <string name="notificaciones_empty_action">Ir a Mensajes</string>
+    <string name="notificacion_mensaje">Nuevo mensaje de %s</string>
+    <string name="notificacion_cita">Próxima cita: %s</string>
+    <string name="deportista_selector_hint">Seleccionar deportista</string>
+
     <!-- Actividad List -->
     <string name="actividad_list_title">Actividad Reciente</string>
     <string name="actividad_list_subtitle">Historial completo de actividad</string>

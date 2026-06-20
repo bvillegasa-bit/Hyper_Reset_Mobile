@@ -14,27 +14,39 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.hyperreset.app.R;
+import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.data.model.ReporteResponse;
 import com.hyperreset.app.ui.reportes.detail.ReporteDetailFragment;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.List;
 
 /**
  * Fragment that lists all reports for a given deportista.
- * Accessed from DeportistaDetailFragment via "Ver Reportes" button.
- * Pass deportistaId as argument.
+ * Supports two modes:
+ * 1. Direct mode (deportistaId passed in args): Load and show reports directly
+ * 2. Selector mode (no deportistaId): First show a deportista list to select from
  */
 public class ReporteListFragment extends Fragment {
 
     private ReporteListViewModel viewModel;
-    private long deportistaId;
+    private SessionManager sessionManager;
+    private long deportistaId = -1;
+    private boolean modoSeleccion = true;
 
+    // Deportista selector views
+    private View layoutDeportistaSelector;
+    private RecyclerView rvDeportistas;
+    private View layoutDeportistaEmpty;
+    private DeportistaAdapter deportistaAdapter;
+
+    // Reportes views
     private RecyclerView rvReportes;
     private View layoutEmpty;
     private View layoutError;
     private View progressLoading;
-    private ReporteAdapter adapter;
+    private ReporteAdapter reporteAdapter;
 
     @Nullable
     @Override
@@ -52,18 +64,35 @@ public class ReporteListFragment extends Fragment {
             deportistaId = args.getLong("deportistaId", -1);
         }
 
+        sessionManager = new SessionManager(requireContext());
         viewModel = new ReporteListViewModel();
 
         initViews(view);
-        setupRecyclerView();
+        setupRecyclerViews();
         setupObservers();
+        setupBackHandler();
 
         if (deportistaId > 0) {
+            modoSeleccion = false;
+            showReportesMode();
             viewModel.loadReportes(deportistaId);
+        } else {
+            modoSeleccion = true;
+            showDeportistaSelector();
+            long coachId = sessionManager.getUserId();
+            if (coachId > 0) {
+                viewModel.loadDeportistasByCoach(coachId);
+            }
         }
     }
 
     private void initViews(View view) {
+        // Deportista selector
+        layoutDeportistaSelector = view.findViewById(R.id.layoutDeportistaSelector);
+        rvDeportistas = view.findViewById(R.id.rvDeportistas);
+        layoutDeportistaEmpty = view.findViewById(R.id.layoutDeportistaEmpty);
+
+        // Reportes
         rvReportes = view.findViewById(R.id.rvReportes);
         layoutEmpty = view.findViewById(R.id.layoutEmpty);
         layoutError = view.findViewById(R.id.layoutError);
@@ -76,9 +105,21 @@ public class ReporteListFragment extends Fragment {
         });
     }
 
-    private void setupRecyclerView() {
+    private void setupRecyclerViews() {
+        // Deportista adapter
+        rvDeportistas.setLayoutManager(new LinearLayoutManager(requireContext()));
+        deportistaAdapter = new DeportistaAdapter(deportista -> {
+            // User selected a deportista → load reports
+            deportistaId = deportista.getId();
+            modoSeleccion = false;
+            showReportesMode();
+            viewModel.loadReportes(deportistaId);
+        });
+        rvDeportistas.setAdapter(deportistaAdapter);
+
+        // Reporte adapter
         rvReportes.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new ReporteAdapter(reporte -> {
+        reporteAdapter = new ReporteAdapter(reporte -> {
             Bundle args = new Bundle();
             args.putLong("reporteId", reporte.getId());
             ReporteDetailFragment detailFragment = new ReporteDetailFragment();
@@ -89,10 +130,43 @@ public class ReporteListFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         });
-        rvReportes.setAdapter(adapter);
+        rvReportes.setAdapter(reporteAdapter);
     }
 
     private void setupObservers() {
+        // Observe deportistas list
+        viewModel.getDeportistas().observe(getViewLifecycleOwner(), resource -> {
+            if (resource == null) return;
+
+            progressLoading.setVisibility(View.GONE);
+            layoutDeportistaEmpty.setVisibility(View.GONE);
+
+            switch (resource.status) {
+                case LOADING:
+                    if (modoSeleccion) {
+                        progressLoading.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case SUCCESS:
+                    if (resource.data != null && !resource.data.isEmpty()) {
+                        deportistaAdapter.updateData(resource.data);
+                    } else {
+                        layoutDeportistaEmpty.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case ERROR:
+                    if (deportistaAdapter.getItemCount() == 0) {
+                        layoutError.setVisibility(View.VISIBLE);
+                    } else {
+                        Snackbar.make(requireView(),
+                                resource.message != null ? resource.message : "Error al cargar deportistas",
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                    break;
+            }
+        });
+
+        // Observe reportes list
         viewModel.getReportes().observe(getViewLifecycleOwner(), resource -> {
             if (resource == null) return;
 
@@ -108,13 +182,13 @@ public class ReporteListFragment extends Fragment {
                 case SUCCESS:
                     if (resource.data != null && !resource.data.isEmpty()) {
                         rvReportes.setVisibility(View.VISIBLE);
-                        adapter.updateData(resource.data);
+                        reporteAdapter.updateData(resource.data);
                     } else {
                         layoutEmpty.setVisibility(View.VISIBLE);
                     }
                     break;
                 case ERROR:
-                    if (adapter.getItemCount() == 0) {
+                    if (reporteAdapter.getItemCount() == 0) {
                         layoutError.setVisibility(View.VISIBLE);
                     } else {
                         Snackbar.make(requireView(),
@@ -125,6 +199,101 @@ public class ReporteListFragment extends Fragment {
             }
         });
     }
+
+    private void setupBackHandler() {
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(),
+                new androidx.activity.OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        if (!modoSeleccion) {
+                            // In reports mode → go back to deportista selector
+                            showDeportistaSelector();
+                        } else {
+                            // In selector mode → pop fragment
+                            setEnabled(false);
+                            requireActivity().onBackPressed();
+                        }
+                    }
+                });
+    }
+
+    private void showDeportistaSelector() {
+        modoSeleccion = true;
+        deportistaId = -1;
+        layoutDeportistaSelector.setVisibility(View.VISIBLE);
+        rvReportes.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.GONE);
+        layoutError.setVisibility(View.GONE);
+        progressLoading.setVisibility(View.GONE);
+    }
+
+    private void showReportesMode() {
+        modoSeleccion = false;
+        layoutDeportistaSelector.setVisibility(View.GONE);
+    }
+
+    // ==================================================================
+    // DeportistaAdapter
+    // ==================================================================
+
+    /**
+     * RecyclerView adapter for displaying deportista list in selector mode.
+     */
+    private static class DeportistaAdapter extends RecyclerView.Adapter<DeportistaAdapter.ViewHolder> {
+
+        private List<DeportistaResponse> deportistas;
+        private final OnDeportistaClickListener listener;
+
+        interface OnDeportistaClickListener {
+            void onDeportistaClick(DeportistaResponse deportista);
+        }
+
+        DeportistaAdapter(OnDeportistaClickListener listener) {
+            this.listener = listener;
+        }
+
+        void updateData(List<DeportistaResponse> deportistas) {
+            this.deportistas = deportistas;
+            notifyDataSetChanged();
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_deportista, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            DeportistaResponse d = deportistas.get(position);
+            holder.tvNombre.setText(d.getNombreCompleto() != null ? d.getNombreCompleto() : "-");
+            holder.tvEmail.setText(d.getEmail() != null ? d.getEmail() : "-");
+            holder.itemView.setOnClickListener(v -> listener.onDeportistaClick(d));
+        }
+
+        @Override
+        public int getItemCount() {
+            return deportistas != null ? deportistas.size() : 0;
+        }
+
+        static class ViewHolder extends RecyclerView.ViewHolder {
+            final TextView tvNombre;
+            final TextView tvEmail;
+
+            ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvNombre = itemView.findViewById(R.id.tvNombreCompleto);
+                tvEmail = itemView.findViewById(R.id.tvEmail);
+            }
+        }
+    }
+
+    // ==================================================================
+    // ReporteAdapter (unchanged)
+    // ==================================================================
 
     /**
      * RecyclerView adapter for displaying report cards.

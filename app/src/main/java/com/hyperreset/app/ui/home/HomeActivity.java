@@ -151,6 +151,16 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Programmatically select a bottom navigation item.
+     * Used by fragments to navigate to a different tab.
+     */
+    public void selectNavigationItem(int itemId) {
+        if (bottomNav != null) {
+            bottomNav.setSelectedItemId(itemId);
+        }
+    }
+
     @Override
     public void onBackPressed() {
         if (fragmentManager.getBackStackEntryCount() > 0) {
