@@ -57,6 +57,7 @@ public class TestDetailFragment extends Fragment {
     private TextView tvBatteryDate;
     private TextView tvBatteryUnidad;
     private TextView tvBatteryCalificacion;
+    private MaterialButton btnRealizarPrueba;
 
     @Nullable
     @Override
@@ -112,12 +113,14 @@ public class TestDetailFragment extends Fragment {
         tvBatteryDate = view.findViewById(R.id.tvBatteryDate);
         tvBatteryUnidad = view.findViewById(R.id.tvBatteryUnidad);
         tvBatteryCalificacion = view.findViewById(R.id.tvBatteryCalificacion);
+        btnRealizarPrueba = view.findViewById(R.id.btnRealizarPrueba);
 
         rvResultados.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         btnAddResult.setOnClickListener(v -> navigateToResultEntry());
         btnFinalizar.setOnClickListener(v -> viewModel.completarTest(testId));
         btnGenerarReporte.setOnClickListener(v -> navigateToGenerateReporte());
+        btnRealizarPrueba.setOnClickListener(v -> onRealizarPruebaClick());
     }
 
     private void showBatteryInfo(View view) {
@@ -152,6 +155,9 @@ public class TestDetailFragment extends Fragment {
             tvBatteryLastValue.setText(String.valueOf(ultimoValor));
             tvBatteryUnidad.setText(unidad);
             tvBatteryDate.setText(fechaUltimo != null ? fechaUltimo : "");
+
+            // Completed test: hide "Realizar prueba" button
+            btnRealizarPrueba.setVisibility(View.GONE);
         } else {
             badgeStatus.setText(R.string.test_bateria_coming_soon);
             setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_in_progress));
@@ -159,6 +165,9 @@ public class TestDetailFragment extends Fragment {
             tvBatteryLastValue.setText("--");
             tvBatteryUnidad.setText("");
             tvBatteryDate.setText("");
+
+            // Pending test: show "Realizar prueba" button
+            btnRealizarPrueba.setVisibility(View.VISIBLE);
         }
 
         // Show calificación badge if available
@@ -194,6 +203,27 @@ public class TestDetailFragment extends Fragment {
 
             if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
                 bindResultados(resource.data);
+            }
+        });
+
+        viewModel.getCreateTestResult().observe(getViewLifecycleOwner(), resource -> {
+            if (resource == null) return;
+
+            if (resource.status == Resource.Status.LOADING) {
+                btnRealizarPrueba.setEnabled(false);
+                btnRealizarPrueba.setText(R.string.test_bateria_creando);
+            } else {
+                btnRealizarPrueba.setEnabled(true);
+                btnRealizarPrueba.setText(R.string.test_bateria_realizar_prueba);
+
+                if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
+                    // Navigate to result entry with the newly created test session
+                    navigateToResultEntryForNewTest(resource.data.getId());
+                } else if (resource.status == Resource.Status.ERROR) {
+                    Snackbar.make(requireView(),
+                            resource.message != null ? resource.message : "Error al crear sesión de prueba",
+                            Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -265,6 +295,32 @@ public class TestDetailFragment extends Fragment {
         Bundle args = new Bundle();
         args.putLong("reporteId", reporteId);
         ReporteDetailFragment fragment = new ReporteDetailFragment();
+        fragment.setArguments(args);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void onRealizarPruebaClick() {
+        Bundle args = getArguments();
+        if (args == null) return;
+
+        long depId = args.getLong("deportistaId", 0);
+        if (depId <= 0) {
+            Snackbar.make(requireView(), "No se ha seleccionado un deportista", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        viewModel.createTestSession(depId, tipoTest);
+    }
+
+    private void navigateToResultEntryForNewTest(long newTestId) {
+        Bundle args = new Bundle();
+        args.putLong("testId", newTestId);
+        args.putString("tipoTest", tipoTest);
+        args.putBoolean("isFromBattery", true);
+        ResultEntryFragment fragment = new ResultEntryFragment();
         fragment.setArguments(args);
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()

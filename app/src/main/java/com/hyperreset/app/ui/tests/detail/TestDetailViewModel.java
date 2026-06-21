@@ -75,6 +75,20 @@ public class TestDetailViewModel extends ViewModel {
         });
     }
 
+    private final MutableLiveData<Resource<TestFisicoResponse>> createTestResult = new MutableLiveData<>();
+
+    public LiveData<Resource<TestFisicoResponse>> getCreateTestResult() {
+        return createTestResult;
+    }
+
+    public void createTestSession(long deportistaId, String tipoTest) {
+        createTestResult.setValue(Resource.loading());
+        Map<String, Object> request = new HashMap<>();
+        request.put("deportistaId", deportistaId);
+        request.put("tipoTest", tipoTest);
+        repository.createTestFisico(request, result -> createTestResult.setValue(result));
+    }
+
     public void generarReporte(long testFisicoId, long deportistaId) {
         generateResult.setValue(Resource.loading());
         Map<String, Object> request = new HashMap<>();

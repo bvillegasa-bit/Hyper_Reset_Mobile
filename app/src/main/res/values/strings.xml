@@ -421,6 +421,8 @@
     <string name="test_bateria_progress_title">Progreso General</string>
     <string name="test_bateria_completado">Completado</string>
     <string name="test_bateria_coming_soon">Próximamente</string>
+    <string name="test_bateria_realizar_prueba">Realizar prueba</string>
+    <string name="test_bateria_creando">Creando sesión…</string>
 
     <!-- Change Password -->
     <string name="change_password_title">Cambiar Contraseña</string>

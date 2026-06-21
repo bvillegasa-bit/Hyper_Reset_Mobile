@@ -5,3 +5,9 @@ replay_*.log
 .gradle/
 build/
 local.properties
+
+# Auto-generated docs and APKs
+DESCRIPCION_SOFTWARE.*
+GUIA_USUARIO.*
+MANUAL_CODIGO_FUENTE.*
+HyperReset_v*.apk

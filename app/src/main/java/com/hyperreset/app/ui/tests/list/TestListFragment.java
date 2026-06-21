@@ -50,6 +50,10 @@ public class TestListFragment extends Fragment {
     private List<DeportistaResponse> deportistaList = new ArrayList<>();
     private boolean spinnerInitializing = true;
 
+    // Currently selected deportista for navigation
+    private long currentDeportistaId = -1;
+    private String currentDeportistaNombre = "";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -74,7 +78,8 @@ public class TestListFragment extends Fragment {
             // DEPORTISTA: hide COACH-only views, load tipos-con-estado
             spinnerFilter.setVisibility(View.GONE);
             fabCreateTest.setVisibility(View.GONE);
-            viewModel.loadTiposTestConEstado(sessionManager.getDeportistaId());
+            currentDeportistaId = sessionManager.getDeportistaId();
+            viewModel.loadTiposTestConEstado(currentDeportistaId);
         } else {
             // COACH: setup spinner filter, show FAB
             setupSpinner();
@@ -142,8 +147,10 @@ public class TestListFragment extends Fragment {
                     viewModel.loadTests();
                 } else if (position - 1 < deportistaList.size()) {
                     // Selected a specific deportista — load their tipos-con-estado
-                    long deportistaId = deportistaList.get(position - 1).getId();
-                    viewModel.loadTiposTestConEstado(deportistaId);
+                    DeportistaResponse selected = deportistaList.get(position - 1);
+                    currentDeportistaId = selected.getId();
+                    currentDeportistaNombre = selected.getNombreCompleto();
+                    viewModel.loadTiposTestConEstado(currentDeportistaId);
                 }
             }
 
@@ -181,6 +188,9 @@ public class TestListFragment extends Fragment {
         if (test.getCalificacion() != null && !test.getCalificacion().isEmpty()) {
             args.putString("calificacion", test.getCalificacion());
         }
+        // Pass deportista context for executing the test
+        args.putLong("deportistaId", currentDeportistaId);
+        args.putString("deportistaNombre", currentDeportistaNombre);
         TestDetailFragment detailFragment = new TestDetailFragment();
         detailFragment.setArguments(args);
         requireActivity().getSupportFragmentManager()
