@@ -17,6 +17,7 @@ import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.NotificacionItem;
 import com.hyperreset.app.ui.mensajes.list.MensajeListFragment;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.List;
 
@@ -54,7 +55,15 @@ public class NotificacionesFragment extends Fragment {
         setupRecyclerView();
         setupObservers();
 
-        viewModel.loadNotificaciones();
+        String userRole = new SessionManager(requireContext()).getUserRole();
+
+        if ("COACH".equals(userRole)) {
+            viewModel.loadNotificaciones();
+            btnRetry.setOnClickListener(v -> viewModel.loadNotificaciones());
+        } else {
+            progressLoading.setVisibility(View.GONE);
+            layoutEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initViews(View view) {
@@ -65,7 +74,6 @@ public class NotificacionesFragment extends Fragment {
         btnRetry = view.findViewById(R.id.btnRetry);
         btnGoToMessages = view.findViewById(R.id.btnGoToMessages);
 
-        btnRetry.setOnClickListener(v -> viewModel.loadNotificaciones());
         btnGoToMessages.setOnClickListener(v -> navigateToMessages());
     }
 
