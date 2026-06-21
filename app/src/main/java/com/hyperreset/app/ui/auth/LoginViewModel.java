@@ -1,16 +1,19 @@
 package com.hyperreset.app.ui.auth;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
+import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.AuthResponse;
 import com.hyperreset.app.data.model.Usuario;
 import com.hyperreset.app.data.repository.AuthRepository;
 import com.hyperreset.app.utils.Resource;
 import com.hyperreset.app.utils.SessionManager;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends AndroidViewModel {
 
     private final AuthRepository authRepository;
     private SessionManager sessionManager;
@@ -18,7 +21,8 @@ public class LoginViewModel extends ViewModel {
     private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
     private final MutableLiveData<Resource<Usuario>> loginResult = new MutableLiveData<>();
 
-    public LoginViewModel(AuthRepository authRepository) {
+    public LoginViewModel(Application application, AuthRepository authRepository) {
+        super(application);
         this.authRepository = authRepository;
     }
 
@@ -59,12 +63,12 @@ public class LoginViewModel extends ViewModel {
                             user.setRol(resource.data.getRol());
                             loginResult.setValue(Resource.success(user));
                         } else {
-                            loginResult.setValue(Resource.error("Error al obtener datos del usuario"));
+                            loginResult.setValue(Resource.error(getApplication().getString(R.string.login_error_user_data)));
                         }
                         break;
                     case ERROR:
                         loginResult.setValue(Resource.error(resource.message != null
-                                ? resource.message : "Error de autenticación"));
+                                ? resource.message : getApplication().getString(R.string.login_error_auth)));
                         break;
                     case LOADING:
                         // Already set loading state

@@ -186,7 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         View registerButton = findViewById(R.id.registerButton);
         registerButton.setEnabled(false);
-        ((android.widget.Button) registerButton).setText("Creando cuenta...");
+        ((android.widget.Button) registerButton).setText(R.string.register_creating);
 
         authRepository.register(nombres, apellidos, email, password, selectedRole,
                 new AuthRepository.ResourceCallback<AuthResponse>() {
@@ -204,13 +204,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     navigateToHome();
                                 } else {
                                     Snackbar.make(findViewById(R.id.register_root),
-                                            "Error al obtener datos del usuario",
+                                            getString(R.string.register_error_user_data),
                                             Snackbar.LENGTH_LONG).show();
                                 }
                                 break;
                             case ERROR:
                                 String msg = resource.message != null
-                                        ? resource.message : "Error de registro";
+                                        ? resource.message : getString(R.string.register_error_register);
                                 Snackbar.make(findViewById(R.id.register_root),
                                         msg, Snackbar.LENGTH_LONG).show();
                                 break;

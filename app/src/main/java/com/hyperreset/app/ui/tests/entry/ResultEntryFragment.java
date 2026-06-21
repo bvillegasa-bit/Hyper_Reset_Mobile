@@ -120,7 +120,7 @@ public class ResultEntryFragment extends Fragment {
     private void onSaveClick() {
         String valorStr = etValor.getText() != null ? etValor.getText().toString().trim() : "";
         if (valorStr.isEmpty()) {
-            Snackbar.make(requireView(), "Ingresa un valor", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(requireView(), getString(R.string.result_entry_ingresa_valor), Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -169,7 +169,7 @@ public class ResultEntryFragment extends Fragment {
                     etValor.setText("");
                 } else if (resource.status == Resource.Status.ERROR) {
                     Snackbar.make(requireView(),
-                            resource.message != null ? resource.message : "Error al guardar",
+                            resource.message != null ? resource.message : getString(R.string.result_entry_error_save),
                             Snackbar.LENGTH_LONG).show();
                 }
             }

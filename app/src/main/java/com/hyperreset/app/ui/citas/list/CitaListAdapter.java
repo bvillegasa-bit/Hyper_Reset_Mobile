@@ -105,7 +105,7 @@ public class CitaListAdapter extends RecyclerView.Adapter<CitaListAdapter.ViewHo
             // Name: COACH sees deportistaNombre, DEPORTISTA sees coachNombre
             if (isCoach) {
                 String nombre = cita.getDeportistaNombre();
-                tvNombre.setText(nombre != null ? nombre : "Sin nombre");
+                tvNombre.setText(nombre != null ? nombre : itemView.getContext().getString(R.string.citas_list_sin_nombre));
             } else {
                 String nombre = cita.getCoachNombre();
                 tvNombre.setText(nombre != null ? nombre : "Dr. Asignado");
@@ -113,7 +113,7 @@ public class CitaListAdapter extends RecyclerView.Adapter<CitaListAdapter.ViewHo
 
             // Motivo / Type
             String motivo = cita.getMotivo();
-            tvMotivo.setText(motivo != null ? motivo : "Sin motivo");
+            tvMotivo.setText(motivo != null ? motivo : itemView.getContext().getString(R.string.citas_list_sin_motivo));
 
             // Duration badge (hidden by default — backend may not send duration)
             badgeDuracion.setVisibility(View.GONE);

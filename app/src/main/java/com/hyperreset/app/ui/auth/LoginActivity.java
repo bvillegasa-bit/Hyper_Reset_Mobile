@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Manual ViewModel creation (no Hilt)
         loginViewModel = new LoginViewModel(
+            getApplication(),
             ((com.hyperreset.app.HyperResetApplication) getApplication()).getAppContainer().getAuthRepository()
         );
         loginViewModel.setSessionManager(new SessionManager(this));

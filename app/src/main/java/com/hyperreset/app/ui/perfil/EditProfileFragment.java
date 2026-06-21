@@ -207,6 +207,7 @@ public class EditProfileFragment extends Fragment {
         int day = cal.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePicker = new DatePickerDialog(requireContext(),
+                R.style.HyperResetDatePicker,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     // Format as yyyy-MM-dd
                     String formattedDate = String.format("%04d-%02d-%02d",

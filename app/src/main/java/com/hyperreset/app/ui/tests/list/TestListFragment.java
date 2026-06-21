@@ -100,7 +100,14 @@ public class TestListFragment extends Fragment {
             if (sm.isDeportista()) {
                 viewModel.loadTiposTestConEstado(sm.getDeportistaId());
             } else {
-                viewModel.loadTests();
+                // COACH: reload from current spinner selection
+                int pos = spinnerFilter.getSelectedItemPosition();
+                if (pos > 0 && pos - 1 < deportistaList.size()) {
+                    long depId = deportistaList.get(pos - 1).getId();
+                    viewModel.loadTiposTestConEstado(depId);
+                } else {
+                    viewModel.loadDeportistas(sm.getUserId());
+                }
             }
         });
     }
@@ -247,14 +254,6 @@ public class TestListFragment extends Fragment {
             animateProgressBar(completados, total);
         });
 
-        // Observe test sessions (original behavior for COACH)
-        viewModel.getTests().observe(getViewLifecycleOwner(), resource -> {
-            // Only used for COACH when "Todos" is selected
-            if (resource == null) return;
-            // We don't manage visibility here because tiposConEstado takes priority
-            // This observer just keeps the existing data in sync
-        });
-
         // Observe deportistas for COACH spinner
         viewModel.getDeportistas().observe(getViewLifecycleOwner(), resource -> {
             if (resource != null && resource.status == Resource.Status.SUCCESS
@@ -270,6 +269,17 @@ public class TestListFragment extends Fragment {
                 spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                 spinnerInitializing = true;
                 spinnerFilter.setAdapter(spinnerAdapter);
+
+                // Auto-load the first deportista's battery tests after spinner is ready
+                if (!deportistaList.isEmpty()) {
+                    // Use a small delay to let the spinner settle after setAdapter
+                    spinnerFilter.post(() -> {
+                        if (isAdded()) {
+                            spinnerFilter.setSelection(1);
+                            viewModel.loadTiposTestConEstado(deportistaList.get(0).getId());
+                        }
+                    });
+                }
             }
         });
     }

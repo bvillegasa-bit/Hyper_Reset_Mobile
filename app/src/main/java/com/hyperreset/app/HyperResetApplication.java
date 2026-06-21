@@ -26,6 +26,21 @@ public class HyperResetApplication extends Application {
 
         // Apply persisted settings on startup
         SettingsManager settingsManager = new SettingsManager(this);
+
+        // Restore saved theme mode
+        String theme = settingsManager.getThemeMode();
+        if ("light".equals(theme)) {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+                    androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO);
+        } else if ("dark".equals(theme)) {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+                    androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(
+                    androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+
+        // Restore saved language
         String language = settingsManager.getLanguage();
         android.content.res.Configuration config = new android.content.res.Configuration();
         if ("en".equals(language)) {

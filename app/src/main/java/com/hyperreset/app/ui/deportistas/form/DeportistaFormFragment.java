@@ -216,7 +216,7 @@ public class DeportistaFormFragment extends Fragment {
                     }
                 } else if (resource.status == Resource.Status.ERROR) {
                     Snackbar.make(requireView(),
-                            resource.message != null ? resource.message : "Error al guardar deportista",
+                            resource.message != null ? resource.message : getString(R.string.deportista_error_save),
                             Snackbar.LENGTH_LONG).show();
                 }
             }

@@ -1,8 +1,10 @@
 package com.hyperreset.app.ui.notificaciones;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.ActividadRecienteItem;
@@ -18,17 +20,19 @@ import java.util.List;
  * Fetches data from DashboardRepository.getActividad() and maps
  * ActividadRecienteItem objects to NotificacionItem UI models.
  */
-public class NotificacionesViewModel extends ViewModel {
+public class NotificacionesViewModel extends AndroidViewModel {
 
     private final DashboardRepository repository;
 
     private final MutableLiveData<Resource<List<NotificacionItem>>> notificaciones = new MutableLiveData<>();
 
-    public NotificacionesViewModel() {
+    public NotificacionesViewModel(Application application) {
+        super(application);
         this.repository = new DashboardRepository();
     }
 
-    public NotificacionesViewModel(DashboardRepository repository) {
+    public NotificacionesViewModel(Application application, DashboardRepository repository) {
+        super(application);
         this.repository = repository;
     }
 
@@ -72,7 +76,7 @@ public class NotificacionesViewModel extends ViewModel {
             switch (tipo.toLowerCase()) {
                 case "success":
                     iconResId = R.drawable.ic_bell;
-                    title = "Nuevo progreso";
+                    title = getApplication().getString(R.string.notificacion_nuevo_progreso);
                     break;
                 case "warning":
                     iconResId = R.drawable.ic_bell;
@@ -88,7 +92,7 @@ public class NotificacionesViewModel extends ViewModel {
                     break;
                 case "message":
                     iconResId = R.drawable.ic_message;
-                    title = "Nuevo mensaje";
+                    title = getApplication().getString(R.string.notificacion_nuevo_mensaje);
                     break;
                 default:
                     iconResId = R.drawable.ic_notification;
@@ -97,7 +101,7 @@ public class NotificacionesViewModel extends ViewModel {
             }
 
             String description = paciente.isEmpty() ? accion : paciente + " - " + accion;
-            if (description.isEmpty()) description = "Nueva actividad";
+            if (description.isEmpty()) description = getApplication().getString(R.string.notificacion_nueva_actividad);
 
             items.add(new NotificacionItem(iconResId, title, description, a.getTimestamp(), tipo));
         }

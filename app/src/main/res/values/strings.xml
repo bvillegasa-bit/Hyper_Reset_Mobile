@@ -22,6 +22,7 @@
     <string name="login_error_invalid_email">Correo electrónico inválido</string>
     <string name="login_error_invalid_password">La contraseña debe tener al menos 6 caracteres</string>
     <string name="login_error_auth">Error de autenticación</string>
+    <string name="login_error_user_data">Error al obtener datos del usuario</string>
     <string name="login_register_soon">Próximamente</string>
 
     <!-- Register -->
@@ -43,6 +44,9 @@
     <string name="register_name_invalid">El nombre es obligatorio</string>
     <string name="register_success">Cuenta creada exitosamente</string>
     <string name="register_role_required">Selecciona un tipo de cuenta</string>
+    <string name="register_creating">Creando cuenta...</string>
+    <string name="register_error_user_data">Error al obtener datos del usuario</string>
+    <string name="register_error_register">Error de registro</string>
     <string name="action_back">Regresar</string>
 
     <!-- Home -->
@@ -88,6 +92,7 @@
     <string name="deportistas_validation_nombres">El nombre es obligatorio</string>
     <string name="deportistas_validation_apellidos">Los apellidos son obligatorios</string>
     <string name="deportistas_validation_email">El correo electrónico es obligatorio</string>
+    <string name="deportista_error_save">Error al guardar deportista</string>
 
     <!-- Deportistas Detail -->
     <string name="deportistas_detail_title">Detalle del Deportista</string>
@@ -137,6 +142,8 @@
     <string name="result_entry_save">Guardar Resultado</string>
     <string name="result_entry_complete">Finalizar Test</string>
     <string name="result_entry_validation_positive">El valor debe ser positivo</string>
+    <string name="result_entry_ingresa_valor">Ingresa un valor</string>
+    <string name="result_entry_error_save">Error al guardar</string>
 
     <!-- Test Detail -->
     <string name="test_detail_title">Detalle del Test</string>
@@ -146,6 +153,8 @@
     <string name="test_detail_en_progreso">EN PROGRESO</string>
     <string name="test_detail_completado">COMPLETADO</string>
     <string name="test_action_generar_reporte">Generar Reporte</string>
+    <string name="test_error_generar_reporte">No se puede generar el reporte: faltan datos del deportista</string>
+    <string name="test_sin_calificacion">Sin calificación</string>
 
     <!-- Calificacion Labels -->
     <string name="calificacion_excelente">Excelente</string>
@@ -158,6 +167,8 @@
     <string name="citas_list_empty">No hay citas registradas</string>
     <string name="citas_list_error">Error al cargar citas</string>
     <string name="citas_list_retry">Reintentar</string>
+    <string name="citas_list_sin_nombre">Sin nombre</string>
+    <string name="citas_list_sin_motivo">Sin motivo</string>
     <string name="citas_filter_todas">Todas</string>
     <string name="citas_filter_hoy">Hoy</string>
     <string name="citas_filter_semana">Esta semana</string>
@@ -175,6 +186,7 @@
     <string name="citas_validation_fecha_hora">Selecciona fecha y hora de la cita</string>
     <string name="citas_validation_motivo">El motivo es obligatorio</string>
     <string name="citas_validation_deportista">Selecciona un deportista</string>
+    <string name="citas_error_save">Error al guardar la cita</string>
     <string name="citas_detail_title">Detalle de Cita</string>
     <string name="citas_estado_pendiente">PENDIENTE</string>
     <string name="citas_estado_confirmada">CONFIRMADA</string>
@@ -247,6 +259,8 @@
     <string name="materiales_detail_tipo">Tipo</string>
     <string name="materiales_detail_url">URL</string>
     <string name="materiales_detail_fecha">Fecha de Publicación</string>
+    <string name="material_error_open_link">No se puede abrir el enlace</string>
+    <string name="material_error_save">Error al guardar el material</string>
     <string name="materiales_success_created">Material creado exitosamente</string>
     <string name="materiales_success_updated">Material actualizado exitosamente</string>
     <string name="materiales_success_deleted">Material eliminado exitosamente</string>
@@ -442,6 +456,9 @@
     <string name="notificaciones_empty_action">Ir a Mensajes</string>
     <string name="notificacion_mensaje">Nuevo mensaje de %s</string>
     <string name="notificacion_cita">Próxima cita: %s</string>
+    <string name="notificacion_nuevo_progreso">Nuevo progreso</string>
+    <string name="notificacion_nuevo_mensaje">Nuevo mensaje</string>
+    <string name="notificacion_nueva_actividad">Nueva actividad</string>
     <string name="deportista_selector_hint">Seleccionar deportista</string>
 
     <!-- Actividad List -->

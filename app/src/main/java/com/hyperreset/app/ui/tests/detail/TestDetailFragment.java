@@ -136,8 +136,8 @@ public class TestDetailFragment extends Fragment {
         // Set test type name
         tvTestType.setText(!testName.isEmpty() ? testName : getTestTypeLabel(tipoTest));
 
-        // Set deportista label
-        tvDeportista.setText(R.string.test_bateria_completado);
+        // Set deportista label — hide in battery view (no name available)
+        tvDeportista.setVisibility(View.GONE);
 
         // Set last value if available
         boolean completado = args.getBoolean("completado", false);
@@ -256,7 +256,7 @@ public class TestDetailFragment extends Fragment {
             viewModel.generarReporte(testId, depId);
         } else {
             Snackbar.make(requireView(),
-                    "No se puede generar el reporte: faltan datos del deportista",
+                    getString(R.string.test_error_generar_reporte),
                     Snackbar.LENGTH_LONG).show();
         }
     }
@@ -354,7 +354,7 @@ public class TestDetailFragment extends Fragment {
                 holder.text2.setText(cal);
                 holder.text2.setTextColor(getColorForCalificacion(holder.itemView.getContext(), cal));
             } else {
-                holder.text2.setText("Sin calificación");
+                holder.text2.setText(holder.itemView.getContext().getString(R.string.test_sin_calificacion));
                 holder.text2.setTextColor(
                         ContextCompat.getColor(holder.itemView.getContext(), R.color.hyper_on_surface));
             }

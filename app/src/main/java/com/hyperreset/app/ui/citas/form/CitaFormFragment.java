@@ -135,6 +135,7 @@ public class CitaFormFragment extends Fragment {
             final Calendar c = Calendar.getInstance();
             DatePickerDialog dialog = new DatePickerDialog(
                     requireContext(),
+                    R.style.HyperResetDatePicker,
                     (view, year, month, dayOfMonth) -> {
                         Calendar selected = Calendar.getInstance();
                         selected.set(year, month, dayOfMonth);
@@ -305,7 +306,7 @@ public class CitaFormFragment extends Fragment {
                     navigateToDetail(resource.data);
                 } else if (resource.status == Resource.Status.ERROR) {
                     Snackbar.make(requireView(),
-                            resource.message != null ? resource.message : "Error al guardar la cita",
+                            resource.message != null ? resource.message : getString(R.string.citas_error_save),
                             Snackbar.LENGTH_LONG).show();
                 }
             }

@@ -48,7 +48,7 @@ public class NotificacionesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new NotificacionesViewModel();
+        viewModel = new NotificacionesViewModel(requireActivity().getApplication());
 
         initViews(view);
         setupRecyclerView();

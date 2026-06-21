@@ -191,7 +191,7 @@ public class MaterialDetailFragment extends Fragment {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         } catch (Exception e) {
-            Snackbar.make(requireView(), "No se puede abrir el enlace", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(requireView(), getString(R.string.material_error_open_link), Snackbar.LENGTH_LONG).show();
         }
     }
 

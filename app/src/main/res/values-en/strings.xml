@@ -22,6 +22,7 @@
     <string name="login_error_invalid_email">Invalid email address</string>
     <string name="login_error_invalid_password">Password must be at least 6 characters</string>
     <string name="login_error_auth">Authentication error</string>
+    <string name="login_error_user_data">Error getting user data</string>
     <string name="login_register_soon">Coming soon</string>
 
     <!-- Register -->
@@ -43,6 +44,9 @@
     <string name="register_name_invalid">Name is required</string>
     <string name="register_success">Account created successfully</string>
     <string name="register_role_required">Select an account type</string>
+    <string name="register_creating">Creating account...</string>
+    <string name="register_error_user_data">Error getting user data</string>
+    <string name="register_error_register">Registration error</string>
     <string name="action_back">Back</string>
 
     <!-- Home -->
@@ -83,6 +87,7 @@
     <string name="deportistas_validation_nombres">First name is required</string>
     <string name="deportistas_validation_apellidos">Last name is required</string>
     <string name="deportistas_validation_email">Email is required</string>
+    <string name="deportista_error_save">Error saving athlete</string>
 
     <!-- Deportistas Detail -->
     <string name="deportistas_detail_title">Athlete Details</string>
@@ -132,6 +137,8 @@
     <string name="result_entry_save">Save Result</string>
     <string name="result_entry_complete">Complete Test</string>
     <string name="result_entry_validation_positive">Value must be positive</string>
+    <string name="result_entry_ingresa_valor">Enter a value</string>
+    <string name="result_entry_error_save">Error saving</string>
 
     <!-- Test Detail -->
     <string name="test_detail_title">Test Details</string>
@@ -140,6 +147,8 @@
     <string name="test_detail_add_result">Add Result</string>
     <string name="test_detail_en_progreso">IN PROGRESS</string>
     <string name="test_detail_completado">COMPLETED</string>
+    <string name="test_error_generar_reporte">Cannot generate report: missing athlete data</string>
+    <string name="test_sin_calificacion">No rating</string>
 
     <!-- Calificacion Labels -->
     <string name="calificacion_excelente">Excellent</string>
@@ -152,6 +161,8 @@
     <string name="citas_list_empty">No appointments registered</string>
     <string name="citas_list_error">Error loading appointments</string>
     <string name="citas_list_retry">Retry</string>
+    <string name="citas_list_sin_nombre">No name</string>
+    <string name="citas_list_sin_motivo">No reason</string>
     <string name="citas_filter_todas">All</string>
     <string name="citas_filter_hoy">Today</string>
     <string name="citas_filter_semana">This week</string>
@@ -168,6 +179,7 @@
     <string name="citas_validation_fecha_hora">Select date and time for the appointment</string>
     <string name="citas_validation_motivo">Reason is required</string>
     <string name="citas_validation_deportista">Select an athlete</string>
+    <string name="citas_error_save">Error saving appointment</string>
     <string name="citas_detail_title">Appointment Details</string>
     <string name="citas_estado_pendiente">PENDING</string>
     <string name="citas_estado_confirmada">CONFIRMED</string>
@@ -220,6 +232,8 @@
     <string name="materiales_detail_tipo">Type</string>
     <string name="materiales_detail_url">URL</string>
     <string name="materiales_detail_fecha">Publication Date</string>
+    <string name="material_error_open_link">Cannot open link</string>
+    <string name="material_error_save">Error saving material</string>
     <string name="materiales_success_created">Material created successfully</string>
     <string name="materiales_success_updated">Material updated successfully</string>
     <string name="materiales_success_deleted">Material deleted successfully</string>
@@ -239,6 +253,9 @@
     <string name="notificaciones_empty_action">Go to Messages</string>
     <string name="notificacion_mensaje">New message from %s</string>
     <string name="notificacion_cita">Upcoming appointment: %s</string>
+    <string name="notificacion_nuevo_progreso">New progress</string>
+    <string name="notificacion_nuevo_mensaje">New message</string>
+    <string name="notificacion_nueva_actividad">New activity</string>
     <string name="deportista_selector_hint">Select an athlete</string>
 
     <!-- Home Dashboard -->
