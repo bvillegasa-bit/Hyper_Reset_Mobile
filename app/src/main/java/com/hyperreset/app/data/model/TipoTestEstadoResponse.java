@@ -36,6 +36,9 @@ public class TipoTestEstadoResponse {
     @SerializedName("calificacion")
     private String calificacion;
 
+    @SerializedName("idTestFisico")
+    private Long idTestFisico;
+
     // Getters and Setters
 
     public String getTipoTest() { return tipoTest; }
@@ -64,4 +67,7 @@ public class TipoTestEstadoResponse {
 
     public String getCalificacion() { return calificacion; }
     public void setCalificacion(String calificacion) { this.calificacion = calificacion; }
+
+    public Long getIdTestFisico() { return idTestFisico; }
+    public void setIdTestFisico(Long idTestFisico) { this.idTestFisico = idTestFisico; }
 }

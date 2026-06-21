@@ -22,6 +22,7 @@ import com.hyperreset.app.data.model.TestFisicoResponse;
 import com.hyperreset.app.ui.reportes.detail.ReporteDetailFragment;
 import com.hyperreset.app.ui.tests.entry.ResultEntryFragment;
 import com.hyperreset.app.utils.Resource;
+import com.hyperreset.app.utils.SessionManager;
 
 import java.util.List;
 
@@ -131,7 +132,6 @@ public class TestDetailFragment extends Fragment {
         cardBiometrics.setVisibility(View.GONE);
         btnAddResult.setVisibility(View.GONE);
         btnFinalizar.setVisibility(View.GONE);
-        btnGenerarReporte.setVisibility(View.GONE);
 
         // Show battery info section
         batteryInfoSection.setVisibility(View.VISIBLE);
@@ -158,6 +158,16 @@ public class TestDetailFragment extends Fragment {
 
             // Completed test: hide "Realizar prueba" button
             btnRealizarPrueba.setVisibility(View.GONE);
+
+            // Check if user is COACH to show report button
+            SessionManager sm = new SessionManager(requireContext());
+            String role = sm.getUserRole();
+            boolean isCoach = role != null && role.equals("COACH");
+            if (completado && testId > 0 && isCoach) {
+                btnGenerarReporte.setVisibility(View.VISIBLE);
+            } else {
+                btnGenerarReporte.setVisibility(View.GONE);
+            }
         } else {
             badgeStatus.setText(R.string.test_bateria_coming_soon);
             setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_in_progress));

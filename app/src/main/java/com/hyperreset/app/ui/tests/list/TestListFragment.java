@@ -191,6 +191,9 @@ public class TestListFragment extends Fragment {
         // Pass deportista context for executing the test
         args.putLong("deportistaId", currentDeportistaId);
         args.putString("deportistaNombre", currentDeportistaNombre);
+        // Pasar idTestFisico como testId (solo si completado y no nulo)
+        args.putLong("testId", test.isCompletado() && test.getIdTestFisico() != null
+                ? test.getIdTestFisico() : -1L);
         TestDetailFragment detailFragment = new TestDetailFragment();
         detailFragment.setArguments(args);
         requireActivity().getSupportFragmentManager()
