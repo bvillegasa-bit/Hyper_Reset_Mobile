@@ -281,4 +281,21 @@
     <string name="home_action_register_test">Register Test</string>
     <string name="home_action_view_reports">View Reports</string>
     <string name="home_action_schedule">My Schedule</string>
+
+    <!-- Test Execution -->
+    <string name="test_execution_instructions_label">Instructions</string>
+    <string name="test_execution_timer_label">Time remaining</string>
+    <string name="test_execution_start">Start</string>
+    <string name="test_execution_running">Running…</string>
+    <string name="test_execution_next">Next</string>
+    <string name="test_execution_cancel_title">Cancel test?</string>
+    <string name="test_execution_cancel_message">If you leave now, the test will remain in progress without results.</string>
+    <string name="test_execution_cancel_confirm">Leave</string>
+    <string name="test_execution_cancel_keep">Stay here</string>
+
+    <!-- Session History -->
+    <string name="test_history_title">Session History</string>
+    <string name="test_history_title_format">History: %s</string>
+    <string name="test_history_empty">No sessions recorded for this test type.</string>
+    <string name="test_action_ver_historial">View History</string>
 </resources>

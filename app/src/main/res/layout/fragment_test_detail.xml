@@ -254,5 +254,14 @@
             app:backgroundTint="@color/hyper_accent"
             app:cornerRadius="8dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnVerHistorial"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/test_action_ver_historial"
+            android:visibility="gone" />
+
     </LinearLayout>
 </ScrollView>

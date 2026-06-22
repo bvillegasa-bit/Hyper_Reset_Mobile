@@ -6,6 +6,7 @@
     <!-- Figma Design Colors (dark theme) -->
     <!-- Brand -->
     <color name="hyper_primary">#FFFF4500</color>
+    <color name="hyper_secondary">#FFA0A0A0</color>
     <color name="hyper_on_primary">#FFFFFFFF</color>
     <color name="hyper_accent">#FFFF6B35</color>
     <color name="hyper_on_accent">#FFFFFFFF</color>

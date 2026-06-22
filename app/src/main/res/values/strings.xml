@@ -153,6 +153,7 @@
     <string name="test_detail_en_progreso">EN PROGRESO</string>
     <string name="test_detail_completado">COMPLETADO</string>
     <string name="test_action_generar_reporte">Generar Reporte</string>
+    <string name="test_action_ver_historial">Ver historial</string>
     <string name="test_error_generar_reporte">No se puede generar el reporte: faltan datos del deportista</string>
     <string name="test_sin_calificacion">Sin calificación</string>
 
@@ -470,4 +471,20 @@
     <string name="actividad_list_error">Error al cargar la actividad</string>
     <string name="actividad_list_retry">Reintentar</string>
     <string name="actividad_list_refresh">Actualizar</string>
+
+    <!-- Test Execution -->
+    <string name="test_execution_instructions_label">Instrucciones</string>
+    <string name="test_execution_timer_label">Tiempo restante</string>
+    <string name="test_execution_start">Comenzar</string>
+    <string name="test_execution_running">Ejecutando…</string>
+    <string name="test_execution_next">Siguiente</string>
+    <string name="test_execution_cancel_title">¿Cancelar el test?</string>
+    <string name="test_execution_cancel_message">Si sales ahora, el test quedará en progreso sin resultados.</string>
+    <string name="test_execution_cancel_confirm">Salir</string>
+    <string name="test_execution_cancel_keep">Seguir aquí</string>
+
+    <!-- Session History -->
+    <string name="test_history_title">Historial de sesiones</string>
+    <string name="test_history_title_format">Historial: %s</string>
+    <string name="test_history_empty">No hay sesiones registradas para este tipo de test.</string>
 </resources>

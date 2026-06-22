@@ -91,6 +91,11 @@ public interface ApiService {
     @GET("test-fisicos/deportista/{deportistaId}")
     Call<ApiResponse<List<TestFisicoResponse>>> getTestFisicosByDeportista(@Path("deportistaId") long deportistaId);
 
+    @GET("test-fisicos/deportista/{deportistaId}/tipo/{tipoTest}")
+    Call<ApiResponse<List<TestFisicoResponse>>> getTestFisicosByDeportistaAndTipo(
+            @Path("deportistaId") long deportistaId,
+            @Path("tipoTest") String tipoTest);
+
     @POST("test-fisicos")
     Call<ApiResponse<TestFisicoResponse>> createTestFisico(@Body Object request);
 

@@ -106,6 +106,25 @@ public class TestRepository {
         });
     }
 
+    public void getTestFisicosByDeportistaAndTipo(long deportistaId, String tipoTest,
+                                                   ResourceCallback<List<TestFisicoResponse>> callback) {
+        executor.execute(() -> {
+            Call<ApiResponse<List<TestFisicoResponse>>> call = apiService.getTestFisicosByDeportistaAndTipo(deportistaId, tipoTest);
+            call.enqueue(new Callback<ApiResponse<List<TestFisicoResponse>>>() {
+                @Override
+                public void onResponse(Call<ApiResponse<List<TestFisicoResponse>>> call,
+                                       Response<ApiResponse<List<TestFisicoResponse>>> response) {
+                    handleApiResponse(response, callback);
+                }
+
+                @Override
+                public void onFailure(Call<ApiResponse<List<TestFisicoResponse>>> call, Throwable t) {
+                    postResult(callback, Resource.error(getErrorMessage(t)));
+                }
+            });
+        });
+    }
+
     public void createTestFisico(Object request, ResourceCallback<TestFisicoResponse> callback) {
         executor.execute(() -> {
             Call<ApiResponse<TestFisicoResponse>> call = apiService.createTestFisico(request);

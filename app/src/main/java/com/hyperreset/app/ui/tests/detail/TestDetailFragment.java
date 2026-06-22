@@ -21,6 +21,8 @@ import com.hyperreset.app.data.model.ResultadoResponse;
 import com.hyperreset.app.data.model.TestFisicoResponse;
 import com.hyperreset.app.ui.reportes.detail.ReporteDetailFragment;
 import com.hyperreset.app.ui.tests.entry.ResultEntryFragment;
+import com.hyperreset.app.ui.tests.execution.TestExecutionFragment;
+import com.hyperreset.app.ui.tests.history.SessionHistoryFragment;
 import com.hyperreset.app.utils.Resource;
 import com.hyperreset.app.utils.SessionManager;
 
@@ -37,6 +39,7 @@ public class TestDetailFragment extends Fragment {
     private long testId;
     private String tipoTest;
     private String testName;
+    private long currentDepId;
     private boolean isBatteryView; // true if navigated from battery test (no session ID)
 
     private TextView tvDeportista;
@@ -51,6 +54,7 @@ public class TestDetailFragment extends Fragment {
     private MaterialButton btnAddResult;
     private MaterialButton btnFinalizar;
     private MaterialButton btnGenerarReporte;
+    private MaterialButton btnVerHistorial;
 
     // Battery test type info views
     private View batteryInfoSection;
@@ -121,6 +125,8 @@ public class TestDetailFragment extends Fragment {
         btnAddResult.setOnClickListener(v -> navigateToResultEntry());
         btnFinalizar.setOnClickListener(v -> viewModel.completarTest(testId));
         btnGenerarReporte.setOnClickListener(v -> navigateToGenerateReporte());
+        btnVerHistorial = view.findViewById(R.id.btnVerHistorial);
+        btnVerHistorial.setOnClickListener(v -> navigateToHistory());
         btnRealizarPrueba.setOnClickListener(v -> onRealizarPruebaClick());
     }
 
@@ -168,6 +174,9 @@ public class TestDetailFragment extends Fragment {
             } else {
                 btnGenerarReporte.setVisibility(View.GONE);
             }
+
+            // Show history button when test type has been completed (any user role)
+            btnVerHistorial.setVisibility(View.VISIBLE);
         } else {
             badgeStatus.setText(R.string.test_bateria_coming_soon);
             setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_in_progress));
@@ -178,6 +187,9 @@ public class TestDetailFragment extends Fragment {
 
             // Pending test: show "Realizar prueba" button
             btnRealizarPrueba.setVisibility(View.VISIBLE);
+
+            // Hide history button for pending tests
+            btnVerHistorial.setVisibility(View.GONE);
         }
 
         // Show calificación badge if available
@@ -227,8 +239,8 @@ public class TestDetailFragment extends Fragment {
                 btnRealizarPrueba.setText(R.string.test_bateria_realizar_prueba);
 
                 if (resource.status == Resource.Status.SUCCESS && resource.data != null) {
-                    // Navigate to result entry with the newly created test session
-                    navigateToResultEntryForNewTest(resource.data.getId());
+                    // Navigate to test execution with the newly created test session
+                    navigateToTestExecution(resource.data.getId(), tipoTest, currentDepId);
                 } else if (resource.status == Resource.Status.ERROR) {
                     Snackbar.make(requireView(),
                             resource.message != null ? resource.message : "Error al crear sesión de prueba",
@@ -327,7 +339,37 @@ public class TestDetailFragment extends Fragment {
             Snackbar.make(requireView(), "No se ha seleccionado un deportista", Snackbar.LENGTH_LONG).show();
             return;
         }
+        currentDepId = depId;
         viewModel.createTestSession(depId, tipoTest);
+    }
+
+    private void navigateToHistory() {
+        Bundle args = getArguments();
+        if (args == null) return;
+        long depId = args.getLong("deportistaId", -1);
+        String tipo = args.getString("tipoTest", "");
+        String name = args.getString("testName", "");
+        SessionHistoryFragment fragment =
+                SessionHistoryFragment.newInstance(depId, tipo, name);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private void navigateToTestExecution(long newTestId, String tipoTest, long depId) {
+        TestExecutionFragment fragment = new TestExecutionFragment();
+        Bundle args = new Bundle();
+        args.putLong("testId", newTestId);
+        args.putString("tipoTest", tipoTest);
+        args.putLong("deportistaId", depId);
+        fragment.setArguments(args);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void navigateToResultEntryForNewTest(long newTestId) {
