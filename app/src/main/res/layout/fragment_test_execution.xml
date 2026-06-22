@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
                     android:lineSpacingExtra="4dp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@color/hyper_on_primary" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

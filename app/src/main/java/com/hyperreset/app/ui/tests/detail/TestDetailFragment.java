@@ -169,7 +169,7 @@ public class TestDetailFragment extends Fragment {
             SessionManager sm = new SessionManager(requireContext());
             String role = sm.getUserRole();
             boolean isCoach = role != null && role.equals("COACH");
-            if (completado && testId > 0 && isCoach) {
+            if (completado && isCoach) {
                 btnGenerarReporte.setVisibility(View.VISIBLE);
             } else {
                 btnGenerarReporte.setVisibility(View.GONE);
@@ -301,6 +301,14 @@ public class TestDetailFragment extends Fragment {
     }
 
     private void navigateToGenerateReporte() {
+        // Use testId from the field or from arguments
+        long localTestId = testId;
+        if (localTestId <= 0) {
+            Bundle args = getArguments();
+            if (args != null) {
+                localTestId = args.getLong("testId", 0);
+            }
+        }
         // Use deportistaId from the loaded test or from arguments
         long depId = viewModel.getDeportistaId();
         if (depId <= 0) {
@@ -309,8 +317,8 @@ public class TestDetailFragment extends Fragment {
                 depId = args.getLong("deportistaId", 0);
             }
         }
-        if (depId > 0 && testId > 0) {
-            viewModel.generarReporte(testId, depId);
+        if (depId > 0 && localTestId > 0) {
+            viewModel.generarReporte(localTestId, depId);
         } else {
             Snackbar.make(requireView(),
                     getString(R.string.test_error_generar_reporte),
