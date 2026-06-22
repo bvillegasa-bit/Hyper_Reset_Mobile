@@ -298,4 +298,5 @@
     <string name="test_history_title_format">History: %s</string>
     <string name="test_history_empty">No sessions recorded for this test type.</string>
     <string name="test_action_ver_historial">View History</string>
+    <string name="reportes_generar_nuevo">Generate New Report</string>
 </resources>

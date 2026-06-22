@@ -215,6 +215,7 @@
     <string name="reportes_list_error">Error al cargar reportes</string>
     <string name="reportes_list_retry">Reintentar</string>
     <string name="reportes_generating">Generando...</string>
+    <string name="reportes_generar_nuevo">Generar nuevo reporte</string>
 
     <string name="reporte_detail_header">Resumen del Reporte</string>
     <string name="reporte_detail_deportista">Deportista</string>

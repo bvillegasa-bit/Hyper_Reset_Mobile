@@ -74,7 +74,18 @@ public class TestListFragment extends Fragment {
 
         SessionManager sessionManager = new SessionManager(requireContext());
 
-        if (sessionManager.isDeportista()) {
+        // Check if a specific deportistaId was passed in arguments
+        Bundle args = getArguments();
+        long argDepId = args != null ? args.getLong("deportistaId", -1) : -1;
+
+        if (argDepId > 0) {
+            // Called from another module (e.g. Reportes) with a pre-selected deportista
+            spinnerFilter.setVisibility(View.GONE);
+            fabCreateTest.setVisibility(View.GONE);
+            currentDeportistaId = argDepId;
+            currentDeportistaNombre = args.getString("deportistaNombre", "");
+            viewModel.loadTiposTestConEstado(currentDeportistaId);
+        } else if (sessionManager.isDeportista()) {
             // DEPORTISTA: hide COACH-only views, load tipos-con-estado
             spinnerFilter.setVisibility(View.GONE);
             fabCreateTest.setVisibility(View.GONE);

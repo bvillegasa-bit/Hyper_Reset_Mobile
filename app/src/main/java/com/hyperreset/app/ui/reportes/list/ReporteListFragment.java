@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.hyperreset.app.R;
 import com.hyperreset.app.data.model.DeportistaResponse;
 import com.hyperreset.app.data.model.ReporteResponse;
 import com.hyperreset.app.ui.reportes.detail.ReporteDetailFragment;
+import com.hyperreset.app.ui.tests.list.TestListFragment;
 import com.hyperreset.app.utils.Resource;
 import com.hyperreset.app.utils.SessionManager;
 
@@ -47,6 +49,7 @@ public class ReporteListFragment extends Fragment {
     private View layoutError;
     private View progressLoading;
     private ReporteAdapter reporteAdapter;
+    private MaterialButton btnGenerarNuevoReporte;
 
     @Nullable
     @Override
@@ -103,6 +106,23 @@ public class ReporteListFragment extends Fragment {
                 viewModel.loadReportes(deportistaId);
             }
         });
+
+        btnGenerarNuevoReporte = view.findViewById(R.id.btnGenerarNuevoReporte);
+        btnGenerarNuevoReporte.setOnClickListener(v -> navigateToTestList());
+    }
+
+    private void navigateToTestList() {
+        if (deportistaId <= 0) return;
+        TestListFragment fragment = new TestListFragment();
+        Bundle args = new Bundle();
+        args.putLong("deportistaId", deportistaId);
+        args.putString("deportistaNombre", "");
+        fragment.setArguments(args);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void setupRecyclerViews() {
@@ -226,11 +246,13 @@ public class ReporteListFragment extends Fragment {
         layoutEmpty.setVisibility(View.GONE);
         layoutError.setVisibility(View.GONE);
         progressLoading.setVisibility(View.GONE);
+        btnGenerarNuevoReporte.setVisibility(View.GONE);
     }
 
     private void showReportesMode() {
         modoSeleccion = false;
         layoutDeportistaSelector.setVisibility(View.GONE);
+        btnGenerarNuevoReporte.setVisibility(View.VISIBLE);
     }
 
     // ==================================================================
