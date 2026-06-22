@@ -268,7 +268,12 @@ public class TestDetailFragment extends Fragment {
             setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_excelente));
             btnAddResult.setVisibility(View.GONE);
             btnFinalizar.setVisibility(View.GONE);
-            btnGenerarReporte.setVisibility(View.VISIBLE);
+
+            // Only COACH can generate reports
+            SessionManager sm = new SessionManager(requireContext());
+            String role = sm.getUserRole();
+            boolean isCoach = role != null && role.equals("COACH");
+            btnGenerarReporte.setVisibility(isCoach ? View.VISIBLE : View.GONE);
         } else {
             badgeStatus.setText(R.string.test_detail_en_progreso);
             setBadgeColor(ContextCompat.getColor(requireContext(), R.color.hyper_in_progress));
