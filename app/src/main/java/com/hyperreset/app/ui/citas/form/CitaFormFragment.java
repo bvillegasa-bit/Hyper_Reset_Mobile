@@ -196,7 +196,9 @@ public class CitaFormFragment extends Fragment {
                 return;
             }
             request.put("deportistaId", sessionManager.getDeportistaId());
-            request.put("coachId", coachList.get(selectedCoachPosition).getIdCoach());
+            // Send usuarioId (usuario.idUsuario) not idCoach (coach PK)
+            // because CitaService.createCita() looks up coach via findByUsuario_IdUsuario()
+            request.put("coachId", coachList.get(selectedCoachPosition).getUsuarioId());
         } else {
             // COACH: selectedDeportistaPosition is the deportista index
             if (selectedDeportistaPosition < 0 || selectedDeportistaPosition >= deportistaList.size()) {
